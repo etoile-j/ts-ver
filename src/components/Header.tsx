@@ -5,21 +5,24 @@ import ShoppingCartIcon from '../assets/icon-shopping-cart.svg';
 import UserIcon from '../assets/icon-user.svg';
 
 const HeaderEl = styled.header`
-    z-index: 5;
+    z-index: 2;
     display: block;
     position: fixed;
     top: 0;
     background-color: #ffffff;
     width: 100%;
     height: 90px;
+    padding: 0 15px 0;
     border: 1px solid pink;
 `;
 
 const Nav = styled.nav`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    max-width: 1280px;
     height: 90px;
+    margin: 0 auto;
 `;
 
 const Wrap = styled.div`
@@ -74,7 +77,7 @@ const ShoppingCartBtn = styled.button`
     display: inline-block;
     width: 66px;
     height: 32px;
-    margin-right: 12px;
+    margin-right: 10px;
     /* background-image: url(${ShoppingCartIcon});
     background-repeat: no-repeat;
     background-size: 32px 32px;
