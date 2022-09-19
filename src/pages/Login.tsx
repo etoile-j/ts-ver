@@ -1,4 +1,5 @@
 import FormContainer from 'components/FormContainer';
+import LoginContent from 'components/LoginContent';
 import styled from 'styled-components';
 
 const Main = styled.main`
@@ -37,7 +38,7 @@ const Login = () => {
     return (
         <>
             <Main>
-                <FormContainer />
+                <FormContainer content={<LoginContent />} />
                 <Ul>
                     <Li>회원가입</Li>
                     <Li2>비밀번호 찾기</Li2>

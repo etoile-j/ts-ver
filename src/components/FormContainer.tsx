@@ -67,7 +67,8 @@ const FormContainer = (props: any) => {
                     <LoginTap2>판매회원 로그인</LoginTap2>
                 </Ul>
                 <Form>
-                    <LoginContent />
+                    {props.content}
+                    {/* <LoginContent /> */}
                 </Form>
             </Container>
         </>
