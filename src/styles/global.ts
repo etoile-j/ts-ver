@@ -23,6 +23,13 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6{
     font-family:'Maven Pro', sans-serif;
   }
+  h2 {
+    padding: 54px 0 52px;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    text-align: center;
+  }
   ol, ul, li {
     list-style: none;
   }
