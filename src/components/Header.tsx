@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import SearchIcon from '../assets/search.svg';
 import Logo from '../assets/Logo-hodu.png';
+import SearchIcon from '../assets/search.svg';
 import ShoppingCartIcon from '../assets/icon-shopping-cart.svg';
 import UserIcon from '../assets/icon-user.svg';
+import styled from 'styled-components';
 
 const HeaderEl = styled.header`
     z-index: 2;
@@ -13,7 +13,7 @@ const HeaderEl = styled.header`
     width: 100%;
     height: 90px;
     padding: 0 15px 0;
-    border: 1px solid pink;
+    border-bottom: 1px solid #c4c4c4;
 `;
 
 const Nav = styled.nav`
