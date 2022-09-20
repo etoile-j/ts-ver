@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import LoginContent from './LoginContent';
 
 const Logo = styled.h1`
     margin: 70px 0;
@@ -66,10 +65,7 @@ const FormContainer = (props: any) => {
                     <LoginTap>구매회원 로그인</LoginTap>
                     <LoginTap2>판매회원 로그인</LoginTap2>
                 </Ul>
-                <Form>
-                    {props.content}
-                    {/* <LoginContent /> */}
-                </Form>
+                <Form>{props.content}</Form>
             </Container>
         </>
     );
