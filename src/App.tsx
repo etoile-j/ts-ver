@@ -1,11 +1,24 @@
-import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Join from 'pages/Join';
+import Login from 'pages/Login';
+import Main from 'pages/Main';
+import Payment from 'pages/Payment';
+import ProductDetails from 'pages/ProductDetails';
 import { GlobalStyle } from './styles/global';
 
 function App() {
     return (
         <>
             <GlobalStyle />
-            <div className="App">시작해보자!</div>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/join" element={<Join />} />
+                    <Route path="/productdetail" element={<ProductDetails />} />
+                    <Route path="/payment" element={<Payment />} />
+                </Routes>
+            </BrowserRouter>
         </>
     );
 }
