@@ -5,6 +5,17 @@ interface styledCompo {
     width: string;
 }
 
+const Form = styled.form`
+    width: 100%;
+    z-index: 2;
+    background-color: #ffffff;
+    position: relative;
+    top: -20px;
+    padding: 35px;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+`;
+
 const Div = styled.div`
     position: relative;
     margin-top: 12px;
@@ -86,7 +97,7 @@ const PhoneNumber = styled.div`
 
 const JoinContent = () => {
     return (
-        <>
+        <Form>
             <fieldset>
                 <Div>
                     <Label>아이디</Label>
@@ -125,7 +136,7 @@ const JoinContent = () => {
                     <Input type="text" name="paymentMethod" width="220px" />
                 </Div>
             </Fieldset>
-        </>
+        </Form>
     );
 };
 export default JoinContent;

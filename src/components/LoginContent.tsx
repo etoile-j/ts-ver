@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+const Form = styled.form`
+    width: 100%;
+    z-index: 2;
+    background-color: #ffffff;
+    position: relative;
+    top: -20px;
+    padding: 35px;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+`;
+
 const Input = styled.input`
     width: 100%;
     padding: 19px 0;
@@ -39,7 +50,7 @@ const CautionText = styled.strong`
 
 const LoginContent = () => {
     return (
-        <>
+        <Form>
             <Input placeholder="아이디" />
             <Input placeholder="비밀번호" />
             <Div>
@@ -48,7 +59,7 @@ const LoginContent = () => {
                 </CautionText>
             </Div>
             <BasicButton>로그인</BasicButton>
-        </>
+        </Form>
     );
 };
 export default LoginContent;

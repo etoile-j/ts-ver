@@ -45,17 +45,6 @@ const LoginTap = styled(LoginTap2)`
     }
 `;
 
-const Form = styled.form`
-    width: 100%;
-    z-index: 2;
-    background-color: #ffffff;
-    position: relative;
-    top: -20px;
-    padding: 35px;
-    border: 1px solid #c4c4c4;
-    border-radius: 10px;
-`;
-
 const FormContainer = (props: any) => {
     return (
         <>
@@ -65,7 +54,7 @@ const FormContainer = (props: any) => {
                     <LoginTap>구매회원 로그인</LoginTap>
                     <LoginTap2>판매회원 로그인</LoginTap2>
                 </Ul>
-                <Form>{props.content}</Form>
+                {props.content}
             </Container>
         </>
     );
