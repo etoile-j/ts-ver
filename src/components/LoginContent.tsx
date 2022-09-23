@@ -1,3 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../constants/constants';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -25,7 +28,7 @@ const Input = styled.input`
     }
 `;
 
-const BasicButton = styled.button`
+const SubmitButton = styled.button`
     background-color: #6997f7;
     width: 100%;
     padding: 19px;
@@ -35,6 +38,7 @@ const BasicButton = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
+    cursor: pointer;
 `;
 
 const Div = styled.div`
@@ -49,16 +53,64 @@ const CautionText = styled.strong`
 `;
 
 const LoginContent = () => {
+    const [id, setId] = useState<string>();
+    const [password, setPassword] = useState<string>();
+    const [cautionText, setCautionText] = useState<string>();
+
+    const idRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        idRef.current?.focus();
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(id, password);
+        try {
+            const url: string = BASE_URL + '/accounts/login/';
+            const response = await axios.post(url, {
+                username: id,
+                password: password,
+                login_type: 'BUYER',
+            });
+            localStorage.setItem('token', response.data.token);
+            window.location.replace('/');
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+            if (id === undefined) {
+                setCautionText('아이디를 입력해주세요.');
+            } else if (password === undefined) {
+                setCautionText('비밀번호를 입력해주세요.');
+            } else {
+                setPassword('');
+                setCautionText('아이디 또는 비밀번호가 일치하지 않습니다.');
+            }
+        }
+    };
+
     return (
-        <Form>
-            <Input placeholder="아이디" />
-            <Input placeholder="비밀번호" />
+        <Form onSubmit={handleSubmit}>
+            <Input
+                type="text"
+                placeholder="아이디"
+                value={id || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setId(e.target.value);
+                }}
+                ref={idRef}
+            />
+            <Input
+                type="password"
+                placeholder="비밀번호"
+                value={password || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setPassword(e.target.value);
+                }}
+            />
             <Div>
-                <CautionText>
-                    아이디 또는 비밀번호가 일치하지 않습니다.
-                </CautionText>
+                <CautionText>{cautionText}</CautionText>
             </Div>
-            <BasicButton>로그인</BasicButton>
+            <SubmitButton type="submit">로그인</SubmitButton>
         </Form>
     );
 };
