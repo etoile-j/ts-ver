@@ -15,7 +15,7 @@ const Ul = styled.ul`
     display: flex;
 `;
 
-const LoginTap2 = styled.li`
+const SellerTap = styled.li`
     background-color: #f2f2f2;
     width: 100%;
     padding: 19px 0 37px;
@@ -27,7 +27,7 @@ const LoginTap2 = styled.li`
     text-align: center;
 `;
 
-const LoginTap = styled(LoginTap2)`
+const BuyerTap = styled(SellerTap)`
     z-index: 3;
     background-color: #ffffff;
     width: 550px;
@@ -51,8 +51,8 @@ const FormContainer = (props: any) => {
             <Logo>로고</Logo>
             <Container>
                 <Ul>
-                    <LoginTap>구매회원 로그인</LoginTap>
-                    <LoginTap2>판매회원 로그인</LoginTap2>
+                    <BuyerTap>{props.buyer}</BuyerTap>
+                    <SellerTap>{props.seller}</SellerTap>
                 </Ul>
                 {props.content}
             </Container>

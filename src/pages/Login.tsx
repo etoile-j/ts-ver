@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import FormContainer from 'components/FormContainer';
 import LoginContent from 'components/LoginContent';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Main = styled.main`
@@ -39,7 +39,11 @@ const Login = () => {
     return (
         <>
             <Main>
-                <FormContainer content={<LoginContent />} />
+                <FormContainer
+                    content={<LoginContent />}
+                    buyer="구매회원 로그인"
+                    seller="판매회원 로그인"
+                />
                 <Ul>
                     <Link to="/join">회원가입</Link>
                     <Li2>비밀번호 찾기</Li2>
