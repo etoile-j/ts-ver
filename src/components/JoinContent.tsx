@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import Check_off from '../assets/icon-check-off.svg';
+import Check_on from '../assets/icon-check-on.svg';
 import styled from 'styled-components';
 
 interface styledCompo {
-    width: string;
+    width?: string;
+    color?: string;
 }
 
 const Form = styled.form`
@@ -31,20 +34,6 @@ const Label = styled.label`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
-`;
-const PasswordLabel = styled(Label)`
-    ::after {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        width: 28px;
-        height: 28px;
-        top: 43px;
-        right: 16px;
-        background-image: url(${Check_off});
-        background-repeat: no-repeat;
-        background-size: 28px 28px;
-    }
 `;
 
 const Input = styled.input`
@@ -79,7 +68,22 @@ const CautionText = styled.strong`
 `;
 
 const PassText = styled(CautionText)`
-    color: #3875f8;
+    color: #2c6cf6;
+`;
+
+const PasswordInput = styled.div`
+    position: relative;
+`;
+
+const PwCheck = styled.div`
+    display: inline-block;
+    position: absolute;
+    top: 13px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    background-image: url(${Check_off});
+    background-repeat: no-repeat;
 `;
 
 const Fieldset = styled.fieldset`
@@ -99,25 +103,67 @@ const PhoneNumber = styled.div`
     justify-content: space-between;
 `;
 
+const PhoneInput = styled(Input)`
+    text-align: center;
+`;
+
+const Div2 = styled.div`
+    /* width: 550px; */
+    /* margin: 0 auto; */
+    margin-top: 40px;
+    color: #767676;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+`;
+
+const JoinBtn = styled.button`
+    background: ${(props: styledCompo) => props.color};
+    width: 100%;
+    padding: 19px 0;
+    margin-top: 34px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    cursor: pointer;
+`;
+
 const JoinContent = () => {
     const [id, setId] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
     const [passText, setPassText] = useState<string>();
 
+    type Inputs = {
+        id: string;
+        password: string;
+        passwordCheck: string;
+        name: string;
+        phone1: number;
+        phone2: number;
+        phone3: number;
+        emailId: string;
+        emailDomain: string;
+        agreement: any;
+    };
+
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        formState: { errors, isValid },
+    } = useForm<Inputs>({ mode: 'onBlur' });
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+        handleJoin(data);
+    };
+
     useEffect(() => {
         setCautionText('');
         setPassText('');
     }, [id]);
-
-    // const idRegexCheck = () => {
-    //     const regex = /^[a-z]+[a-z0-9]{5,19}$/g; //수정예정
-    //     if (!regex.test(id!)) {
-    //         setCautionText(
-    //             '6~20자의 영문 소문자, 대문자, 숫자만 사용 가능합니다.',
-    //         );
-    //     }
-    //     return;
-    // };
 
     const regex = /^[a-z]+[a-z0-9]{5,19}$/g; //수정예정
 
@@ -138,7 +184,7 @@ const JoinContent = () => {
                     username: id,
                 });
                 console.log(response);
-                setPassText('사용 가능한 아이디입니다:)');
+                setPassText('사용 가능한 아이디입니다 :)');
             }
         } catch (err) {
             console.error(err);
@@ -146,8 +192,25 @@ const JoinContent = () => {
         }
     };
 
+    const handleJoin = async (data: Inputs) => {
+        try {
+            const url: string = BASE_URL + '/accounts/signup/';
+            const response = await axios.post(url, {
+                username: data.id,
+                password: data.password,
+                password2: data.passwordCheck,
+                phone_number: data.phone1 + data.phone2 + data.phone3,
+                name: data.name,
+            });
+
+            console.log(response);
+        } catch (err) {}
+    };
+
+    // const aa: string = 'backgroundImage: `url(${Check_on})`';
+
     return (
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset>
                 <Div>
                     <Label>아이디</Label>
@@ -155,6 +218,14 @@ const JoinContent = () => {
                         type="text"
                         width="346px"
                         value={id || ''}
+                        {...register('id', {
+                            required: '필수정보 입니다.',
+                            pattern: {
+                                value: /^[a-z]+[a-z0-9]{5,19}$/g,
+                                message:
+                                    '6~20자의 영문 소문자, 대문자, 숫자만 사용 가능합니다.',
+                            },
+                        })}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setId(e.target.value);
                         }}
@@ -165,35 +236,181 @@ const JoinContent = () => {
                 </Div>
                 <CautionText>{cautionText}</CautionText>
                 <PassText>{passText}</PassText>
+                {errors.id && <CautionText>{errors.id.message}</CautionText>}
                 <Div>
-                    <PasswordLabel>비밀번호</PasswordLabel>
-                    <Input type="password" width="100%" />
+                    <Label htmlFor="password">비밀번호</Label>
+                    <PasswordInput>
+                        <Input
+                            id="password"
+                            type="password"
+                            width="100%"
+                            {...register('password', {
+                                required: '필수정보 입니다.',
+                                pattern: {
+                                    value: /^[0-8a-z]+$/,
+                                    message:
+                                        '8자 이상, 영문 대소문자, 숫자, 특수문자를 이용하세요.',
+                                },
+                            })}
+                        />
+                        <PwCheck
+                            style={{
+                                backgroundImage: !regex.test(
+                                    getValues('password'),
+                                )
+                                    ? `url(${Check_off})`
+                                    : `url(${Check_on})`,
+                            }}
+                        />
+                    </PasswordInput>
                 </Div>
+                {errors.password && (
+                    <CautionText>{errors.password.message}</CautionText>
+                )}
                 <Div>
-                    <PasswordLabel>비밀번호 재확인</PasswordLabel>
-                    <Input type="password" width="100%" />
+                    <Label htmlFor="passwordCheck">비밀번호 재확인</Label>
+                    <PasswordInput>
+                        <Input
+                            id="passwordCheck"
+                            type="password"
+                            width="100%"
+                            {...register('passwordCheck', {
+                                required: '필수정보 입니다.',
+                                validate: {
+                                    matchingPw: (value) => {
+                                        const password = getValues('password');
+                                        return (
+                                            password === value ||
+                                            '비밀번호가 일치하지 않습니다.'
+                                        );
+                                    },
+                                },
+                            })}
+                        />
+                        <PwCheck
+                            style={{
+                                backgroundImage:
+                                    getValues('password') !== '' &&
+                                    getValues('password') ===
+                                        getValues('passwordCheck')
+                                        ? `url(${Check_on})`
+                                        : `url(${Check_off})`,
+                            }}
+                        />
+                    </PasswordInput>
                 </Div>
-                <CautionText>비밀번호가 일치하지 않습니다.</CautionText>
+                {errors.passwordCheck && (
+                    <CautionText>{errors.passwordCheck.message}</CautionText>
+                )}
             </fieldset>
             <Fieldset>
                 <div>
-                    <Label>이름</Label>
-                    <Input type="text" width="100%" />
+                    <Label htmlFor="name">이름</Label>
+                    <Input
+                        id="name"
+                        type="text"
+                        width="100%"
+                        {...register('name', {
+                            required: '필수정보 입니다.',
+                        })}
+                    />
                 </div>
+                {errors.name && (
+                    <CautionText>{errors.name.message}</CautionText>
+                )}
                 <Div>
                     <Label>휴대폰번호</Label>
                     <PhoneNumber>
-                        <Input type="text" width="152px" />
-                        <Input type="text" width="152px" />
-                        <Input type="text" width="152px" />
+                        <PhoneInput
+                            type="text"
+                            width="152px"
+                            maxLength={3}
+                            {...register('phone1', {
+                                required: '필수정보 입니다.',
+                                minLength: {
+                                    value: 3,
+                                    message: '모두 입력해주세요.',
+                                },
+                            })}
+                        />
+                        <PhoneInput
+                            type="text"
+                            width="152px"
+                            maxLength={4}
+                            {...register('phone2', {
+                                required: '필수정보 입니다.',
+                                minLength: {
+                                    value: 3,
+                                    message: '모두 입력해주세요.',
+                                },
+                            })}
+                        />
+                        <PhoneInput
+                            type="text"
+                            width="152px"
+                            maxLength={4}
+                            {...register('phone3', {
+                                required: '필수정보 입니다.',
+                                minLength: {
+                                    value: 4,
+                                    message: '모두 입력해주세요.',
+                                },
+                            })}
+                        />
                     </PhoneNumber>
                 </Div>
+                {errors.phone1 && (
+                    <CautionText>{errors.phone1.message}</CautionText>
+                )}
                 <Div>
                     <Label>이메일</Label>
-                    <Input type="text" width="220px" />
+                    <Input
+                        type="text"
+                        width="220px"
+                        {...register('emailId', {
+                            required: '필수정보 입니다.',
+                            pattern: {
+                                value: /^[a-zA-Z0-9-.]+$/,
+                                message: '잘못된 이메일 형식입니다.',
+                            },
+                        })}
+                    />
                     <At>@</At>
-                    <Input type="text" width="220px" />
+                    <Input
+                        type="text"
+                        width="220px"
+                        {...register('emailDomain', {
+                            required: '필수정보 입니다.',
+                            pattern: {
+                                value: /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                                message: '잘못된 이메일 형식입니다.',
+                            },
+                        })}
+                    />
                 </Div>
+                {(errors.emailId || errors.emailDomain) &&
+                    (<CautionText>{errors.emailId?.message}</CautionText> || (
+                        <CautionText>{errors.emailDomain?.message}</CautionText>
+                    ))}
+                <Div2>
+                    <label>
+                        <input
+                            type="checkbox"
+                            {...register('agreement', {
+                                required: true,
+                            })}
+                        />
+                        ㅇㅇ샵의 이용약관 및 개인정보처리방침에 대한 내용을
+                        확인하였고 동의합니다.
+                    </label>
+                    <JoinBtn
+                        type="submit"
+                        disabled={isValid ? false : true}
+                        color={isValid ? '#6997f7' : '#c4c4c4'}
+                    >
+                        가입하기
+                    </JoinBtn>
+                </Div2>
             </Fieldset>
         </Form>
     );
