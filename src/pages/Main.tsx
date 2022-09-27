@@ -21,9 +21,6 @@ const Main = () => {
             <MainEm>
                 <Products>
                     <ProductInfo />
-                    <ProductInfo />
-                    <ProductInfo />
-                    <ProductInfo />
                 </Products>
             </MainEm>
             <Footer />

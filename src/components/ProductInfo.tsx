@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from 'constants/constants';
 import styled from 'styled-components';
-import TestImg from '../assets/ProductTestImg.jpg';
 
 const ProductImg = styled.img`
     width: 380px;
@@ -7,6 +10,7 @@ const ProductImg = styled.img`
     margin-bottom: 16px;
     border: 1px solid #c4c4c4;
     border-radius: 10px;
+    object-fit: cover;
 `;
 
 const ProductName = styled.p`
@@ -37,16 +41,48 @@ const Won = styled.span`
 `;
 
 const ProductInfo = () => {
+    const [products, setProducts] = useState<[]>();
+    const { product_id } = useParams();
+
+    const getProductList = async () => {
+        try {
+            const response = await axios.get(BASE_URL + '/products/');
+            console.log(response);
+            setProducts(response.data.results);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        getProductList();
+    }, []);
+
+    interface IProductProps {
+        // products: {} | undefined;
+        product_id?: string;
+        image?: string;
+        store_name?: string;
+        product_name?: string;
+        price?: number;
+    }
+
     return (
         <>
-            <li>
-                <ProductImg src={TestImg}></ProductImg>
-                <SellerName>우당탕탕 라이캣의 실험실</SellerName>
-                <ProductName>Hack Your Life 개발자 노트북 파우치</ProductName>
-                <Price>
-                    29000<Won>원</Won>
-                </Price>
-            </li>
+            {products?.map((products: IProductProps) => {
+                return (
+                    <Link to={`/productdetail/${product_id}`}>
+                        <li key={products.product_id}>
+                            <ProductImg src={products.image}></ProductImg>
+                            <SellerName>{products.store_name}</SellerName>
+                            <ProductName>{products.product_name}</ProductName>
+                            <Price>
+                                {products.price?.toLocaleString('Ko-KR')}
+                                <Won>원</Won>
+                            </Price>
+                        </li>
+                    </Link>
+                );
+            })}
         </>
     );
 };
