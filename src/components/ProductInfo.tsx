@@ -70,7 +70,7 @@ const ProductInfo = () => {
         <>
             {products?.map((products: IProductProps) => {
                 return (
-                    <Link to={`/productdetail/${product_id}`}>
+                    <Link to={`/productdetail/${products.product_id}`}>
                         <li key={products.product_id}>
                             <ProductImg src={products.image}></ProductImg>
                             <SellerName>{products.store_name}</SellerName>

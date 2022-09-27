@@ -15,7 +15,10 @@ function App() {
                     <Route path="/" element={<Main />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/join" element={<Join />} />
-                    <Route path="/productdetail" element={<ProductDetails />} />
+                    <Route
+                        path="/productdetail/:product_id"
+                        element={<ProductDetails />}
+                    />
                     <Route path="/payment" element={<Payment />} />
                 </Routes>
             </BrowserRouter>

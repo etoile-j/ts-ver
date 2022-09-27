@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import ProductCard from 'components/ProductCard';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import ProductCard from 'components/ProductCard';
+import styled from 'styled-components';
 
 const Main = styled.main`
     padding: 80px 0 60px;
@@ -29,6 +29,8 @@ const ProductDetails = () => {
         <>
             <Header />
             <Main>
+                <h2>상품 상세 정보</h2>
+                {/* ir */}
                 <ProductCard />
                 <Ul>
                     <Li>상세정보</Li>

@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from 'constants/constants';
 import CountButton from './CountButton';
-import TestImg from '../assets/ProductTestImg.jpg';
+import styled from 'styled-components';
 
 const Wrap = styled.div`
     display: flex;
@@ -11,6 +14,7 @@ const ProductImg = styled.img`
     float: left;
     width: 600px;
     height: 600px;
+    object-fit: cover;
 `;
 
 const Div = styled.div`
@@ -112,22 +116,50 @@ const GrayBtn = styled(ColorBtn)`
     margin-left: 14px;
 `;
 
+interface IProductDetail {
+    product_id?: string;
+    image?: string;
+    store_name?: string;
+    product_name?: string;
+    price?: number;
+    shipping_fee: number;
+}
+
 const ProductCard = () => {
+    const [product, setProduct] = useState<IProductDetail>();
+    const { product_id } = useParams();
+
+    const getProductDetail = async () => {
+        try {
+            const response = await axios.get(
+                BASE_URL + `/products/${product_id}/`,
+            );
+            console.log(response);
+            setProduct(response.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        getProductDetail();
+    }, []);
+
     return (
         <Wrap>
-            <ProductImg src={TestImg}></ProductImg>
+            <ProductImg src={product?.image}></ProductImg>
             <Div>
                 <div>
-                    <SellerName>우당탕탕 라이캣의 실험실</SellerName>
-                    <ProductName>
-                        Hack Your Life 개발자 노트북 파우치
-                    </ProductName>
+                    <SellerName>{product?.store_name}</SellerName>
+                    <ProductName>{product?.product_name}</ProductName>
                     <Price>
-                        29000<Won>원</Won>
+                        {product?.price?.toLocaleString('ko-KR')}
+                        <Won>원</Won>
                     </Price>
                 </div>
                 <div>
-                    <DeliveryText>택배배송 / 무료배송</DeliveryText>
+                    <DeliveryText>
+                        택배배송 / {product?.shipping_fee}원
+                    </DeliveryText>
                     <CountContainer>
                         <CountButton />
                     </CountContainer>
