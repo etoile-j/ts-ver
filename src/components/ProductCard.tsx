@@ -108,12 +108,14 @@ const ColorBtn = styled.button`
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 const GrayBtn = styled(ColorBtn)`
     background-color: #767676;
     width: 200px;
     margin-left: 14px;
+    cursor: pointer;
 `;
 
 interface IProductDetail {
@@ -123,9 +125,11 @@ interface IProductDetail {
     product_name?: string;
     price?: number;
     shipping_fee: number;
+    stock: number;
 }
 
 const ProductCard = () => {
+    const [count, setCount] = useState(1);
     const [product, setProduct] = useState<IProductDetail>();
     const { product_id } = useParams();
 
@@ -158,22 +162,37 @@ const ProductCard = () => {
                 </div>
                 <div>
                     <DeliveryText>
-                        택배배송 / {product?.shipping_fee}원
+                        택배배송 /{' '}
+                        {product?.shipping_fee === 0
+                            ? '무료배송'
+                            : `${product?.shipping_fee.toLocaleString(
+                                  'ko-KR',
+                              )}원`}
                     </DeliveryText>
                     <CountContainer>
-                        <CountButton />
+                        <CountButton
+                            stocks={product?.stock}
+                            count={count}
+                            setCount={setCount}
+                        />
                     </CountContainer>
                     <TotalWrap>
                         <TotalTitle>총 상품 금액</TotalTitle>
                         <TotalAmount>
-                            총 수량 <Number>1</Number>개
+                            총 수량 <Number>{count}</Number>개
                         </TotalAmount>
                         <TotalPrice>
-                            19990<TotalWon>원</TotalWon>
+                            {(product?.price! * count).toLocaleString('ko-KR')}
+                            <TotalWon>원</TotalWon>
                         </TotalPrice>
                     </TotalWrap>
                     <div>
-                        <ColorBtn>바로 구매</ColorBtn>
+                        <ColorBtn
+                            type="button"
+                            onClick={() => (window.location.href = '/payment')}
+                        >
+                            바로 구매
+                        </ColorBtn>
                         <GrayBtn>장바구니</GrayBtn>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-const Count = styled.input`
+const Count = styled.button`
     width: 50px;
     height: 50px;
     border-top: 1px solid #c4c4c4;
@@ -11,7 +12,7 @@ const Count = styled.input`
     text-align: center;
 `;
 
-const CountBtn = styled.button`
+const CountBtn = styled.button.attrs({ type: 'button' })`
     position: relative;
     width: 50px;
     height: 50px;
@@ -21,6 +22,7 @@ const CountBtn = styled.button`
     color: transparent;
     font-weight: 500;
     font-size: 18px;
+    cursor: pointer;
     ::before {
         content: '';
         background-color: #c4c4c4;
@@ -45,13 +47,56 @@ const CountBtnplus = styled(CountBtn)`
     }
 `;
 
-const CountButton = () => {
+interface IProductDetailProps {
+    stocks?: number | undefined;
+    count?: number | undefined;
+    setCount?: Dispatch<SetStateAction<number>> | undefined;
+}
+
+const CountButton = (props: IProductDetailProps) => {
+    const { stocks, count, setCount } = props;
+    const [disabledP, setDisabledP] = useState(false);
+    const [disabledM, setDisabledM] = useState(false);
+
+    console.log(stocks);
+    console.log('count', count);
+    const plusBtn = () => {
+        if (disabledM === true) {
+            setDisabledM(false);
+        }
+        if (count === stocks) {
+            alert('재고가 없습니다.');
+            setDisabledP(true);
+        } else {
+            setCount!(count! + 1);
+        }
+    };
+
+    const minusBtn = () => {
+        if (disabledP === true) {
+            setDisabledP(false);
+            setCount!(count! - 1);
+        } else if (count === 2) {
+            //이거거어어어 고치고 싶다^^.........
+            setDisabledM((isState) => !isState);
+        }
+        setCount!(count! - 1);
+    };
+
     return (
-        <>
-            <CountBtn>-</CountBtn>
-            <Count type="number"></Count>
-            <CountBtnplus>+</CountBtnplus>
-        </>
+        <div>
+            <CountBtn
+                // onClick={() => setCount(count - 1)}
+                onClick={minusBtn}
+                disabled={disabledM}
+            >
+                -
+            </CountBtn>
+            <Count>{count}</Count>
+            <CountBtnplus onClick={plusBtn} disabled={disabledP}>
+                +
+            </CountBtnplus>
+        </div>
     );
 };
 export default CountButton;
