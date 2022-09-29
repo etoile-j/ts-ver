@@ -5,6 +5,7 @@ import Main from 'pages/Main';
 import Payment from 'pages/Payment';
 import ProductDetails from 'pages/ProductDetails';
 import { GlobalStyle } from './styles/global';
+import ShoppingCart from 'pages/ShoppingCart';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         element={<ProductDetails />}
                     />
                     <Route path="/payment" element={<Payment />} />
+                    <Route path="/shoppingcart" element={<ShoppingCart />} />
                 </Routes>
             </BrowserRouter>
         </>
