@@ -75,7 +75,20 @@ const GrayBtn = styled.button`
     line-height: 30px;
 `;
 
-const FinalPaymentInfo = () => {
+interface IDirectOrder {
+    info: {
+        product_id: number;
+        totalCount: number;
+        order_kind: string;
+        image: string;
+        SellerName: string;
+        productName: string;
+        shippingFee: number;
+        price: number;
+    };
+}
+
+const FinalPaymentInfo = ({ info }: IDirectOrder) => {
     return (
         <>
             <Container>
@@ -83,26 +96,33 @@ const FinalPaymentInfo = () => {
                     <Div>
                         <H4>- 상품금액</H4>
                         <Price>
-                            34500<span>원</span>
+                            {(info.price * info.totalCount).toLocaleString(
+                                'ko-KR',
+                            )}
+                            <span>원</span>
                         </Price>
                     </Div>
                     <Div>
                         <H4>- 할인금액</H4>
                         <Price>
-                            34500<span>원</span>
+                            0<span>원</span>
                         </Price>
                     </Div>
                     <Div>
                         <H4>- 배송비</H4>
                         <Price>
-                            34500<span>원</span>
+                            {info.shippingFee.toLocaleString('ko-KR')}
+                            <span>원</span>
                         </Price>
                     </Div>
                     <PaymentDiv>
                         <H4>- 결제금액</H4>
                         <PaymentPrice>
-                            37600<span>원</span>
-                            {/* `${dd}원` */}
+                            {(
+                                info.price * info.totalCount +
+                                info.shippingFee
+                            ).toLocaleString('ko-KR')}
+                            <span>원</span>
                         </PaymentPrice>
                     </PaymentDiv>
                 </WhiteWrap>

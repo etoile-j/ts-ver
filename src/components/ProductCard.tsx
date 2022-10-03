@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import CountButton from './CountButton';
@@ -128,10 +128,17 @@ interface IProductDetail {
     stock: number;
 }
 
+interface IDirectOrder {
+    product_id: number;
+    totalCount: number;
+    order_kind: string;
+}
+
 const ProductCard = () => {
     const [count, setCount] = useState(1);
     const [product, setProduct] = useState<IProductDetail>();
     const { product_id } = useParams();
+    const navigate = useNavigate();
 
     const getProductDetail = async () => {
         try {
@@ -189,7 +196,20 @@ const ProductCard = () => {
                     <div>
                         <ColorBtn
                             type="button"
-                            onClick={() => (window.location.href = '/payment')}
+                            onClick={() =>
+                                navigate('/payment', {
+                                    state: {
+                                        product_id: product_id,
+                                        totalCount: count,
+                                        order_kind: 'direct_order',
+                                        image: product?.image,
+                                        SellerName: product?.store_name,
+                                        productName: product?.product_name,
+                                        shippingFee: product?.shipping_fee,
+                                        price: product?.price,
+                                    },
+                                })
+                            }
                         >
                             바로 구매
                         </ColorBtn>
