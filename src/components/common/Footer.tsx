@@ -1,9 +1,9 @@
+import GithubIcon from '../../assets/githubIcon.svg';
 import styled from 'styled-components';
-import GithubIcon from '../assets/githubIcon.svg';
 
 const FooterEl = styled.footer`
     background-color: #f2f2f2;
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     width: 100%;
     padding: 0 15px 0;
@@ -68,7 +68,12 @@ const Footer = () => {
                     <Li>전자금융거래약관</Li>
                     <Li>청소년보호정책</Li>
                     <Li>제휴문의</Li>
-                    <GithubLink />
+                    <GithubLink
+                        type="button"
+                        onClick={() =>
+                            window.open('https://github.com/etoile-j')
+                        }
+                    />
                 </Ul>
                 <Address>
                     <Strong>(주)ㅇㅇ SHOP</Strong>

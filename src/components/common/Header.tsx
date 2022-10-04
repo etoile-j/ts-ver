@@ -1,8 +1,9 @@
-import Logo from '../assets/Logo-hodu.png';
-import SearchIcon from '../assets/search.svg';
-import ShoppingCartIcon from '../assets/icon-shopping-cart.svg';
-import UserIcon from '../assets/icon-user.svg';
+import Logo from '../../assets/Logo-hodu.png';
+import SearchIcon from '../../assets/search.svg';
+import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
+import UserIcon from '../../assets/icon-user.svg';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const HeaderEl = styled.header`
     z-index: 2;
@@ -99,7 +100,9 @@ const Header = () => {
         <HeaderEl>
             <Nav>
                 <Wrap>
-                    <LogoImg></LogoImg>
+                    <Link to="/">
+                        <LogoImg />
+                    </Link>
                     <SearchContainer>
                         <Search
                             type="text"
