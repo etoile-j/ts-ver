@@ -1,5 +1,5 @@
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
 import ProductInfo from 'components/ProductInfo';
 import styled from 'styled-components';
 

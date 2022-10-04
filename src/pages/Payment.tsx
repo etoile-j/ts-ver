@@ -4,8 +4,8 @@ import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import DeliveryInfo from 'components/DeliveryInfo';
 import FinalPaymentInfo from 'components/FinalPaymentInfo';
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
 import OrderTable from 'components/OrderTable';
 import styled from 'styled-components';
 
