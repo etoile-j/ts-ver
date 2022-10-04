@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface styledCompo {
+    color?: string;
+}
+
 const Container = styled.div`
     width: 480px;
     border: 2px solid #6997f7;
@@ -64,7 +68,7 @@ const GrayWrap = styled.div`
 `;
 
 const GrayBtn = styled.button`
-    background-color: #c4c4c4;
+    background-color: ${(props: styledCompo) => props.color};
     width: 220px;
     padding: 19px 0;
     margin-top: 30px;
@@ -73,6 +77,7 @@ const GrayBtn = styled.button`
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
+    cursor: pointer;
 `;
 
 interface IDirectOrder {
@@ -88,7 +93,7 @@ interface IDirectOrder {
     };
 }
 
-const FinalPaymentInfo = ({ info }: IDirectOrder) => {
+const FinalPaymentInfo = ({ info, register, isValid }: IDirectOrder | any) => {
     return (
         <>
             <Container>
@@ -128,10 +133,21 @@ const FinalPaymentInfo = ({ info }: IDirectOrder) => {
                 </WhiteWrap>
                 <GrayWrap>
                     <label>
-                        <input type="checkbox" />
+                        <input
+                            type="checkbox"
+                            {...register('agreement', {
+                                required: true,
+                            })}
+                        />
                         주문내용을 확인하였으며, 정보제공에 동의합니다.
                     </label>
-                    <GrayBtn>결제하기</GrayBtn>
+                    <GrayBtn
+                        type="submit"
+                        disabled={isValid ? false : true}
+                        color={isValid ? '#6997f7' : '#c4c4c4'}
+                    >
+                        결제하기
+                    </GrayBtn>
                 </GrayWrap>
             </Container>
         </>

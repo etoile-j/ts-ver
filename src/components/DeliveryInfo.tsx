@@ -32,7 +32,11 @@ const Input = styled.input`
     height: 40px;
     padding-left: 15px;
     border: 1px solid #c4c4c4;
-    font-size: 19px;
+    font-size: 17px;
+`;
+const PhoneInput = styled(Input)`
+    padding-left: 0;
+    text-align: center;
 `;
 const AddressInput = styled(Input)`
     margin: 8px 0;
@@ -57,7 +61,7 @@ const PostCodeBtn = styled.button`
     line-height: 20px;
 `;
 
-const DeliveryInfo = () => {
+const DeliveryInfo = ({ register }: any) => {
     return (
         <>
             <fieldset>
@@ -71,11 +75,11 @@ const DeliveryInfo = () => {
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <Input type="text" width="80px" />
+                        <PhoneInput type="text" width="80px" maxLength={3} />
                         <Hyphen>-</Hyphen>
-                        <Input type="text" width="100px" />
+                        <PhoneInput type="text" width="100px" maxLength={4} />
                         <Hyphen>-</Hyphen>
-                        <Input type="text" width="100px" />
+                        <PhoneInput type="text" width="100px" maxLength={4} />
                     </span>
                 </Line>
                 <Line>
@@ -89,16 +93,43 @@ const DeliveryInfo = () => {
                 </Legend>
                 <Line>
                     <Label>수령인</Label>
-                    <Input type="text" width="334px" />
+                    <Input
+                        type="text"
+                        width="334px"
+                        {...register('name', {
+                            required: '필수정보 입니다.',
+                        })}
+                    />
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <Input type="text" width="80px" />
+                        <PhoneInput
+                            type="text"
+                            width="80px"
+                            maxLength={3}
+                            {...register('phone1', {
+                                required: '필수정보 입니다.',
+                            })}
+                        />
                         <Hyphen>-</Hyphen>
-                        <Input type="text" width="100px" />
+                        <PhoneInput
+                            type="text"
+                            width="100px"
+                            maxLength={4}
+                            {...register('phone2', {
+                                required: '필수정보 입니다.',
+                            })}
+                        />
                         <Hyphen>-</Hyphen>
-                        <Input type="text" width="100px" />
+                        <PhoneInput
+                            type="text"
+                            width="100px"
+                            maxLength={4}
+                            {...register('phone3', {
+                                required: '필수정보 입니다.',
+                            })}
+                        />
                     </span>
                 </Line>
                 <Line>
@@ -107,14 +138,30 @@ const DeliveryInfo = () => {
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
                     <br />
                     <Label></Label>
-                    <AddressInput type="text" width="600px" />
+                    <AddressInput
+                        type="text"
+                        width="600px"
+                        {...register('address1', {
+                            required: '필수정보 입니다.',
+                        })}
+                    />
                     <br />
                     <Label></Label>
-                    <Input type="text" width="600px" />
+                    <Input
+                        type="text"
+                        width="600px"
+                        {...register('address2', {
+                            required: '필수정보 입니다.',
+                        })}
+                    />
                 </Line>
                 <Line>
                     <Label>배송 메시지</Label>
-                    <Input type="text" width="600px" />
+                    <Input
+                        type="text"
+                        width="600px"
+                        {...register('deliveryMessage')}
+                    />
                 </Line>
             </fieldset>
         </>
