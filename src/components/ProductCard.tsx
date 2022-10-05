@@ -108,14 +108,12 @@ const ColorBtn = styled.button`
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
-    cursor: pointer;
 `;
 
 const GrayBtn = styled(ColorBtn)`
     background-color: #767676;
     width: 200px;
     margin-left: 14px;
-    cursor: pointer;
 `;
 
 interface IProductDetail {

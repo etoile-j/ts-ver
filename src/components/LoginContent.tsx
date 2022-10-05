@@ -38,7 +38,6 @@ const SubmitButton = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
-    cursor: pointer;
 `;
 
 const Div = styled.div`

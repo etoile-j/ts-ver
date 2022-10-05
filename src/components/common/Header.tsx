@@ -71,7 +71,6 @@ const SearchBtn = styled.button`
     background-image: url(${SearchIcon});
     background-repeat: no-repeat;
     background-size: contain;
-    cursor: pointer;
 `;
 
 const ShoppingCartBtn = styled.button`

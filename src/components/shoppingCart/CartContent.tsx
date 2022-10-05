@@ -89,7 +89,6 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
     color: transparent;
     font-weight: 500;
     font-size: 18px;
-    cursor: pointer;
     ::before {
         content: '';
         background-color: #c4c4c4;
@@ -131,7 +130,6 @@ const OrderBtn = styled.button`
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
-    cursor: pointer;
 `;
 
 const DeleteBtn = styled.button`
@@ -143,7 +141,6 @@ const DeleteBtn = styled.button`
     background-image: url(${DeleteIcon});
     background-repeat: no-repeat;
     background-size: 22px 22px;
-    cursor: pointer;
 `;
 
 interface ICartData {

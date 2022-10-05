@@ -55,7 +55,6 @@ const VaildCheckBtn = styled.button`
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
-    cursor: pointer;
 `;
 
 const CautionText = styled.strong`
@@ -127,7 +126,6 @@ const JoinBtn = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
-    cursor: pointer;
 `;
 
 const JoinContent = () => {

@@ -77,7 +77,6 @@ const GrayBtn = styled.button`
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
-    cursor: pointer;
 `;
 
 interface IDirectOrder {
