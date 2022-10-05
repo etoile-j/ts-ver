@@ -99,7 +99,9 @@ const TotalWon = styled.span`
     line-height: 23px;
 `;
 
-const ColorBtn = styled.button`
+const ColorBtn = styled.button.attrs({
+    type: 'button',
+})`
     background-color: #6997f7;
     width: 416px;
     padding: 19px 0;
@@ -153,6 +155,30 @@ const ProductCard = () => {
         getProductDetail();
     }, []);
 
+    const token = localStorage.getItem('token');
+
+    const postCart = async () => {
+        try {
+            const url = BASE_URL + '/cart/';
+            const response = await axios.post(
+                url,
+                {
+                    product_id: product_id,
+                    quantity: count,
+                    check: true,
+                },
+                {
+                    headers: {
+                        Authorization: `JWT ${token}`,
+                    },
+                },
+            );
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
         <Wrap>
             <ProductImg src={product?.image}></ProductImg>
@@ -193,7 +219,6 @@ const ProductCard = () => {
                     </TotalWrap>
                     <div>
                         <ColorBtn
-                            type="button"
                             onClick={() =>
                                 navigate('/payment', {
                                     state: {
@@ -211,7 +236,13 @@ const ProductCard = () => {
                         >
                             바로 구매
                         </ColorBtn>
-                        <GrayBtn>장바구니</GrayBtn>
+                        <GrayBtn
+                            onClick={() => {
+                                postCart();
+                            }}
+                        >
+                            장바구니
+                        </GrayBtn>
                     </div>
                 </div>
             </Div>
