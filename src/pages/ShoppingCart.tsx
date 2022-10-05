@@ -1,11 +1,13 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../constants/constants';
+import CartContent from 'components/shoppingCart/CartContent';
+import Footer from 'components/common/Footer';
+import Header from 'components/common/Header';
+import NoneCartContent from 'components/shoppingCart/NoneCartContent';
 import MinusIcon from '../assets/icon-minus-line.svg';
 import PlusIcon from '../assets/icon-plus-line.svg';
 import styled from 'styled-components';
-import NoneCartContent from 'components/shoppingCart/NoneCartContent';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import CartContent from 'components/shoppingCart/CartContent';
-
 interface styledCompo {
     width?: string;
 }
@@ -31,6 +33,15 @@ const Content = styled.span`
     display: inline-block;
     width: ${(props: styledCompo) => props.width};
     text-align: center;
+`;
+
+const Container = styled.li`
+    display: flex;
+    align-items: center;
+    height: 200px;
+    margin-bottom: 10px;
+    border: 2px solid #c4c4c4;
+    border-radius: 10px;
 `;
 
 const OrderBtn = styled.button`
@@ -127,47 +138,92 @@ const Won = styled.span`
 `;
 
 const ShoppingCart = () => {
+    const [cartData, setCartData] = useState([]);
+    const [cartCount, setCartCount] = useState();
+    const token = localStorage.getItem('token');
+
+    const handleGetCart = async () => {
+        try {
+            const url: string = BASE_URL + '/cart/';
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `JWT ${token}`,
+                },
+            });
+            setCartData(response.data.results);
+            setCartCount(response.data.count);
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        handleGetCart();
+    }, []);
+
+    interface ICartData {
+        cart_item_id: number;
+        product_id: number;
+        quantity: number;
+    }
+    console.log(cartData);
+
     return (
         <>
             <Header />
             <h2>장바구니</h2>
             <Main>
-                <ul>
-                    <TitleLi>
-                        <Content width="90px">
-                            <input type="radio"></input>
-                        </Content>
-                        <Content width="611px">상품정보</Content>
-                        <Content width="248px">수량</Content>
-                        <Content width="329px">상품금액</Content>
-                    </TitleLi>
+                <TitleLi>
+                    <Content width="90px">
+                        <input type="radio"></input>
+                    </Content>
+                    <Content width="611px">상품정보</Content>
+                    <Content width="248px">수량</Content>
+                    <Content width="329px">상품금액</Content>
+                </TitleLi>
+                {cartCount === 0 ? (
                     <NoneCartContent />
-                    <CartContent />
-                </ul>
-                <CartResult>
-                    <List>
-                        <CartResultTitle>총 상품금액</CartResultTitle>
-                        <Price>34500</Price>원
-                        <Minus />
-                    </List>
-                    <List>
-                        <CartResultTitle>상품 할인</CartResultTitle>
-                        <Price>500</Price>원
-                        <Plus />
-                    </List>
-                    <List>
-                        <CartResultTitle>배송비</CartResultTitle>
-                        <Price>0</Price>원
-                    </List>
-                    <Result>
-                        <CartResultTitleAmount>
-                            결제 예정 금액
-                        </CartResultTitleAmount>
-                        <ResultPrice>34000</ResultPrice>
-                        <Won>원</Won>
-                    </Result>
-                </CartResult>
-                <OrderBtnBig>주문하기</OrderBtnBig>
+                ) : (
+                    <>
+                        <>
+                            {cartData?.map((cartData: ICartData) => {
+                                return (
+                                    <Container key={cartData.cart_item_id}>
+                                        <CartContent
+                                            cartData={cartData}
+                                            product_id={cartData.product_id}
+                                            quantity={cartData.quantity}
+                                        />
+                                    </Container>
+                                );
+                            })}
+                        </>
+                        <CartResult>
+                            <List>
+                                <CartResultTitle>총 상품금액</CartResultTitle>
+                                <Price>34500</Price>원
+                                <Minus />
+                            </List>
+                            <List>
+                                <CartResultTitle>상품 할인</CartResultTitle>
+                                <Price>500</Price>원
+                                <Plus />
+                            </List>
+                            <List>
+                                <CartResultTitle>배송비</CartResultTitle>
+                                <Price>0</Price>원
+                            </List>
+                            <Result>
+                                <CartResultTitleAmount>
+                                    결제 예정 금액
+                                </CartResultTitleAmount>
+                                <ResultPrice>34000</ResultPrice>
+                                <Won>원</Won>
+                            </Result>
+                        </CartResult>
+                        <OrderBtnBig>주문하기</OrderBtnBig>
+                    </>
+                )}
             </Main>
             <Footer />
         </>

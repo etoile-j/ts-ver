@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
 import CountButton from 'components/CountButton';
-import TestImg from '../../assets/ProductTestImg.jpg';
 import DeleteIcon from '../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
@@ -33,6 +35,7 @@ const ProductImg = styled.img`
     height: 160px;
     margin-right: 36px;
     border-radius: 10px;
+    object-fit: contain;
 `;
 
 const SellerName = styled.p`
@@ -63,6 +66,52 @@ const DeliveryText = styled.p`
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+`;
+
+const Count = styled.button`
+    width: 50px;
+    height: 50px;
+    border-top: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+`;
+
+const CountBtn = styled.button.attrs({ type: 'button' })`
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 30px 0;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px 0 0 5px;
+    color: transparent;
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    ::before {
+        content: '';
+        background-color: #c4c4c4;
+        position: absolute;
+        top: 24px;
+        left: 15px;
+        width: 18px;
+        height: 2px;
+    }
+`;
+
+const CountBtnplus = styled(CountBtn)`
+    border-radius: 0 5px 5px 0;
+    ::after {
+        content: '';
+        background-color: #c4c4c4;
+        position: absolute;
+        top: 16px;
+        left: 23px;
+        width: 2px;
+        height: 18px;
+    }
 `;
 
 const InPrice = styled.p`
@@ -97,38 +146,83 @@ const DeleteBtn = styled.button`
     cursor: pointer;
 `;
 
-const CartContent = () => {
+interface ICartData {
+    product_id: number;
+    quantity: number;
+}
+
+const CartContent = (cartData: ICartData | any) => {
+    const [detail, setDetail] = useState<IDetail>();
+    interface IDetail {
+        product_id?: string;
+        image?: string;
+        store_name?: string;
+        product_name?: string;
+        price?: number;
+        shipping_fee: number;
+        stock: number;
+    }
+    // console.log(cartData.result.cart_item_id);
+    console.log(cartData.product_id);
+
+    const handleGetDetail = async () => {
+        try {
+            const url: string = BASE_URL + `/products/${cartData.product_id}/`;
+            const response = await axios.get(url);
+            setDetail(response.data);
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        handleGetDetail();
+    }, []);
+
     return (
-        <Container>
+        <>
             <Content width="90px">
                 <input type="radio"></input>
             </Content>
             <Content width="611px">
                 <Wrap>
-                    <ProductImg src={TestImg}></ProductImg>
+                    <ProductImg src={detail?.image}></ProductImg>
                     <div>
-                        <SellerName>우탕탕 라이캣의 실험실</SellerName>
-                        <ProductName>
-                            Hack Your Life 개발자 노트북 파우치
-                        </ProductName>
+                        <SellerName>{detail?.store_name}</SellerName>
+                        <ProductName>{detail?.product_name}</ProductName>
                         <Price>
-                            29000<span>원</span>
+                            {detail?.price?.toLocaleString('ko-KR')}
+                            <span>원</span>
                         </Price>
-                        <DeliveryText>택배배송 / 무료배송</DeliveryText>
+                        <DeliveryText>
+                            택배배송 /{' '}
+                            {detail?.shipping_fee === 0
+                                ? '무료배송'
+                                : `${detail?.shipping_fee.toLocaleString(
+                                      'ko-KR',
+                                  )}원`}
+                        </DeliveryText>
                     </div>
                 </Wrap>
             </Content>
             <Content width="248px">
-                <CountButton />
+                {/* <CountButton /> */}
+                <CountBtn>-</CountBtn>
+                <Count>{cartData.quantity}</Count>
+                <CountBtnplus>+</CountBtnplus>
             </Content>
             <Content width="329px">
                 <InPrice>
-                    17500<span>원</span>
+                    {(
+                        detail?.price! * cartData.quantity +
+                        detail?.shipping_fee!
+                    ).toLocaleString('ko-KR')}
+                    <span>원</span>
                 </InPrice>
                 <OrderBtn>주문하기</OrderBtn>
                 <DeleteBtn />
             </Content>
-        </Container>
+        </>
     );
 };
 export default CartContent;

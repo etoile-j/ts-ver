@@ -113,10 +113,12 @@ const Header = () => {
                 </Wrap>
                 <Ul>
                     <li>
-                        <ShoppingCartBtn>
-                            <img src={ShoppingCartIcon} />
-                            <span>장바구니</span>
-                        </ShoppingCartBtn>
+                        <Link to="shoppingcart">
+                            <ShoppingCartBtn>
+                                <img src={ShoppingCartIcon} />
+                                <span>장바구니</span>
+                            </ShoppingCartBtn>
+                        </Link>
                     </li>
                     <li>
                         <MyPage>
