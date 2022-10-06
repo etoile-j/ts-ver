@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
 import Logo from '../../assets/Logo-hodu.png';
@@ -93,6 +94,7 @@ const MyPage = styled(ShoppingCartBtn)`
 
 const Header = () => {
     const [openModal, setOpenModal] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState(false);
 
     const handleModal = () => {
         setOpenModal(!openModal);
@@ -131,7 +133,11 @@ const Header = () => {
                     </li>
                     <li>
                         {window.localStorage.getItem('token') !== null ? (
-                            <MyPage>
+                            <MyPage
+                                onClick={() => {
+                                    setOpenDropdown(true);
+                                }}
+                            >
                                 <img src={UserIcon} />
                                 <span>마이페이지</span>
                             </MyPage>
@@ -151,6 +157,11 @@ const Header = () => {
             {openModal ? (
                 <ModalContainer>
                     <Modal close={handleModal} />
+                </ModalContainer>
+            ) : null}
+            {openDropdown ? (
+                <ModalContainer>
+                    <Dropdown />
                 </ModalContainer>
             ) : null}
         </HeaderEl>
