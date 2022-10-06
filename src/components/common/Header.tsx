@@ -1,9 +1,12 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Modal from 'components/modal/Modal';
+import ModalContainer from 'components/modal/ModalContainer';
 import Logo from '../../assets/Logo-hodu.png';
 import SearchIcon from '../../assets/search.svg';
 import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
 import UserIcon from '../../assets/icon-user.svg';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const HeaderEl = styled.header`
     z-index: 2;
@@ -78,10 +81,6 @@ const ShoppingCartBtn = styled.button`
     width: 66px;
     height: 32px;
     margin-right: 10px;
-    /* background-image: url(${ShoppingCartIcon});
-    background-repeat: no-repeat;
-    background-size: 32px 32px;
-    background-position: center; */
     color: #767676;
     font-weight: 400;
     font-size: 12px;
@@ -92,9 +91,13 @@ const MyPage = styled(ShoppingCartBtn)`
     margin-right: 0;
 `;
 
-const Span = styled.p``;
-
 const Header = () => {
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleModal = () => {
+        setOpenModal(!openModal);
+    };
+
     return (
         <HeaderEl>
             <Nav>
@@ -112,21 +115,44 @@ const Header = () => {
                 </Wrap>
                 <Ul>
                     <li>
-                        <Link to="shoppingcart">
-                            <ShoppingCartBtn>
+                        {window.localStorage.getItem('token') !== null ? (
+                            <Link to="shoppingcart">
+                                <ShoppingCartBtn>
+                                    <img src={ShoppingCartIcon} />
+                                    <span>장바구니</span>
+                                </ShoppingCartBtn>
+                            </Link>
+                        ) : (
+                            <ShoppingCartBtn onClick={handleModal}>
                                 <img src={ShoppingCartIcon} />
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
-                        </Link>
+                        )}
                     </li>
                     <li>
-                        <MyPage>
-                            <img src={UserIcon} />
-                            <span>마이페이지</span>
-                        </MyPage>
+                        {window.localStorage.getItem('token') !== null ? (
+                            <MyPage>
+                                <img src={UserIcon} />
+                                <span>마이페이지</span>
+                            </MyPage>
+                        ) : (
+                            <MyPage
+                                onClick={() => {
+                                    window.location.href = '/login';
+                                }}
+                            >
+                                <img src={UserIcon} />
+                                <span>로그인</span>
+                            </MyPage>
+                        )}
                     </li>
                 </Ul>
             </Nav>
+            {openModal ? (
+                <ModalContainer>
+                    <Modal close={handleModal} />
+                </ModalContainer>
+            ) : null}
         </HeaderEl>
     );
 };

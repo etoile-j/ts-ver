@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import CountButton from './CountButton';
+import Modal from './modal/Modal';
+import ModalContainer from './modal/ModalContainer';
 import styled from 'styled-components';
 
 const Wrap = styled.div`
@@ -139,6 +141,11 @@ const ProductCard = () => {
     const [product, setProduct] = useState<IProductDetail>();
     const { product_id } = useParams();
     const navigate = useNavigate();
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleModal = () => {
+        setOpenModal(!openModal);
+    };
 
     const getProductDetail = async () => {
         try {
@@ -219,26 +226,34 @@ const ProductCard = () => {
                     </TotalWrap>
                     <div>
                         <ColorBtn
-                            onClick={() =>
-                                navigate('/payment', {
-                                    state: {
-                                        product_id: product_id,
-                                        totalCount: count,
-                                        order_kind: 'direct_order',
-                                        image: product?.image,
-                                        SellerName: product?.store_name,
-                                        productName: product?.product_name,
-                                        shippingFee: product?.shipping_fee,
-                                        price: product?.price,
-                                    },
-                                })
-                            }
+                            onClick={() => {
+                                if (!token) {
+                                    handleModal();
+                                } else {
+                                    navigate('/payment', {
+                                        state: {
+                                            product_id: product_id,
+                                            totalCount: count,
+                                            order_kind: 'direct_order',
+                                            image: product?.image,
+                                            SellerName: product?.store_name,
+                                            productName: product?.product_name,
+                                            shippingFee: product?.shipping_fee,
+                                            price: product?.price,
+                                        },
+                                    });
+                                }
+                            }}
                         >
                             바로 구매
                         </ColorBtn>
                         <GrayBtn
                             onClick={() => {
-                                postCart();
+                                if (!token) {
+                                    handleModal();
+                                } else {
+                                    postCart();
+                                }
                             }}
                         >
                             장바구니
@@ -246,6 +261,11 @@ const ProductCard = () => {
                     </div>
                 </div>
             </Div>
+            {openModal ? (
+                <ModalContainer>
+                    <Modal close={handleModal} />
+                </ModalContainer>
+            ) : null}
         </Wrap>
     );
 };
