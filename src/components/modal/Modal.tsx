@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import CloseIcon from '../../assets/icon-delete.svg';
 import styled, { keyframes } from 'styled-components';
 
@@ -10,8 +11,20 @@ const fadeIn = keyframes`
     }
 `;
 
-const Container = styled.div`
+const Div = styled.div`
     position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+`;
+
+const Container = styled.div`
+    position: absolute;
     z-index: 10;
     top: 50%;
     left: 50%;
@@ -82,19 +95,33 @@ interface IModal {
 }
 
 const Modal = (modal: IModal) => {
+    useEffect(() => {
+        const body = document.querySelector('body') as HTMLElement;
+        body.style.overflow = 'hidden';
+        return () => {
+            body.style.overflow = 'auto';
+        };
+    }, []);
+
     return (
-        <Container>
-            <Wrap>
-                <CloseBtn onClick={modal.close} />
-                <Content>
-                    <p>{modal.text}</p>
-                    <div>
-                        <BtnLeft onClick={modal.close}>{modal.leftBtn}</BtnLeft>
-                        <BtnRight onClick={modal.ok}>{modal.rightBtn}</BtnRight>
-                    </div>
-                </Content>
-            </Wrap>
-        </Container>
+        <Div>
+            <Container>
+                <Wrap>
+                    <CloseBtn onClick={modal.close} />
+                    <Content>
+                        <p>{modal.text}</p>
+                        <div>
+                            <BtnLeft onClick={modal.close}>
+                                {modal.leftBtn}
+                            </BtnLeft>
+                            <BtnRight onClick={modal.ok}>
+                                {modal.rightBtn}
+                            </BtnRight>
+                        </div>
+                    </Content>
+                </Wrap>
+            </Container>
+        </Div>
     );
 };
 export default Modal;
