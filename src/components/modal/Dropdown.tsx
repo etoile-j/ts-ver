@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+`;
 
 const Container = styled.div`
     position: fixed;
@@ -12,6 +21,7 @@ const Container = styled.div`
     border-radius: 10px;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    animation: ${fadeIn} 0.15s ease-in-out;
 `;
 
 const Button = styled.button.attrs({

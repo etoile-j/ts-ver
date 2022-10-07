@@ -1,5 +1,14 @@
 import CloseIcon from '../../assets/icon-delete.svg';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+`;
 
 const Container = styled.div`
     position: fixed;
@@ -18,6 +27,7 @@ const Wrap = styled.div`
     text-align: center;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
+    animation: ${fadeIn} 0.15s ease-in-out;
 `;
 
 const CloseBtn = styled.button`
