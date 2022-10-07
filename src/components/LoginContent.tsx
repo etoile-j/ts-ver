@@ -51,10 +51,15 @@ const CautionText = styled.strong`
     line-height: 20px;
 `;
 
-const LoginContent = () => {
+interface ILoginType {
+    typeBuyers?: boolean;
+}
+
+const LoginContent = ({ typeBuyers }: ILoginType) => {
     const [id, setId] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
+    console.log(typeBuyers);
 
     const idRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
@@ -69,8 +74,9 @@ const LoginContent = () => {
             const response = await axios.post(url, {
                 username: id,
                 password: password,
-                login_type: 'BUYER',
+                login_type: typeBuyers ? 'BUYER' : 'SELLER',
             });
+            console.log(typeBuyers ? 'BUYER' : 'SELLER');
             localStorage.setItem('token', response.data.token);
             window.location.replace('/');
             console.log(response);

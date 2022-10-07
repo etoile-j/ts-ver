@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FormContainer from 'components/FormContainer';
 import LoginContent from 'components/LoginContent';
@@ -36,13 +37,17 @@ const Li2 = styled(Li)`
 `;
 
 const Login = () => {
+    const [typeBuyer, setTypeBuyer] = useState(true);
+
     return (
         <>
             <Main>
                 <FormContainer
-                    content={<LoginContent />}
+                    content={<LoginContent typeBuyers={typeBuyer} />}
                     buyer="구매회원 로그인"
                     seller="판매회원 로그인"
+                    typeBuyer={typeBuyer}
+                    setTypeBuyer={setTypeBuyer}
                 />
                 <Ul>
                     <Link to="/join">회원가입</Link>
