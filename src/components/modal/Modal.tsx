@@ -35,7 +35,10 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 210px;
     height: 110px;
+    margin: 0 auto;
+    line-height: 20px;
 `;
 
 const BtnLeft = styled.button.attrs({
@@ -60,25 +63,24 @@ const BtnRight = styled(BtnLeft)`
     color: #ffffff;
 `;
 
-const Modal = ({ close }: any) => {
+interface IModal {
+    close: React.MouseEventHandler<HTMLButtonElement>;
+    ok: React.MouseEventHandler<HTMLButtonElement>;
+    leftBtn: string;
+    rightBtn: string;
+    text?: string;
+}
+
+const Modal = (modal: IModal) => {
     return (
         <Container>
             <Wrap>
-                <CloseBtn onClick={close} />
+                <CloseBtn onClick={modal.close} />
                 <Content>
-                    <p>
-                        로그인이 필요한 서비스입니다.
-                        <br />
-                        로그인 하시겠습니까?
-                    </p>
-
+                    <p>{modal.text}</p>
                     <div>
-                        <BtnLeft onClick={close}>아니오</BtnLeft>
-                        <BtnRight
-                            onClick={() => (window.location.href = '/login')}
-                        >
-                            예
-                        </BtnRight>
+                        <BtnLeft onClick={modal.close}>{modal.leftBtn}</BtnLeft>
+                        <BtnRight onClick={modal.ok}>{modal.rightBtn}</BtnRight>
                     </div>
                 </Content>
             </Wrap>

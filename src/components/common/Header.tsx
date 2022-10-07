@@ -156,7 +156,13 @@ const Header = () => {
             </Nav>
             {openModal ? (
                 <ModalContainer>
-                    <Modal close={handleModal} />
+                    <Modal
+                        close={handleModal}
+                        ok={() => (window.location.href = '/login')}
+                        leftBtn="아니오"
+                        rightBtn="예"
+                        text="로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
+                    />
                 </ModalContainer>
             ) : null}
             {openDropdown ? (
