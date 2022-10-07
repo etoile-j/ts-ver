@@ -1,22 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
-import CountButton from 'components/CountButton';
+// import CountButton from 'components/CountButton';
+import Modal from 'components/modal/Modal';
+import ModalContainer from 'components/modal/ModalContainer';
 import DeleteIcon from '../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
 interface styledCompo {
     width?: string;
 }
-
-const Container = styled.li`
-    display: flex;
-    align-items: center;
-    height: 200px;
-    margin-bottom: 10px;
-    border: 2px solid #c4c4c4;
-    border-radius: 10px;
-`;
 
 const Content = styled.span`
     position: relative;
@@ -132,7 +125,7 @@ const OrderBtn = styled.button`
     line-height: 20px;
 `;
 
-const DeleteBtn = styled.button`
+const DeleteBtn = styled.button.attrs({ type: 'button' })`
     position: absolute;
     top: -40px;
     right: 14px;
@@ -144,12 +137,18 @@ const DeleteBtn = styled.button`
 `;
 
 interface ICartData {
+    cart_item_id: number;
     product_id: number;
     quantity: number;
 }
 
 const CartContent = (cartData: ICartData | any) => {
     const [detail, setDetail] = useState<IDetail>();
+    const [closeModal, setCloseModal] = useState(false);
+
+    const handleModal = () => {
+        setCloseModal(!closeModal);
+    };
     interface IDetail {
         product_id?: string;
         image?: string;
@@ -160,7 +159,7 @@ const CartContent = (cartData: ICartData | any) => {
         stock: number;
     }
     // console.log(cartData.result.cart_item_id);
-    console.log(cartData.product_id);
+    console.log(cartData.cart_item_id);
 
     const handleGetDetail = async () => {
         try {
@@ -175,6 +174,24 @@ const CartContent = (cartData: ICartData | any) => {
     useEffect(() => {
         handleGetDetail();
     }, []);
+
+    const deleteCart = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
+            const response = await axios.delete(url, {
+                headers: {
+                    Authorization: `JWT ${token}`,
+                },
+            });
+            console.log(response);
+            if (response.status === 204) {
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <>
@@ -217,8 +234,19 @@ const CartContent = (cartData: ICartData | any) => {
                     <span>원</span>
                 </InPrice>
                 <OrderBtn>주문하기</OrderBtn>
-                <DeleteBtn />
+                <DeleteBtn onClick={handleModal} />
             </Content>
+            {closeModal ? (
+                <ModalContainer>
+                    <Modal
+                        close={handleModal}
+                        ok={deleteCart}
+                        leftBtn="취소"
+                        rightBtn="확인"
+                        text="상품을 삭제 하시겠습니까?"
+                    />
+                </ModalContainer>
+            ) : null}
         </>
     );
 };

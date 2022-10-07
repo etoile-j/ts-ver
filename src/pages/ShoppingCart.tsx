@@ -192,6 +192,7 @@ const ShoppingCart = () => {
                                             cartData={cartData}
                                             product_id={cartData.product_id}
                                             quantity={cartData.quantity}
+                                            cart_item_id={cartData.cart_item_id}
                                         />
                                     </Container>
                                 );
