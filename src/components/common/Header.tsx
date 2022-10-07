@@ -118,12 +118,14 @@ const Header = () => {
                 <Ul>
                     <li>
                         {window.localStorage.getItem('token') !== null ? (
-                            <Link to="shoppingcart">
-                                <ShoppingCartBtn>
-                                    <img src={ShoppingCartIcon} />
-                                    <span>장바구니</span>
-                                </ShoppingCartBtn>
-                            </Link>
+                            <ShoppingCartBtn
+                                onClick={() =>
+                                    (window.location.href = '/shoppingcart')
+                                }
+                            >
+                                <img src={ShoppingCartIcon} />
+                                <span>장바구니</span>
+                            </ShoppingCartBtn>
                         ) : (
                             <ShoppingCartBtn onClick={handleModal}>
                                 <img src={ShoppingCartIcon} />
