@@ -6,6 +6,7 @@ import Payment from 'pages/Payment';
 import ProductDetails from 'pages/ProductDetails';
 import { GlobalStyle } from './styles/global';
 import ShoppingCart from 'pages/ShoppingCart';
+import UploadProduct from 'pages/seller/UploadProduct';
 
 function App() {
     return (
@@ -17,11 +18,12 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/join" element={<Join />} />
                     <Route
-                        path="/productdetail/:product_id"
+                        path="/detail/:product_id"
                         element={<ProductDetails />}
                     />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/shoppingcart" element={<ShoppingCart />} />
+                    <Route path="/seller/upload" element={<UploadProduct />} />
                 </Routes>
             </BrowserRouter>
         </>
