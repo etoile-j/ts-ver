@@ -207,6 +207,8 @@ const ProductInput = () => {
             );
             console.log(response);
             window.location.replace(`/detail/${response.data.product_id}`);
+            URL.revokeObjectURL(preImg);
+            setPreImg('');
         } catch (err) {
             console.error(err);
         }
