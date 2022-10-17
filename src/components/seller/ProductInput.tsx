@@ -2,13 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
+import uploadIcon from '../../assets/icon-img.svg';
 import styled from 'styled-components';
-
-const Temp = styled.div`
-    background-color: lightgray;
-    width: 454px;
-    height: 454px;
-`;
 
 interface styledCompo {
     width?: string;
@@ -37,6 +32,37 @@ const Label = styled.label`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
+`;
+
+const ImgWrap = styled.div`
+    position: relative;
+`;
+
+const ImgLabel = styled(Label)`
+    ::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        bottom: 10px;
+        right: 10px;
+        background-image: url(${uploadIcon});
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        cursor: pointer;
+    }
+`;
+
+const ImgInput = styled.input`
+    display: none;
+`;
+
+const ImgPreview = styled.img`
+    background-color: lightgray;
+    width: 454px;
+    height: 454px;
+    object-fit: cover;
 `;
 
 const Input = styled.input`
@@ -126,9 +152,20 @@ const WhiteBtn = styled(ColorBtn)`
 `;
 
 const ProductInput = () => {
+    const [preImg, setPreImg] = useState<any>();
+    const [img, setImg] = useState<any>();
     const [name, setName] = useState<string>();
     const [parcel, setParcel] = useState(true);
     const [delivery, setDelivery] = useState(false);
+
+    const uploadImg = (e: React.ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files![0];
+        setPreImg(URL.createObjectURL(file));
+        const formData = new FormData();
+        formData.append('image', file);
+        setImg(file);
+    };
 
     type Inputs = {
         price: number;
@@ -153,9 +190,9 @@ const ProductInput = () => {
                 url,
                 {
                     product_name: name,
-                    image: 'http://www.jejuilbo.net/news/photo/202210/192011_128224_1557.jpg',
+                    image: img,
                     price: data.price,
-                    shipping_method: data.shippingMethod, // PARCEL 또는 DELIVERY 선택
+                    shipping_method: data.shippingMethod,
                     shipping_fee: data.shippingFee,
                     stock: data.stock,
                     product_info: '정보입니다.',
@@ -164,10 +201,12 @@ const ProductInput = () => {
                 {
                     headers: {
                         Authorization: `JWT ${token}`,
+                        'Content-Type': 'multipart/form-data',
                     },
                 },
             );
             console.log(response);
+            window.location.replace(`/detail/${response.data.product_id}`);
         } catch (err) {
             console.error(err);
         }
@@ -177,10 +216,16 @@ const ProductInput = () => {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Wrap>
-                    <div>
-                        <Label htmlFor="name">상품 이미지</Label>
-                        <Temp />
-                    </div>
+                    <ImgWrap>
+                        <ImgLabel htmlFor="image">상품 이미지</ImgLabel>
+                        <ImgInput
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            onChange={uploadImg}
+                        />
+                        <ImgPreview src={preImg} />
+                    </ImgWrap>
                     <InputContainer>
                         <Field>
                             <Label htmlFor="name">상품명</Label>
