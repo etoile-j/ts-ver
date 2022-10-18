@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../../constants/constants';
 import styled from 'styled-components';
 
 interface styledCompo {
@@ -27,12 +30,12 @@ const ProductWrap = styled.div`
     align-items: center;
 `;
 
-const Img = styled.div`
-    background-color: black;
+const Img = styled.img`
     width: 70px;
     height: 70px;
     margin: 0 20px 0 10px;
     border-radius: 50%;
+    object-fit: contain;
 `;
 
 const TextWrap = styled.div`
@@ -79,29 +82,68 @@ const DeleteBtn = styled(EditBtn)`
     }
 `;
 
-const ProductOnSale = () => {
+interface Iproduct {
+    setCount: React.Dispatch<React.SetStateAction<undefined>>;
+}
+
+const ProductOnSale = ({ setCount }: Iproduct) => {
+    const [data, setData] = useState([]);
+    const token = localStorage.getItem('token');
+
+    const getProductList = async () => {
+        try {
+            const response = await axios.get(BASE_URL + '/seller/', {
+                headers: {
+                    Authorization: `JWT ${token}`,
+                },
+            });
+            console.log(response);
+            setCount(response.data.count);
+            setData(response.data.results);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        getProductList();
+    }, []);
+
+    interface IData {
+        product_id?: string;
+        image?: string;
+        product_name?: string;
+        stock?: number;
+        price?: number;
+    }
+
     return (
         <>
-            <Product>
-                <Content width="989px">
-                    <ProductWrap>
-                        <Img />
-                        <TextWrap>
-                            <p>일이삼사오육칠팔구십일이삼사오육칠팔구십</p>
-                            <Stock>재고 : 110개</Stock>
-                        </TextWrap>
-                    </ProductWrap>
-                </Content>
-                <Content width="451px">
-                    <Price>20000원</Price>
-                </Content>
-                <Content width="180px">
-                    <EditBtn>수정</EditBtn>
-                </Content>
-                <Content width="180px">
-                    <DeleteBtn>삭제</DeleteBtn>
-                </Content>
-            </Product>
+            {data?.map((data: IData) => {
+                return (
+                    <Product key={data.product_id}>
+                        <Content width="989px">
+                            <ProductWrap>
+                                <Img src={data.image} />
+                                <TextWrap>
+                                    <p>{data.product_name}</p>
+                                    <Stock>재고 : {data.stock}개</Stock>
+                                </TextWrap>
+                            </ProductWrap>
+                        </Content>
+                        <Content width="451px">
+                            <Price>
+                                {data.price?.toLocaleString('ko-KR')}원
+                            </Price>
+                        </Content>
+                        <Content width="180px">
+                            <EditBtn>수정</EditBtn>
+                        </Content>
+                        <Content width="180px">
+                            <DeleteBtn>삭제</DeleteBtn>
+                        </Content>
+                    </Product>
+                );
+            })}
         </>
     );
 };

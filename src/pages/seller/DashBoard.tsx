@@ -2,6 +2,7 @@ import SellerCenterHeader from 'components/seller/SellerCenterHeader';
 import UploadIcon from '../../assets/icon-upload.svg';
 import styled from 'styled-components';
 import ProductOnSale from 'components/seller/ProductOnSale';
+import { useState } from 'react';
 
 interface styledCompo {
     width?: string;
@@ -101,6 +102,8 @@ const Content = styled.span`
 `;
 
 const DashBoard = () => {
+    const [count, setCount] = useState();
+
     return (
         <>
             <SellerCenterHeader />
@@ -109,14 +112,18 @@ const DashBoard = () => {
                     <h2>
                         대시보드<StoreName>스토어 이름</StoreName>
                     </h2>
-                    <ProductUpload>
+                    <ProductUpload
+                        onClick={() =>
+                            (window.location.href = '/seller/upload')
+                        }
+                    >
                         <IconUpload src={UploadIcon} />
                         상품 업로드
                     </ProductUpload>
                 </HeadingWrap>
                 <Ul>
                     <li>
-                        <OnListBtn>판매중인 상품(개수)</OnListBtn>
+                        <OnListBtn>판매중인 상품({count})</OnListBtn>
                     </li>
                     <li>
                         <ListBtn>주문/배송</ListBtn>
@@ -135,7 +142,7 @@ const DashBoard = () => {
                         <Content width="180px">수정</Content>
                         <Content width="180px">삭제</Content>
                     </Title>
-                    <ProductOnSale />
+                    <ProductOnSale setCount={setCount} />
                 </Container>
             </Main>
         </>
