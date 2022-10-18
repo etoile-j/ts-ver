@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
+import ModalContainer from 'components/modal/ModalContainer';
+import Modal from 'components/modal/Modal';
 import styled from 'styled-components';
 
 interface styledCompo {
@@ -89,6 +91,19 @@ interface Iproduct {
 const ProductOnSale = ({ setCount }: Iproduct) => {
     const [data, setData] = useState([]);
     const token = localStorage.getItem('token');
+    const [closeModal, setCloseModal] = useState(false);
+
+    const handleModal = () => {
+        setCloseModal(!closeModal);
+    };
+
+    interface IData {
+        product_id?: string;
+        image?: string;
+        product_name?: string;
+        stock?: number;
+        price?: number;
+    }
 
     const getProductList = async () => {
         try {
@@ -108,13 +123,22 @@ const ProductOnSale = ({ setCount }: Iproduct) => {
         getProductList();
     }, []);
 
-    interface IData {
-        product_id?: string;
-        image?: string;
-        product_name?: string;
-        stock?: number;
-        price?: number;
-    }
+    const deleteProduct = async () => {
+        try {
+            const url = BASE_URL + `/products/${data}/`;
+            const response = await axios.delete(url, {
+                headers: {
+                    Authorization: `JWT ${token}`,
+                },
+            });
+            console.log(response);
+            if (response.status === 204) {
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <>
@@ -139,11 +163,22 @@ const ProductOnSale = ({ setCount }: Iproduct) => {
                             <EditBtn>수정</EditBtn>
                         </Content>
                         <Content width="180px">
-                            <DeleteBtn>삭제</DeleteBtn>
+                            <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>
                         </Content>
                     </Product>
                 );
             })}
+            {closeModal ? (
+                <ModalContainer>
+                    <Modal
+                        close={handleModal}
+                        ok={deleteProduct}
+                        leftBtn="취소"
+                        rightBtn="확인"
+                        text="상품을 삭제 하시겠습니까?"
+                    />
+                </ModalContainer>
+            ) : null}
         </>
     );
 };
