@@ -1,7 +1,7 @@
 import SellerCenterHeader from 'components/seller/SellerCenterHeader';
 import UploadIcon from '../../assets/icon-upload.svg';
 import styled from 'styled-components';
-import ProductOnSale from 'components/seller/ProductOnSale';
+import ProductList from 'components/seller/ProductList';
 import { useState } from 'react';
 
 interface styledCompo {
@@ -142,7 +142,7 @@ const DashBoard = () => {
                         <Content width="180px">수정</Content>
                         <Content width="180px">삭제</Content>
                     </Title>
-                    <ProductOnSale setCount={setCount} />
+                    <ProductList setCount={setCount} />
                 </Container>
             </Main>
         </>

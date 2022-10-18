@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -84,48 +84,26 @@ const DeleteBtn = styled(EditBtn)`
     }
 `;
 
-interface Iproduct {
-    setCount: React.Dispatch<React.SetStateAction<undefined>>;
+interface IData {
+    product_id?: string;
+    image?: string;
+    product_name?: string;
+    stock?: number;
+    price?: number;
 }
 
-const ProductOnSale = ({ setCount }: Iproduct) => {
-    const [data, setData] = useState([]);
-    const token = localStorage.getItem('token');
+const ProductOnSale = (data: IData) => {
     const [closeModal, setCloseModal] = useState(false);
 
     const handleModal = () => {
         setCloseModal(!closeModal);
     };
 
-    interface IData {
-        product_id?: string;
-        image?: string;
-        product_name?: string;
-        stock?: number;
-        price?: number;
-    }
-
-    const getProductList = async () => {
-        try {
-            const response = await axios.get(BASE_URL + '/seller/', {
-                headers: {
-                    Authorization: `JWT ${token}`,
-                },
-            });
-            console.log(response);
-            setCount(response.data.count);
-            setData(response.data.results);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-    useEffect(() => {
-        getProductList();
-    }, []);
+    const token = localStorage.getItem('token');
 
     const deleteProduct = async () => {
         try {
-            const url = BASE_URL + `/products/${data}/`;
+            const url = BASE_URL + `/products/${data.product_id}/`;
             const response = await axios.delete(url, {
                 headers: {
                     Authorization: `JWT ${token}`,
@@ -142,32 +120,26 @@ const ProductOnSale = ({ setCount }: Iproduct) => {
 
     return (
         <>
-            {data?.map((data: IData) => {
-                return (
-                    <Product key={data.product_id}>
-                        <Content width="989px">
-                            <ProductWrap>
-                                <Img src={data.image} />
-                                <TextWrap>
-                                    <p>{data.product_name}</p>
-                                    <Stock>재고 : {data.stock}개</Stock>
-                                </TextWrap>
-                            </ProductWrap>
-                        </Content>
-                        <Content width="451px">
-                            <Price>
-                                {data.price?.toLocaleString('ko-KR')}원
-                            </Price>
-                        </Content>
-                        <Content width="180px">
-                            <EditBtn>수정</EditBtn>
-                        </Content>
-                        <Content width="180px">
-                            <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>
-                        </Content>
-                    </Product>
-                );
-            })}
+            <Product key={data.product_id}>
+                <Content width="989px">
+                    <ProductWrap>
+                        <Img src={data.image} />
+                        <TextWrap>
+                            <p>{data.product_name}</p>
+                            <Stock>재고 : {data.stock}개</Stock>
+                        </TextWrap>
+                    </ProductWrap>
+                </Content>
+                <Content width="451px">
+                    <Price>{data.price?.toLocaleString('ko-KR')}원</Price>
+                </Content>
+                <Content width="180px">
+                    <EditBtn>수정</EditBtn>
+                </Content>
+                <Content width="180px">
+                    <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>
+                </Content>
+            </Product>
             {closeModal ? (
                 <ModalContainer>
                     <Modal
