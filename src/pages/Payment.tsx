@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
@@ -67,6 +67,7 @@ interface IDirectOrder {
 }
 
 const Payment = ({ defaultValues }: any) => {
+    const navigate = useNavigate();
     const info: IDirectOrder = useLocation().state;
     type Inputs = {
         name: string;
@@ -125,6 +126,14 @@ const Payment = ({ defaultValues }: any) => {
                 },
             );
             console.log(response);
+            if (response.status === 200) {
+                navigate('/complete_payment', {
+                    state: {
+                        created_at: response.data.created_at,
+                        order_number: response.data.order_number,
+                    },
+                });
+            }
         } catch (err) {
             console.error(err);
         }
