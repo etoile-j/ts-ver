@@ -42,6 +42,7 @@ const ProductList = ({ setCount }: Iproduct) => {
             {data?.map((data: IData) => {
                 return (
                     <ProductOnSale
+                        key={data.product_id}
                         product_id={data.product_id}
                         image={data.image}
                         product_name={data.product_name}

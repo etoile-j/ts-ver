@@ -20,6 +20,10 @@ const HeadingWrap = styled.div`
     align-items: center;
 `;
 
+const Wrap = styled.div`
+    display: flex;
+`;
+
 const StoreName = styled.strong`
     margin-left: 16px;
     color: #6997f7;
@@ -49,7 +53,7 @@ const IconUpload = styled.img`
     margin-right: 7px;
 `;
 
-const Ul = styled.ul`
+const Nav = styled.nav`
     float: left;
     width: 250px;
     margin-right: 30px;
@@ -73,13 +77,17 @@ const OnListBtn = styled(ListBtn)`
     color: #ffffff;
 `;
 
-const Container = styled.div`
-    overflow: hidden;
-    background-color: #f2f2f2;
+const Table = styled.div`
+    /* background-color: #f2f2f2; */
     max-width: 1440px;
     height: 884px;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
+`;
+
+const Container = styled.div`
+    overflow: scroll;
+    height: 822px;
 `;
 
 const Title = styled.div`
@@ -121,29 +129,33 @@ const DashBoard = () => {
                         상품 업로드
                     </ProductUpload>
                 </HeadingWrap>
-                <Ul>
-                    <li>
-                        <OnListBtn>판매중인 상품({count})</OnListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>주문/배송</ListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>통계</ListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>스토어 설정</ListBtn>
-                    </li>
-                </Ul>
-                <Container>
-                    <Title>
-                        <Content width="989px">상품정보</Content>
-                        <Content width="451px">판매가격</Content>
-                        <Content width="180px">수정</Content>
-                        <Content width="180px">삭제</Content>
-                    </Title>
-                    <ProductList setCount={setCount} />
-                </Container>
+                <Wrap>
+                    <Nav>
+                        <li>
+                            <OnListBtn>판매중인 상품({count})</OnListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>주문/배송</ListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>통계</ListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>스토어 설정</ListBtn>
+                        </li>
+                    </Nav>
+                    <Table>
+                        <Title>
+                            <Content width="989px">상품정보</Content>
+                            <Content width="451px">판매가격</Content>
+                            <Content width="180px">수정</Content>
+                            <Content width="180px">삭제</Content>
+                        </Title>
+                        <Container>
+                            <ProductList setCount={setCount} />
+                        </Container>
+                    </Table>
+                </Wrap>
             </Main>
         </>
     );
