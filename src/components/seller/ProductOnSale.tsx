@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -19,6 +20,9 @@ const Product = styled.div`
     font-size: 18px;
     line-height: 22px;
     border-bottom: 1px solid #c4c4c4;
+    &:last-child {
+        border-radius: 0 0 5px 5px;
+    }
 `;
 
 const Content = styled.span`
@@ -30,6 +34,7 @@ const Content = styled.span`
 const ProductWrap = styled.div`
     display: flex;
     align-items: center;
+    cursor: pointer;
 `;
 
 const Img = styled.img`
@@ -93,6 +98,7 @@ interface IData {
 }
 
 const ProductOnSale = (data: IData) => {
+    const navigate = useNavigate();
     const [closeModal, setCloseModal] = useState(false);
 
     const handleModal = () => {
@@ -120,9 +126,13 @@ const ProductOnSale = (data: IData) => {
 
     return (
         <>
-            <Product key={data.product_id}>
+            <Product>
                 <Content width="989px">
-                    <ProductWrap>
+                    <ProductWrap
+                        onClick={() =>
+                            (window.location.href = `detail/${data.product_id}`)
+                        }
+                    >
                         <Img src={data.image} />
                         <TextWrap>
                             <p>{data.product_name}</p>
@@ -134,7 +144,17 @@ const ProductOnSale = (data: IData) => {
                     <Price>{data.price?.toLocaleString('ko-KR')}원</Price>
                 </Content>
                 <Content width="180px">
-                    <EditBtn>수정</EditBtn>
+                    <EditBtn
+                        onClick={() => {
+                            navigate('/seller/edit', {
+                                state: {
+                                    product_id: data.product_id,
+                                },
+                            });
+                        }}
+                    >
+                        수정
+                    </EditBtn>
                 </Content>
                 <Content width="180px">
                     <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
@@ -151,12 +151,23 @@ const WhiteBtn = styled(ColorBtn)`
     color: #767676;
 `;
 
-const ProductInput = () => {
+interface IGetDetailForEdit {
+    product_id?: number;
+    image?: string;
+    product_name?: string;
+    price?: number;
+    shipping_fee?: number;
+    stock?: number;
+}
+
+const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     const [preImg, setPreImg] = useState<any>();
     const [img, setImg] = useState<any>();
     const [name, setName] = useState<string>();
     const [parcel, setParcel] = useState(true);
     const [delivery, setDelivery] = useState(false);
+
+    console.log(detail);
 
     const uploadImg = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
@@ -168,22 +179,38 @@ const ProductInput = () => {
     };
 
     type Inputs = {
-        price: number;
+        price?: number;
         shippingMethod: 'PARCEL' | 'DELIVERY';
-        shippingFee: number;
-        stock: number;
+        shippingFee?: number;
+        stock?: number;
     };
 
-    const { register, handleSubmit } = useForm<Inputs>({ mode: 'onChange' });
+    const { register, handleSubmit, setValue } = useForm<Inputs>({
+        mode: 'onChange',
+    });
 
     const onSubmit = (data: Inputs) => {
         console.log('훅폼', data);
-        postProduct(data);
+        if (detail === undefined) {
+            handelPostProduct(data);
+        } else {
+            handelEditProduct(data);
+        }
     };
+
+    if (detail !== undefined) {
+        //이거를 저장버튼 눌렀을떄 이용하면 되겠다!!!!!onSumit에다가~ 조건 걸면 되겠다>_<!!후 분리 전에 생각해서 다행
+        setValue('price', detail?.price);
+        setValue('stock', detail?.stock);
+        setValue('shippingFee', detail?.shipping_fee);
+    }
+    useEffect(() => {
+        setPreImg(detail?.image);
+    }, [detail]);
 
     const token = localStorage.getItem('token');
 
-    const postProduct = async (data: Inputs) => {
+    const handelPostProduct = async (data: Inputs) => {
         try {
             const url = BASE_URL + '/products/';
             const response = await axios.post(
@@ -197,6 +224,35 @@ const ProductInput = () => {
                     stock: data.stock,
                     product_info: '정보입니다.',
                     token: `JWT ${token}`,
+                },
+                {
+                    headers: {
+                        Authorization: `JWT ${token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                },
+            );
+            console.log(response);
+            window.location.replace(`/detail/${response.data.product_id}`);
+            URL.revokeObjectURL(preImg);
+            setPreImg('');
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handelEditProduct = async (data: Inputs) => {
+        try {
+            const response = await axios.patch(
+                BASE_URL + `/products/${detail?.product_id}/`,
+                {
+                    product_name: name,
+                    image: img,
+                    price: data.price,
+                    shipping_method: data.shippingMethod,
+                    shipping_fee: data.shippingFee,
+                    stock: data.stock,
+                    product_info: '정보입니다.',
                 },
                 {
                     headers: {
