@@ -167,8 +167,6 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     const [parcel, setParcel] = useState(true);
     const [delivery, setDelivery] = useState(false);
 
-    console.log(detail);
-
     const uploadImg = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
         const file = target.files![0];
@@ -199,12 +197,12 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     };
 
     if (detail !== undefined) {
-        //이거를 저장버튼 눌렀을떄 이용하면 되겠다!!!!!onSumit에다가~ 조건 걸면 되겠다>_<!!후 분리 전에 생각해서 다행
         setValue('price', detail?.price);
         setValue('stock', detail?.stock);
         setValue('shippingFee', detail?.shipping_fee);
     }
     useEffect(() => {
+        setName(detail?.product_name);
         setPreImg(detail?.image);
     }, [detail]);
 
