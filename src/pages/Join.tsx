@@ -9,7 +9,7 @@ const Join = () => {
         <>
             <main>
                 <FormContainer
-                    content={<JoinContent />}
+                    content={<JoinContent typeBuyers={typeBuyer} />}
                     buyer="구매회원가입"
                     seller="판매회원가입"
                     typeBuyer={typeBuyer}

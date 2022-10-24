@@ -48,7 +48,8 @@ const Input = styled.input`
 
 const VaildCheckBtn = styled.button`
     background-color: #6997f7;
-    padding: 17px 31px;
+    width: 120px;
+    padding: 17px 0px;
     margin-left: 12px;
     border-radius: 5px;
     color: #ffffff;
@@ -128,7 +129,11 @@ const JoinBtn = styled.button`
     line-height: 22px;
 `;
 
-const JoinContent = () => {
+interface ILoginType {
+    typeBuyers?: boolean;
+}
+
+const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [id, setId] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
     const [passText, setPassText] = useState<string>();
@@ -143,6 +148,8 @@ const JoinContent = () => {
         phone3: number;
         emailId: string;
         emailDomain: string;
+        storeName: string;
+        companyNum: string;
         agreement: any;
     };
 
@@ -154,8 +161,12 @@ const JoinContent = () => {
     } = useForm<Inputs>({ mode: 'onBlur' });
 
     const onSubmit = (data: any) => {
-        console.log(data);
-        handleJoin(data);
+        console.log('훅', data);
+        if (typeBuyers === true) {
+            handleBuyerJoin(data);
+        } else {
+            handleSellerJoin(data);
+        }
     };
 
     useEffect(() => {
@@ -190,7 +201,21 @@ const JoinContent = () => {
         }
     };
 
-    const handleJoin = async (data: Inputs) => {
+    const companyValidCheck = async () => {
+        try {
+            const url: string =
+                BASE_URL +
+                '/accounts/signup/valid/company_registration_number/';
+            const response = await axios.post(url, {
+                company_registration_number: getValues('companyNum'),
+            });
+            console.log(response);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleBuyerJoin = async (data: Inputs) => {
         try {
             const url: string = BASE_URL + '/accounts/signup/';
             const response = await axios.post(url, {
@@ -200,12 +225,25 @@ const JoinContent = () => {
                 phone_number: data.phone1 + data.phone2 + data.phone3,
                 name: data.name,
             });
-
             console.log(response);
         } catch (err) {}
     };
 
-    // const aa: string = 'backgroundImage: `url(${Check_on})`';
+    const handleSellerJoin = async (data: Inputs) => {
+        try {
+            const url: string = BASE_URL + '/accounts/signup_seller/';
+            const response = await axios.post(url, {
+                username: data.id,
+                password: data.password,
+                password2: data.passwordCheck,
+                phone_number: data.phone1 + data.phone2 + data.phone3,
+                name: data.name,
+                company_registration_number: data.companyNum,
+                store_name: data.storeName,
+            });
+            console.log(response);
+        } catch (err) {}
+    };
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -390,6 +428,42 @@ const JoinContent = () => {
                     (<CautionText>{errors.emailId?.message}</CautionText> || (
                         <CautionText>{errors.emailDomain?.message}</CautionText>
                     ))}
+                {typeBuyers === false && (
+                    <Fieldset>
+                        <div>
+                            <Label>사업자 등록번호</Label>
+                            <Input
+                                type="text"
+                                width="346px"
+                                {...register('companyNum', {
+                                    required: '필수정보 입니다.',
+                                })}
+                            />
+                            <VaildCheckBtn
+                                type="button"
+                                onClick={companyValidCheck}
+                            >
+                                인증
+                            </VaildCheckBtn>
+                        </div>
+                        <Div>
+                            <Label htmlFor="storeName">스토어 이름</Label>
+                            <Input
+                                id="storeName"
+                                type="text"
+                                width="100%"
+                                {...register('storeName', {
+                                    required: '필수정보 입니다.',
+                                })}
+                            />
+                        </Div>
+                        {errors.storeName && (
+                            <CautionText>
+                                {errors.storeName.message}
+                            </CautionText>
+                        )}
+                    </Fieldset>
+                )}
                 <Div2>
                     <label>
                         <input
