@@ -226,6 +226,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 name: data.name,
             });
             console.log(response);
+            if (response.status === 201) {
+                window.location.replace('/complete_join');
+            }
         } catch (err) {}
     };
 
@@ -242,6 +245,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 store_name: data.storeName,
             });
             console.log(response);
+            if (response.status === 201) {
+                window.location.replace('/complete_join');
+            }
         } catch (err) {}
     };
 

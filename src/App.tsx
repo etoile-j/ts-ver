@@ -10,6 +10,7 @@ import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
 import CompletePayment from 'pages/CompletePayment';
 import { GlobalStyle } from './styles/global';
+import CompleteJoin from 'pages/CompleteJoin';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/" element={<Main />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/join" element={<Join />} />
+                    <Route path="/complete_join" element={<CompleteJoin />} />
                     <Route
                         path="/detail/:product_id"
                         element={<ProductDetails />}
