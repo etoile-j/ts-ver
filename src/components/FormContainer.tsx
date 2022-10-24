@@ -70,8 +70,8 @@ interface IForm {
     buyer: string;
     seller: string;
     content: ReactElement;
-    typeBuyer?: boolean;
-    setTypeBuyer?: React.Dispatch<React.SetStateAction<boolean>>;
+    typeBuyer: boolean;
+    setTypeBuyer: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FormContainer = (props: IForm) => {

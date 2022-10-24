@@ -78,6 +78,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             });
             console.log(typeBuyers ? 'BUYER' : 'SELLER');
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('login_type', response.data.user_type);
             window.location.replace('/');
             console.log(response);
         } catch (err) {

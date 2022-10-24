@@ -7,6 +7,7 @@ import Logo from '../../assets/Logo-hodu.png';
 import SearchIcon from '../../assets/search.svg';
 import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
 import UserIcon from '../../assets/icon-user.svg';
+import BagIcon from '../../assets/icon-shopping-bag.svg';
 import styled from 'styled-components';
 
 const HeaderEl = styled.header`
@@ -64,6 +65,7 @@ const Search = styled.input`
 
 const Ul = styled.ul`
     display: flex;
+    align-items: center;
 `;
 
 const SearchBtn = styled.button`
@@ -88,11 +90,34 @@ const ShoppingCartBtn = styled.button`
     line-height: 14px;
 `;
 
+const ProductUpload = styled.button`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #6997f7;
+    width: 168px;
+    height: 54px;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 23px;
+`;
+const IconUpload = styled.img`
+    display: inline;
+    width: 32px;
+    height: 32px;
+    margin-right: 7px;
+`;
+
 const MyPage = styled(ShoppingCartBtn)`
     margin-right: 0;
 `;
 
 const Header = () => {
+    const token = localStorage.getItem('token');
     const [openModal, setOpenModal] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -117,7 +142,12 @@ const Header = () => {
                 </Wrap>
                 <Ul>
                     <li>
-                        {window.localStorage.getItem('token') !== null ? (
+                        {token === null ? (
+                            <ShoppingCartBtn onClick={handleModal}>
+                                <img src={ShoppingCartIcon} />
+                                <span>장바구니</span>
+                            </ShoppingCartBtn>
+                        ) : localStorage.getItem('login_type') === 'BUYER' ? (
                             <ShoppingCartBtn
                                 onClick={() =>
                                     (window.location.href = '/shoppingcart')
@@ -127,14 +157,18 @@ const Header = () => {
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
                         ) : (
-                            <ShoppingCartBtn onClick={handleModal}>
-                                <img src={ShoppingCartIcon} />
-                                <span>장바구니</span>
-                            </ShoppingCartBtn>
+                            <ProductUpload
+                                onClick={() =>
+                                    (window.location.href = '/seller')
+                                }
+                            >
+                                <IconUpload src={BagIcon} />
+                                판매자 센터
+                            </ProductUpload>
                         )}
                     </li>
                     <li>
-                        {window.localStorage.getItem('token') !== null ? (
+                        {token !== null ? (
                             <MyPage
                                 onClick={() => {
                                     setOpenDropdown(true);

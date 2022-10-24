@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import FormContainer from 'components/FormContainer';
 import JoinContent from 'components/JoinContent';
 
 const Join = () => {
+    const [typeBuyer, setTypeBuyer] = useState(true);
+
     return (
         <>
             <main>
@@ -9,6 +12,8 @@ const Join = () => {
                     content={<JoinContent />}
                     buyer="구매회원가입"
                     seller="판매회원가입"
+                    typeBuyer={typeBuyer}
+                    setTypeBuyer={setTypeBuyer}
                 />
             </main>
         </>
