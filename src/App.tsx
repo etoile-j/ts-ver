@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Join from 'pages/Join';
 import Login from 'pages/Login';
 import Main from 'pages/Main';
@@ -9,12 +10,14 @@ import UploadProduct from 'pages/seller/UploadProduct';
 import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
 import CompletePayment from 'pages/CompletePayment';
-import { GlobalStyle } from './styles/global';
 import CompleteJoin from 'pages/CompleteJoin';
+import { GlobalStyle } from './styles/global';
+
+const queryClient = new QueryClient();
 
 function App() {
     return (
-        <>
+        <QueryClientProvider client={queryClient}>
             <GlobalStyle />
             <BrowserRouter>
                 <Routes>
@@ -37,7 +40,7 @@ function App() {
                     <Route path="/seller/edit" element={<EditProduct />} />
                 </Routes>
             </BrowserRouter>
-        </>
+        </QueryClientProvider>
     );
 }
 

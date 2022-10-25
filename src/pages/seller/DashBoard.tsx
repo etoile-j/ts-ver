@@ -1,8 +1,12 @@
-import SellerCenterHeader from 'components/seller/SellerCenterHeader';
-import UploadIcon from '../../assets/icon-upload.svg';
-import styled from 'styled-components';
-import ProductList from 'components/seller/ProductList';
 import { useState } from 'react';
+import SellerCenterHeader from 'components/seller/SellerCenterHeader';
+import ProductList from 'components/seller/ProductList';
+import UploadIcon from '../../assets/icon-upload.svg';
+import PreIcon from '../../assets/icon-previous.svg';
+import PreOffIcon from '../../assets/icon-previous-off.svg';
+import NextIcon from '../../assets/icon-next.svg';
+import NextOffIcon from '../../assets/icon-next-off.svg';
+import styled from 'styled-components';
 
 interface styledCompo {
     width?: string;
@@ -18,6 +22,7 @@ const HeadingWrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1720px;
 `;
 
 const StoreName = styled.strong`
@@ -73,8 +78,11 @@ const OnListBtn = styled(ListBtn)`
     color: #ffffff;
 `;
 
+const TableWrap = styled.div`
+    overflow: hidden;
+`;
+
 const Table = styled.div`
-    /* background-color: #f2f2f2; */
     overflow: hidden;
     max-width: 1440px;
     height: 884px;
@@ -84,6 +92,7 @@ const Table = styled.div`
 
 const Container = styled.div`
     overflow: scroll;
+    background-color: #f2f2f2;
     height: 823px;
 `;
 
@@ -106,8 +115,32 @@ const Content = styled.span`
     text-align: center;
 `;
 
+const PageNum = styled.div`
+    max-width: 1440px;
+    padding-top: 25px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    text-align: center;
+`;
+
+const PreviousPage = styled.button`
+    width: 13px;
+    height: 17px;
+    padding: 0 25px;
+    background-image: url(${PreIcon});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    vertical-align: -2px;
+`;
+const NextPage = styled(PreviousPage)`
+    background-image: url(${NextIcon});
+`;
+
 const DashBoard = () => {
     const [count, setCount] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
 
     return (
         <>
@@ -140,17 +173,54 @@ const DashBoard = () => {
                         <ListBtn>스토어 설정</ListBtn>
                     </li>
                 </Nav>
-                <Table>
-                    <Title>
-                        <Content width="989px">상품정보</Content>
-                        <Content width="451px">판매가격</Content>
-                        <Content width="180px">수정</Content>
-                        <Content width="180px">삭제</Content>
-                    </Title>
-                    <Container>
-                        <ProductList setCount={setCount} />
-                    </Container>
-                </Table>
+                <TableWrap>
+                    <Table>
+                        <Title>
+                            <Content width="989px">상품정보</Content>
+                            <Content width="451px">판매가격</Content>
+                            <Content width="180px">수정</Content>
+                            <Content width="180px">삭제</Content>
+                        </Title>
+                        <Container>
+                            <ProductList
+                                count={count}
+                                setCount={setCount}
+                                currentPage={currentPage}
+                            />
+                        </Container>
+                    </Table>
+                    <PageNum>
+                        <PreviousPage
+                            disabled={currentPage <= 1}
+                            onClick={() =>
+                                setCurrentPage(
+                                    (previousValue) => previousValue - 1,
+                                )
+                            }
+                            style={{
+                                backgroundImage:
+                                    currentPage <= 1
+                                        ? `url(${PreOffIcon})`
+                                        : `url(${PreIcon})`,
+                            }}
+                        />
+                        {currentPage}
+                        <NextPage
+                            disabled={currentPage >= Math.ceil(count! / 15)}
+                            onClick={() =>
+                                setCurrentPage(
+                                    (previousValue) => previousValue + 1,
+                                )
+                            }
+                            style={{
+                                backgroundImage:
+                                    currentPage >= Math.ceil(count! / 15)
+                                        ? `url(${NextOffIcon})`
+                                        : `url(${NextIcon})`,
+                            }}
+                        />
+                    </PageNum>
+                </TableWrap>
             </Main>
         </>
     );

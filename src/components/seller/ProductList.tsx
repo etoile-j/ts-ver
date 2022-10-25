@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import ProductOnSale from './ProductOnSale';
 
 interface Iproduct {
+    count: number | undefined;
     setCount: React.Dispatch<React.SetStateAction<undefined>>;
+    currentPage: number;
 }
 
-const ProductList = ({ setCount }: Iproduct) => {
+const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
     const [data, setData] = useState([]);
     const token = localStorage.getItem('token');
 
@@ -19,13 +22,16 @@ const ProductList = ({ setCount }: Iproduct) => {
         price?: number;
     }
 
-    const getProductList = async () => {
+    const getProductList = async (pageNum: number) => {
         try {
-            const response = await axios.get(BASE_URL + '/seller/', {
-                headers: {
-                    Authorization: `JWT ${token}`,
+            const response = await axios.get(
+                BASE_URL + `/seller/?page=${pageNum}`,
+                {
+                    headers: {
+                        Authorization: `JWT ${token}`,
+                    },
                 },
-            });
+            );
             console.log(response);
             setCount(response.data.count);
             setData(response.data.results);
@@ -34,8 +40,27 @@ const ProductList = ({ setCount }: Iproduct) => {
         }
     };
     useEffect(() => {
-        getProductList();
+        getProductList(currentPage);
     }, []);
+
+    const queryClient = useQueryClient();
+    const totalPage = Math.ceil(count! / 15);
+    console.log(totalPage);
+
+    useEffect(() => {
+        if (currentPage < totalPage!) {
+            const nextPage = currentPage + 1;
+            queryClient.prefetchQuery(['product', nextPage], () =>
+                getProductList(nextPage),
+            );
+        }
+    }, [currentPage, queryClient]);
+
+    const { isLoading } = useQuery(
+        ['product', currentPage],
+        () => getProductList(currentPage),
+        { keepPreviousData: true },
+    );
 
     return (
         <>
