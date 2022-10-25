@@ -170,9 +170,8 @@ const Header = () => {
                     <li>
                         {token !== null ? (
                             <MyPage
-                                onClick={() => {
-                                    setOpenDropdown(true);
-                                }}
+                                onMouseOver={() => setOpenDropdown(true)}
+                                onMouseOut={() => setOpenDropdown(false)}
                             >
                                 <img src={UserIcon} />
                                 <span>마이페이지</span>
@@ -203,7 +202,10 @@ const Header = () => {
             ) : null}
             {openDropdown ? (
                 <ModalContainer>
-                    <Dropdown />
+                    <Dropdown
+                        mouseOver={() => setOpenDropdown(true)}
+                        mouseOut={() => setOpenDropdown(false)}
+                    />
                 </ModalContainer>
             ) : null}
         </HeaderEl>
