@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
-// import CountButton from 'components/CountButton';
+import CountButton from 'components/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
 import DeleteIcon from '../../assets/icon-delete.svg';
@@ -144,10 +144,16 @@ interface ICartData {
 
 const CartContent = (cartData: ICartData | any) => {
     const [detail, setDetail] = useState<IDetail>();
-    const [closeModal, setCloseModal] = useState(false);
+    const [countModal, setCountModal] = useState(false);
+    const [count, setCount] = useState(cartData.quantity);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const token = localStorage.getItem('token');
 
-    const handleModal = () => {
-        setCloseModal(!closeModal);
+    const handleDeleteModal = () => {
+        setDeleteModal(!deleteModal);
+    };
+    const handleCountModal = () => {
+        setCountModal(!countModal);
     };
     interface IDetail {
         product_id?: string;
@@ -175,9 +181,34 @@ const CartContent = (cartData: ICartData | any) => {
         handleGetDetail();
     }, []);
 
-    const deleteCart = async () => {
+    const handelPutCount = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
+            const response = await axios.put(
+                url,
+                {
+                    product_id: cartData.product_id,
+                    quantity: count,
+                    is_active: true,
+                },
+                {
+                    headers: {
+                        Authorization: `JWT ${token}`,
+                    },
+                },
+            );
+            console.log(response);
+            if (response.status === 200) {
+                handleCountModal();
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleDeleteCart = async () => {
+        try {
             const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
             const response = await axios.delete(url, {
                 headers: {
@@ -220,10 +251,10 @@ const CartContent = (cartData: ICartData | any) => {
                 </Wrap>
             </Content>
             <Content width="248px">
-                {/* <CountButton /> */}
-                <CountBtn>-</CountBtn>
+                {/* <CountButton count={cartData.quantity} /> */}
+                <CountBtn onClick={handleCountModal}>-</CountBtn>
                 <Count>{cartData.quantity}</Count>
-                <CountBtnplus>+</CountBtnplus>
+                <CountBtnplus onClick={handleCountModal}>+</CountBtnplus>
             </Content>
             <Content width="329px">
                 <InPrice>
@@ -234,16 +265,33 @@ const CartContent = (cartData: ICartData | any) => {
                     <span>원</span>
                 </InPrice>
                 <OrderBtn>주문하기</OrderBtn>
-                <DeleteBtn onClick={handleModal} />
+                <DeleteBtn onClick={handleDeleteModal} />
             </Content>
-            {closeModal ? (
+            {deleteModal ? (
                 <ModalContainer>
                     <Modal
-                        close={handleModal}
-                        ok={deleteCart}
+                        close={handleDeleteModal}
+                        ok={handleDeleteCart}
                         leftBtn="취소"
                         rightBtn="확인"
                         text="상품을 삭제 하시겠습니까?"
+                    />
+                </ModalContainer>
+            ) : null}
+            {countModal ? (
+                <ModalContainer>
+                    <Modal
+                        close={handleCountModal}
+                        ok={handelPutCount}
+                        leftBtn="취소"
+                        rightBtn="수정"
+                        component={
+                            <CountButton
+                                count={count}
+                                setCount={setCount}
+                                stocks={detail?.stock}
+                            />
+                        }
                     />
                 </ModalContainer>
             ) : null}

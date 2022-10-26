@@ -61,6 +61,8 @@ const DeliveryText = styled.p`
 `;
 
 const CountContainer = styled.div`
+    height: 110px;
+    padding-top: 27px;
     border-top: 2px solid #c4c4c4;
     border-bottom: 2px solid #c4c4c4;
 `;

@@ -16,7 +16,6 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
     position: relative;
     width: 50px;
     height: 50px;
-    margin: 30px 0;
     border: 1px solid #c4c4c4;
     border-radius: 5px 0 0 5px;
     color: transparent;

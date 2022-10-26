@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { ReactElement } from 'react';
 import CloseIcon from '../../assets/icon-delete.svg';
 import styled, { keyframes } from 'styled-components';
 
@@ -39,7 +40,7 @@ const Wrap = styled.div`
     padding: 45px 0 40px;
     text-align: center;
     border: 1px solid #c4c4c4;
-    border-radius: 5px;
+    border-radius: 8px;
     animation: ${fadeIn} 0.15s ease-in-out;
 `;
 
@@ -92,6 +93,7 @@ interface IModal {
     leftBtn: string;
     rightBtn: string;
     text?: string;
+    component?: ReactElement;
 }
 
 const Modal = (modal: IModal) => {
@@ -109,6 +111,7 @@ const Modal = (modal: IModal) => {
                 <Wrap>
                     <CloseBtn onClick={modal.close} />
                     <Content>
+                        {modal.component}
                         <p>{modal.text}</p>
                         <div>
                             <BtnLeft onClick={modal.close}>
