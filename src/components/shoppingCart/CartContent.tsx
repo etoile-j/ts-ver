@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import CountButton from 'components/CountButton';
@@ -148,10 +149,12 @@ const CartContent = (cartData: ICartData | any) => {
     const [count, setCount] = useState(cartData.quantity);
     const [deleteModal, setDeleteModal] = useState(false);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const handleDeleteModal = () => {
         setDeleteModal(!deleteModal);
     };
+
     const handleCountModal = () => {
         setCountModal(!countModal);
     };
@@ -251,7 +254,6 @@ const CartContent = (cartData: ICartData | any) => {
                 </Wrap>
             </Content>
             <Content width="248px">
-                {/* <CountButton count={cartData.quantity} /> */}
                 <CountBtn onClick={handleCountModal}>-</CountBtn>
                 <Count>{cartData.quantity}</Count>
                 <CountBtnplus onClick={handleCountModal}>+</CountBtnplus>
@@ -264,7 +266,24 @@ const CartContent = (cartData: ICartData | any) => {
                     ).toLocaleString('ko-KR')}
                     <span>원</span>
                 </InPrice>
-                <OrderBtn>주문하기</OrderBtn>
+                <OrderBtn
+                    onClick={() =>
+                        navigate('/payment', {
+                            state: {
+                                product_id: detail?.product_id,
+                                totalCount: cartData.quantity,
+                                order_kind: 'cart_one_order',
+                                image: detail?.image,
+                                SellerName: detail?.store_name,
+                                productName: detail?.product_name,
+                                shippingFee: detail?.shipping_fee,
+                                price: detail?.price,
+                            },
+                        })
+                    }
+                >
+                    주문하기
+                </OrderBtn>
                 <DeleteBtn onClick={handleDeleteModal} />
             </Content>
             {deleteModal ? (
