@@ -144,6 +144,7 @@ const ProductCard = () => {
     const { product_id } = useParams();
     const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
+    const loginType = localStorage.getItem('login_type');
 
     const handleModal = () => {
         setOpenModal(!openModal);
@@ -246,6 +247,14 @@ const ProductCard = () => {
                                     });
                                 }
                             }}
+                            style={{
+                                backgroundColor:
+                                    loginType === 'SELLER'
+                                        ? '#c4c4c4'
+                                        : '#6997f7',
+                                cursor: 'default',
+                            }}
+                            disabled={loginType === 'SELLER' && true}
                         >
                             바로 구매
                         </ColorBtn>
@@ -257,6 +266,14 @@ const ProductCard = () => {
                                     postCart();
                                 }
                             }}
+                            style={{
+                                backgroundColor:
+                                    loginType === 'SELLER'
+                                        ? '#c4c4c4'
+                                        : '#6997f7',
+                                cursor: 'default',
+                            }}
+                            disabled={loginType === 'SELLER' && true}
                         >
                             장바구니
                         </GrayBtn>
