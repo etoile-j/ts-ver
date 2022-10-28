@@ -137,8 +137,11 @@ const Won = styled.span`
 `;
 
 const ShoppingCart = () => {
-    const [cartData, setCartData] = useState([]);
+    const [cartData, setCartData] = useState<any[]>([]);
     const [cartCount, setCartCount] = useState();
+    const [changeActive, setChangeActive] = useState(false);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalShipping, setTotalShipping] = useState(0);
     const token = localStorage.getItem('token');
 
     const handleGetCart = async () => {
@@ -167,6 +170,30 @@ const ShoppingCart = () => {
     }
     console.log(cartData);
 
+    const [checkItems, setCheckItems] = useState<number[]>([]);
+    const handleAllCheck = (checked: boolean) => {
+        if (checked) {
+            const idArray: number[] = [];
+            cartData.forEach((el) => idArray.push(el.cart_item_id));
+            const idArray22: number[] = [];
+            cartData.forEach((el) => idArray22.push(el.quantity));
+            console.log(idArray22);
+            setCheckItems(idArray);
+        } else {
+            setCheckItems([]);
+            setTotalPrice(0);
+            setTotalShipping(0);
+        }
+    };
+    console.log(checkItems);
+
+    // const all = document.getElementById('All') as HTMLInputElement;
+    // useEffect(() => {
+    //     if (all != null) {
+    //         all.checked = true;
+    //     }
+    // }, [handleGetCart]);
+
     return (
         <>
             <Header />
@@ -174,7 +201,17 @@ const ShoppingCart = () => {
             <Main>
                 <TitleLi>
                     <Content width="90px">
-                        <input type="radio"></input>
+                        <input
+                            id="All"
+                            type="checkbox"
+                            name="All"
+                            onChange={(e) => handleAllCheck(e.target.checked)}
+                            checked={
+                                checkItems.length === cartData.length
+                                    ? true
+                                    : false
+                            }
+                        />
                     </Content>
                     <Content width="611px">상품정보</Content>
                     <Content width="248px">수량</Content>
@@ -189,10 +226,17 @@ const ShoppingCart = () => {
                                 return (
                                     <Container key={cartData.cart_item_id}>
                                         <CartContent
-                                            cartData={cartData}
                                             product_id={cartData.product_id}
                                             quantity={cartData.quantity}
                                             cart_item_id={cartData.cart_item_id}
+                                            checkItems={checkItems}
+                                            setCheckItems={setCheckItems}
+                                            changeActive={changeActive}
+                                            totalPrice={totalPrice}
+                                            setTotalPrice={setTotalPrice}
+                                            totalShipping={totalShipping}
+                                            setTotalShipping={setTotalShipping}
+                                            handleAllCheck={handleAllCheck}
                                         />
                                     </Container>
                                 );
@@ -201,27 +245,52 @@ const ShoppingCart = () => {
                         <CartResult>
                             <List>
                                 <CartResultTitle>총 상품금액</CartResultTitle>
-                                <Price>34500</Price>원
+                                <Price>
+                                    {totalPrice.toLocaleString('ko-KR')}
+                                </Price>
+                                원
                                 <Minus />
                             </List>
                             <List>
                                 <CartResultTitle>상품 할인</CartResultTitle>
-                                <Price>500</Price>원
+                                <Price>0</Price>원
                                 <Plus />
                             </List>
                             <List>
                                 <CartResultTitle>배송비</CartResultTitle>
-                                <Price>0</Price>원
+                                <Price>
+                                    {totalShipping.toLocaleString('ko-KR')}
+                                </Price>
+                                원
                             </List>
                             <Result>
                                 <CartResultTitleAmount>
                                     결제 예정 금액
                                 </CartResultTitleAmount>
-                                <ResultPrice>34000</ResultPrice>
+                                <ResultPrice>
+                                    {(
+                                        totalPrice + totalShipping
+                                    ).toLocaleString('ko-KR')}
+                                </ResultPrice>
                                 <Won>원</Won>
                             </Result>
                         </CartResult>
-                        <OrderBtnBig>주문하기</OrderBtnBig>
+                        <OrderBtnBig
+                            onClick={() => setChangeActive(true)}
+                            style={{
+                                backgroundColor:
+                                    checkItems.length === 0
+                                        ? '#c4c4c4'
+                                        : '#6997f7',
+                                cursor:
+                                    checkItems.length === 0
+                                        ? 'default'
+                                        : 'pointer',
+                            }}
+                            disabled={checkItems.length === 0 && true}
+                        >
+                            주문하기
+                        </OrderBtnBig>
                     </>
                 )}
             </Main>

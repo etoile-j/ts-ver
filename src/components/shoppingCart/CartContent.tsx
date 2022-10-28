@@ -141,9 +141,17 @@ interface ICartData {
     cart_item_id: number;
     product_id: number;
     quantity: number;
+    checkItems: number[];
+    setCheckItems: React.Dispatch<React.SetStateAction<number[]>>;
+    changeActive: boolean;
+    totalPrice: number;
+    setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+    totalShipping: number;
+    setTotalShipping: React.Dispatch<React.SetStateAction<number>>;
+    handleAllCheck: Function;
 }
 
-const CartContent = (cartData: ICartData | any) => {
+const CartContent = (cartData: ICartData) => {
     const [detail, setDetail] = useState<IDetail>();
     const [countModal, setCountModal] = useState(false);
     const [count, setCount] = useState(cartData.quantity);
@@ -167,8 +175,6 @@ const CartContent = (cartData: ICartData | any) => {
         shipping_fee: number;
         stock: number;
     }
-    // console.log(cartData.result.cart_item_id);
-    console.log(cartData.cart_item_id);
 
     const handleGetDetail = async () => {
         try {
@@ -176,6 +182,9 @@ const CartContent = (cartData: ICartData | any) => {
             const response = await axios.get(url);
             setDetail(response.data);
             console.log(response);
+            if (response.status === 200) {
+                cartData.handleAllCheck(true);
+            }
         } catch (err) {
             console.error(err);
         }
@@ -184,7 +193,7 @@ const CartContent = (cartData: ICartData | any) => {
         handleGetDetail();
     }, []);
 
-    const handelPutCount = async () => {
+    const handelPutCount = async (bool: boolean) => {
         try {
             const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
             const response = await axios.put(
@@ -192,7 +201,7 @@ const CartContent = (cartData: ICartData | any) => {
                 {
                     product_id: cartData.product_id,
                     quantity: count,
-                    is_active: true,
+                    is_active: bool,
                 },
                 {
                     headers: {
@@ -201,7 +210,7 @@ const CartContent = (cartData: ICartData | any) => {
                 },
             );
             console.log(response);
-            if (response.status === 200) {
+            if (response.status === 200 && countModal) {
                 handleCountModal();
                 window.location.reload();
             }
@@ -227,10 +236,56 @@ const CartContent = (cartData: ICartData | any) => {
         }
     };
 
+    const handleSingleCheck = (checked: boolean, id: number) => {
+        if (checked) {
+            cartData.setCheckItems([...cartData.checkItems, id]);
+            cartData.setTotalPrice(
+                cartData.totalPrice + detail?.price! * cartData.quantity,
+            );
+            cartData.setTotalShipping(
+                cartData.totalShipping + detail?.shipping_fee!,
+            );
+        } else {
+            cartData.setCheckItems(
+                cartData.checkItems.filter((el) => el !== id),
+            );
+            cartData.setTotalPrice(
+                cartData.totalPrice - detail?.price! * cartData.quantity,
+            );
+            cartData.setTotalShipping(
+                cartData.totalShipping - detail?.shipping_fee!,
+            );
+        }
+    };
+
+    if (
+        cartData.changeActive &&
+        cartData.checkItems.includes(cartData.cart_item_id) === false
+    ) {
+        handelPutCount(false);
+    }
+
     return (
         <>
             <Content width="90px">
-                <input type="radio"></input>
+                <input
+                    type="checkbox"
+                    name="order"
+                    onChange={(e) =>
+                        handleSingleCheck(
+                            e.target.checked,
+                            cartData.cart_item_id,
+                        )
+                    }
+                    checked={
+                        cartData.checkItems.includes(cartData.cart_item_id)
+                            ? true
+                            : false
+                    }
+                    // value={`${detail?.price! * cartData.quantity} ${
+                    //     detail?.shipping_fee
+                    // }`}
+                ></input>
             </Content>
             <Content width="611px">
                 <Wrap>
@@ -286,7 +341,7 @@ const CartContent = (cartData: ICartData | any) => {
                 </OrderBtn>
                 <DeleteBtn onClick={handleDeleteModal} />
             </Content>
-            {deleteModal ? (
+            {deleteModal && (
                 <ModalContainer>
                     <Modal
                         close={handleDeleteModal}
@@ -296,12 +351,12 @@ const CartContent = (cartData: ICartData | any) => {
                         text="상품을 삭제 하시겠습니까?"
                     />
                 </ModalContainer>
-            ) : null}
-            {countModal ? (
+            )}
+            {countModal && (
                 <ModalContainer>
                     <Modal
                         close={handleCountModal}
-                        ok={handelPutCount}
+                        ok={() => handelPutCount(true)}
                         leftBtn="취소"
                         rightBtn="수정"
                         component={
@@ -313,7 +368,7 @@ const CartContent = (cartData: ICartData | any) => {
                         }
                     />
                 </ModalContainer>
-            ) : null}
+            )}
         </>
     );
 };
