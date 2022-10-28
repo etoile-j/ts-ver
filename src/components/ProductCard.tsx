@@ -252,7 +252,10 @@ const ProductCard = () => {
                                     loginType === 'SELLER'
                                         ? '#c4c4c4'
                                         : '#6997f7',
-                                cursor: 'default',
+                                cursor:
+                                    loginType === 'SELLER'
+                                        ? 'default'
+                                        : 'pointer',
                             }}
                             disabled={loginType === 'SELLER' && true}
                         >
@@ -271,7 +274,10 @@ const ProductCard = () => {
                                     loginType === 'SELLER'
                                         ? '#c4c4c4'
                                         : '#6997f7',
-                                cursor: 'default',
+                                cursor:
+                                    loginType === 'SELLER'
+                                        ? 'default'
+                                        : 'pointer',
                             }}
                             disabled={loginType === 'SELLER' && true}
                         >
