@@ -143,11 +143,23 @@ const ProductCard = () => {
     const [product, setProduct] = useState<IProductDetail>();
     const { product_id } = useParams();
     const navigate = useNavigate();
-    const [openModal, setOpenModal] = useState(false);
+    const [loginModal, setLoginModal] = useState(false);
+    const [addedModal, setAddedModal] = useState(false);
+    const [addMoreModal, setAddMoreModal] = useState(false);
+    const [stockModal, setStockModal] = useState(false);
     const loginType = localStorage.getItem('login_type');
 
-    const handleModal = () => {
-        setOpenModal(!openModal);
+    const handleLoginModal = () => {
+        setLoginModal(!loginModal);
+    };
+    const handleAddedModal = () => {
+        setAddedModal(!addedModal);
+    };
+    const handleAddMoreModal = () => {
+        setAddMoreModal(!addMoreModal);
+    };
+    const handleStockModal = () => {
+        setStockModal(!stockModal);
     };
 
     const getProductDetail = async () => {
@@ -167,7 +179,32 @@ const ProductCard = () => {
 
     const token = localStorage.getItem('token');
 
-    const postCart = async () => {
+    const handleGetCart = async () => {
+        try {
+            const url: string = BASE_URL + '/cart/';
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `JWT ${token}`,
+                },
+            });
+            console.log(response);
+            interface ICartData {
+                product_id: number;
+            }
+            const InCart = response.data.results.map(
+                (cart: ICartData) => cart.product_id,
+            );
+            console.log('InCart', InCart);
+            const IntId = parseInt(product_id!);
+            const checkCart = InCart.includes(IntId);
+            console.log('checkCart', checkCart);
+            checkCart === true ? handleAddMoreModal() : postCart(true);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const postCart = async (checkCart: boolean) => {
         try {
             const url = BASE_URL + '/cart/';
             const response = await axios.post(
@@ -175,7 +212,7 @@ const ProductCard = () => {
                 {
                     product_id: product_id,
                     quantity: count,
-                    check: true,
+                    check: checkCart,
                 },
                 {
                     headers: {
@@ -184,8 +221,12 @@ const ProductCard = () => {
                 },
             );
             console.log(response);
+            if (response.status === 201) {
+                handleAddedModal();
+            }
         } catch (err) {
             console.error(err);
+            handleStockModal();
         }
     };
 
@@ -231,7 +272,7 @@ const ProductCard = () => {
                         <ColorBtn
                             onClick={() => {
                                 if (!token) {
-                                    handleModal();
+                                    handleLoginModal();
                                 } else {
                                     navigate('/payment', {
                                         state: {
@@ -264,9 +305,9 @@ const ProductCard = () => {
                         <GrayBtn
                             onClick={() => {
                                 if (!token) {
-                                    handleModal();
+                                    handleLoginModal();
                                 } else {
-                                    postCart();
+                                    handleGetCart();
                                 }
                             }}
                             style={{
@@ -286,17 +327,53 @@ const ProductCard = () => {
                     </div>
                 </div>
             </Div>
-            {openModal ? (
+            {loginModal && (
                 <ModalContainer>
                     <Modal
-                        close={handleModal}
+                        close={handleLoginModal}
                         ok={() => (window.location.href = '/login')}
                         leftBtn="아니오"
                         rightBtn="예"
                         text="로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                     />
                 </ModalContainer>
-            ) : null}
+            )}
+            {addedModal && (
+                <ModalContainer>
+                    <Modal
+                        close={handleAddedModal}
+                        ok={() => (window.location.href = '/shoppingcart')}
+                        leftBtn="아니오"
+                        rightBtn="예"
+                        text="장바구니에 상품이 담겼습니다. 장바구니로 가시겠습니까?"
+                    />
+                </ModalContainer>
+            )}
+            {addMoreModal && (
+                <ModalContainer>
+                    <Modal
+                        close={handleAddMoreModal}
+                        ok={() => {
+                            postCart(false);
+                            handleAddMoreModal();
+                        }}
+                        leftBtn="아니오"
+                        rightBtn="예"
+                        text="장바구니에 동일한 상품이 있습니다. 더 추가하시겠습니까?"
+                    />
+                </ModalContainer>
+            )}
+            {stockModal && (
+                <ModalContainer>
+                    <Modal
+                        close={handleStockModal}
+                        ok={handleStockModal}
+                        rightBtn="확인"
+                        text="현재 재고보다 더 많은 수량을 담을 수 없습니다."
+                        leftNone="none"
+                    />
+                </ModalContainer>
+            )}
         </Wrap>
     );
 };

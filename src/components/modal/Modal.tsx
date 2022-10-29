@@ -90,10 +90,11 @@ const BtnRight = styled(BtnLeft)`
 interface IModal {
     close: React.MouseEventHandler<HTMLButtonElement>;
     ok: React.MouseEventHandler<HTMLButtonElement>;
-    leftBtn: string;
+    leftBtn?: string;
     rightBtn: string;
     text?: string;
     component?: ReactElement;
+    leftNone?: string;
 }
 
 const Modal = (modal: IModal) => {
@@ -114,7 +115,12 @@ const Modal = (modal: IModal) => {
                         {modal.component}
                         <p>{modal.text}</p>
                         <div>
-                            <BtnLeft onClick={modal.close}>
+                            <BtnLeft
+                                onClick={modal.close}
+                                style={{
+                                    display: modal.leftNone,
+                                }}
+                            >
                                 {modal.leftBtn}
                             </BtnLeft>
                             <BtnRight onClick={modal.ok}>
