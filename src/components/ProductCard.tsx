@@ -10,20 +10,39 @@ import styled from 'styled-components';
 const Wrap = styled.div`
     display: flex;
     height: 600px;
+    @media screen and (max-width: 1000px) {
+        height: 480px;
+    }
+    @media screen and (max-width: 620px) {
+        flex-wrap: wrap;
+        width: 100%;
+        height: 600px;
+        margin: 0 auto;
+    }
 `;
 
 const ProductImg = styled.img`
-    float: left;
-    width: 600px;
-    height: 600px;
+    width: 50%;
+    height: 100%;
     object-fit: cover;
+    @media screen and (max-width: 620px) {
+        width: 100%;
+    }
 `;
 
 const Div = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 50%;
     margin-left: 50px;
+    @media screen and (max-width: 1000px) {
+        margin-left: 25px;
+    }
+    @media screen and (max-width: 620px) {
+        width: 100%;
+        margin: 20px 4px 30px;
+    }
 `;
 
 const ProductName = styled.p`
@@ -31,6 +50,14 @@ const ProductName = styled.p`
     font-weight: 400;
     font-size: 36px;
     line-height: 45px;
+    @media screen and (max-width: 1000px) {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    @media screen and (min-width: 620px) and (max-width: 840px) {
+        font-size: 25px;
+        line-height: 30px;
+    }
 `;
 
 const SellerName = styled.p`
@@ -44,6 +71,10 @@ const Price = styled.p`
     font-weight: 700;
     font-size: 36px;
     line-height: 45px;
+    @media screen and (min-width: 620px) and (max-width: 1000px) {
+        font-size: 28px;
+        line-height: 33px;
+    }
 `;
 const Won = styled.span`
     margin-left: 2px;
@@ -58,6 +89,9 @@ const DeliveryText = styled.p`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
+    @media screen and (max-width: 620px) {
+        margin-top: 70px;
+    }
 `;
 
 const CountContainer = styled.div`
@@ -70,6 +104,9 @@ const CountContainer = styled.div`
 const TotalWrap = styled.div`
     margin: 32px 0 22px;
     text-align: right;
+    @media screen and (min-width: 620px) and (max-width: 1000px) {
+        margin: 22px 0 22px;
+    }
 `;
 
 const TotalTitle = styled.span`
@@ -77,6 +114,9 @@ const TotalTitle = styled.span`
     font-weight: 500;
     font-size: 18px;
     line-height: 60px;
+    @media screen and (min-width: 620px) and (max-width: 1000px) {
+        line-height: 45px;
+    }
 `;
 
 const TotalAmount = styled.span`
@@ -96,6 +136,11 @@ const TotalPrice = styled.strong`
     font-weight: 700;
     font-size: 36px;
     line-height: 45px;
+    @media screen and (min-width: 620px) and (max-width: 1000px) {
+        font-size: 28px;
+        line-height: 36px;
+        margin-left: 18px;
+    }
 `;
 const TotalWon = styled.span`
     font-weight: 400;
@@ -103,11 +148,16 @@ const TotalWon = styled.span`
     line-height: 23px;
 `;
 
+const BtnContainer = styled.div`
+    display: flex;
+    width: 100%;
+`;
+
 const ColorBtn = styled.button.attrs({
     type: 'button',
 })`
     background-color: #6997f7;
-    width: 416px;
+    width: 100%;
     padding: 19px 0;
     color: #ffffff;
     font-weight: 700;
@@ -118,7 +168,6 @@ const ColorBtn = styled.button.attrs({
 
 const GrayBtn = styled(ColorBtn)`
     background-color: #767676;
-    width: 200px;
     margin-left: 14px;
 `;
 
@@ -268,7 +317,7 @@ const ProductCard = () => {
                             <TotalWon>원</TotalWon>
                         </TotalPrice>
                     </TotalWrap>
-                    <div>
+                    <BtnContainer>
                         <ColorBtn
                             onClick={() => {
                                 if (!token) {
@@ -324,7 +373,7 @@ const ProductCard = () => {
                         >
                             장바구니
                         </GrayBtn>
-                    </div>
+                    </BtnContainer>
                 </div>
             </Div>
             {loginModal && (

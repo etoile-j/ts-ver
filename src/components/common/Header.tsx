@@ -27,6 +27,7 @@ const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     max-width: 1280px;
+    min-width: 750px;
     height: 90px;
     margin: 0 auto;
 `;

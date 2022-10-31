@@ -4,8 +4,9 @@ import ProductCard from 'components/ProductCard';
 import styled from 'styled-components';
 
 const Main = styled.main`
-    padding: 80px 0 60px;
-    width: 1300px;
+    padding: 80px 20px 60px;
+    max-width: 1300px;
+    min-width: 767px;
     margin: 0 auto;
 `;
 
@@ -17,6 +18,9 @@ const Ul = styled.ul`
     font-size: 18px;
     line-height: 23px;
     text-align: center;
+    @media screen and (max-width: 620px) {
+        margin-top: 640px;
+    }
 `;
 const Li = styled.li`
     width: 320px;
@@ -29,7 +33,7 @@ const ProductDetails = () => {
         <>
             <Header />
             <Main>
-                <h2>상품 상세 정보</h2>
+                {/* <h2>상품 상세 정보</h2> */}
                 {/* ir */}
                 <ProductCard />
                 <Ul>

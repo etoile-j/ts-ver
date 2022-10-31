@@ -4,9 +4,19 @@ import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import styled from 'styled-components';
 
+const ImgContainer = styled.div`
+    overflow: hidden;
+    position: relative;
+    padding-top: 102%;
+`;
+
 const ProductImg = styled.img`
-    width: 380px;
-    height: 380px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     margin-bottom: 16px;
     border: 1px solid #c4c4c4;
     border-radius: 10px;
@@ -18,9 +28,14 @@ const ProductName = styled.p`
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
+    @media screen and (max-width: 1100px) {
+        font-size: 17px;
+        line-height: 20px;
+    }
 `;
 
 const SellerName = styled.p`
+    margin-top: 7px;
     color: #767676;
     font-weight: 400;
     font-size: 16px;
@@ -70,17 +85,19 @@ const ProductInfo = () => {
         <>
             {products?.map((products: IProductProps) => {
                 return (
-                    <Link to={`/detail/${products.product_id}`}>
-                        <li key={products.product_id}>
-                            <ProductImg src={products.image}></ProductImg>
+                    <li key={products.product_id}>
+                        <Link to={`/detail/${products.product_id}`}>
+                            <ImgContainer>
+                                <ProductImg src={products.image}></ProductImg>
+                            </ImgContainer>
                             <SellerName>{products.store_name}</SellerName>
                             <ProductName>{products.product_name}</ProductName>
                             <Price>
                                 {products.price?.toLocaleString('Ko-KR')}
                                 <Won>원</Won>
                             </Price>
-                        </li>
-                    </Link>
+                        </Link>
+                    </li>
                 );
             })}
         </>
