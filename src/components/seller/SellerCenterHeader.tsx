@@ -10,7 +10,6 @@ const HeaderEl = styled.header`
     background-color: #ffffff;
     width: 100%;
     height: 90px;
-    padding: 0 15px 0;
     border-bottom: 1px solid #c4c4c4;
 `;
 
@@ -25,7 +24,7 @@ const Nav = styled.nav`
 
 const Wrap = styled.div`
     display: flex;
-    margin: 0 20px;
+    padding: 0 20px;
     align-items: center;
 `;
 

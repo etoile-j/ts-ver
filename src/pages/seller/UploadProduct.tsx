@@ -18,6 +18,14 @@ const H3 = styled.h2`
 const CautionWrap = styled.div`
     float: left;
     margin-right: 80px;
+    @media screen and (max-width: 1300px) {
+        margin-right: 30px;
+    }
+    @media screen and (max-width: 1220px) {
+        margin-bottom: 35px;
+        margin-right: 0px;
+        float: none;
+    }
 `;
 
 const H4 = styled.h3`
@@ -36,10 +44,13 @@ const CautionBox = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+    @media screen and (max-width: 1220px) {
+        width: 100%;
+        height: 160px;
+        overflow: scroll;
+    }
 `;
 
-// 866 454  1320     400 =
-// 1440 280 = 1720
 const UploadProduct = () => {
     return (
         <>
@@ -50,6 +61,7 @@ const UploadProduct = () => {
                     <H4>*상품 등록 주의 사항</H4>
                     <CautionBox>
                         <p>- 너무 귀여운 사진은 심장이 아파올 수 있습니다.</p>
+                        <p>- 상품명은 20자까지만 등록 가능합니다.</p>
                     </CautionBox>
                 </CautionWrap>
                 <ProductInput />

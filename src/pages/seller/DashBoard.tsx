@@ -14,6 +14,7 @@ interface styledCompo {
 
 const Main = styled.main`
     max-width: 1720px;
+    min-width: 740px;
     margin: 0 auto;
     padding: 0 20px;
 `;
@@ -58,6 +59,19 @@ const Nav = styled.nav`
     float: left;
     width: 250px;
     margin-right: 30px;
+    @media screen and (max-width: 1100px) {
+        width: 165px;
+        margin-right: 18px;
+    }
+    @media screen and (max-width: 970px) {
+        float: none;
+        display: flex;
+        width: 100%;
+    }
+`;
+
+const Li = styled.li`
+    display: inline-;
 `;
 
 const ListBtn = styled.button.attrs({ type: 'button' })`
@@ -160,12 +174,12 @@ const DashBoard = () => {
                     </ProductUpload>
                 </HeadingWrap>
                 <Nav>
-                    <li>
+                    <Li>
                         <OnListBtn>판매중인 상품({count})</OnListBtn>
-                    </li>
-                    <li>
+                    </Li>
+                    <Li>
                         <ListBtn>주문/배송</ListBtn>
-                    </li>
+                    </Li>
                     <li>
                         <ListBtn>통계</ListBtn>
                     </li>
@@ -176,10 +190,10 @@ const DashBoard = () => {
                 <TableWrap>
                     <Table>
                         <Title>
-                            <Content width="989px">상품정보</Content>
+                            <Content width="939px">상품정보</Content>
                             <Content width="451px">판매가격</Content>
-                            <Content width="180px">수정</Content>
-                            <Content width="180px">삭제</Content>
+                            <Content width="205px">수정</Content>
+                            <Content width="205px">삭제</Content>
                         </Title>
                         <Container>
                             <ProductList

@@ -77,6 +77,9 @@ const EditBtn = styled.button.attrs({
     :hover {
         background-color: #789ff3;
     }
+    @media screen and (max-width: 970px) {
+        width: 67px;
+    }
 `;
 const DeleteBtn = styled(EditBtn)`
     background-color: #ffffff;
@@ -127,7 +130,7 @@ const ProductOnSale = (data: IData) => {
     return (
         <>
             <Product>
-                <Content width="989px">
+                <Content width="939px">
                     <ProductWrap
                         onClick={() =>
                             (window.location.href = `detail/${data.product_id}`)
@@ -143,7 +146,7 @@ const ProductOnSale = (data: IData) => {
                 <Content width="451px">
                     <Price>{data.price?.toLocaleString('ko-KR')}원</Price>
                 </Content>
-                <Content width="180px">
+                <Content width="205px">
                     <EditBtn
                         onClick={() => {
                             navigate('/seller/edit', {
@@ -156,7 +159,7 @@ const ProductOnSale = (data: IData) => {
                         수정
                     </EditBtn>
                 </Content>
-                <Content width="180px">
+                <Content width="205px">
                     <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>
                 </Content>
             </Product>
