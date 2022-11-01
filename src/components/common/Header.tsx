@@ -44,11 +44,17 @@ const LogoImg = styled.h1`
     background-image: url(${Logo});
     background-repeat: no-repeat;
     background-size: contain;
+    @media screen and (max-width: 900px) {
+        margin-right: 17px;
+    }
 `;
 
 const SearchContainer = styled.div`
     position: relative;
     width: 400px;
+    @media screen and (max-width: 900px) {
+        width: 310px;
+    }
 `;
 
 const Search = styled.input`
@@ -91,7 +97,7 @@ const ShoppingCartBtn = styled.button`
     line-height: 14px;
 `;
 
-const ProductUpload = styled.button`
+const SellerBtn = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -105,6 +111,9 @@ const ProductUpload = styled.button`
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;
+    @media screen and (max-width: 900px) {
+        margin-right: 10px;
+    }
 `;
 const IconUpload = styled.img`
     display: inline;
@@ -158,14 +167,14 @@ const Header = () => {
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
                         ) : (
-                            <ProductUpload
+                            <SellerBtn
                                 onClick={() =>
                                     (window.location.href = '/seller')
                                 }
                             >
                                 <IconUpload src={BagIcon} />
                                 판매자 센터
-                            </ProductUpload>
+                            </SellerBtn>
                         )}
                     </li>
                     <li>

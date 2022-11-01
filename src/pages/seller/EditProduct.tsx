@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const Main = styled.main`
     max-width: 1720px;
+    min-width: 540px;
     margin: 0 auto;
     padding: 0 20px;
 `;
@@ -22,6 +23,14 @@ const H3 = styled.h2`
 const CautionWrap = styled.div`
     float: left;
     margin-right: 80px;
+    @media screen and (max-width: 1300px) {
+        margin-right: 30px;
+    }
+    @media screen and (max-width: 1220px) {
+        margin-bottom: 35px;
+        margin-right: 0px;
+        float: none;
+    }
 `;
 
 const H4 = styled.h3`
@@ -40,6 +49,11 @@ const CautionBox = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+    @media screen and (max-width: 1220px) {
+        width: 100%;
+        height: 160px;
+        overflow: scroll;
+    }
 `;
 
 const EditProduct = () => {

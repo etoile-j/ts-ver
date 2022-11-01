@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const Main = styled.main`
     max-width: 1720px;
+    min-width: 540px;
     margin: 0 auto;
     padding: 0 20px;
 `;

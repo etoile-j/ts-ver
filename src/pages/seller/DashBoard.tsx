@@ -70,10 +70,6 @@ const Nav = styled.nav`
     }
 `;
 
-const Li = styled.li`
-    display: inline-;
-`;
-
 const ListBtn = styled.button.attrs({ type: 'button' })`
     width: 100%;
     padding: 15px 20px;
@@ -174,12 +170,12 @@ const DashBoard = () => {
                     </ProductUpload>
                 </HeadingWrap>
                 <Nav>
-                    <Li>
+                    <li>
                         <OnListBtn>판매중인 상품({count})</OnListBtn>
-                    </Li>
-                    <Li>
+                    </li>
+                    <li>
                         <ListBtn>주문/배송</ListBtn>
-                    </Li>
+                    </li>
                     <li>
                         <ListBtn>통계</ListBtn>
                     </li>

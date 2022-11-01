@@ -14,11 +14,19 @@ interface styledCompo {
 
 const Wrap = styled.div`
     display: flex;
+    @media screen and (max-width: 870px) {
+        flex-direction: column;
+    }
 `;
 
 const InputContainer = styled.div`
     width: 826px;
     margin-left: 40px;
+    @media screen and (max-width: 870px) {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 100%;
+    }
 `;
 
 const Field = styled.div`
@@ -63,6 +71,10 @@ const ImgPreview = styled.img`
     width: 454px;
     height: 454px;
     object-fit: cover;
+    @media screen and (max-width: 870px) {
+        width: 100%;
+        height: 354px;
+    }
 `;
 
 const Input = styled.input`
@@ -126,7 +138,7 @@ const RadioLabel = styled.label`
     line-height: 20px;
     text-align: center;
     cursor: pointer;
-    @media screen and (max-width: 1400px) {
+    @media screen and (min-width: 870px) and (max-width: 1400px) {
         width: 154px;
     }
 `;
@@ -145,6 +157,9 @@ const ColorBtn = styled.button`
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
+    @media screen and (max-width: 870px) {
+        width: 150px;
+    }
 `;
 const WhiteBtn = styled(ColorBtn)`
     background-color: #ffffff;
@@ -390,7 +405,12 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                     </InputContainer>
                 </Wrap>
                 <BtnContainer>
-                    <WhiteBtn type="button">취소</WhiteBtn>
+                    <WhiteBtn
+                        type="button"
+                        onClick={() => (window.location.href = '/seller')}
+                    >
+                        취소
+                    </WhiteBtn>
                     <ColorBtn type="submit">저장하기</ColorBtn>
                 </BtnContainer>
             </form>
