@@ -10,27 +10,12 @@ const MainEm = styled.main`
     margin: 0 auto;
 `;
 
-const Products = styled.ul`
-    display: grid;
-    grid-template: auto / repeat(3, 1fr);
-    gap: 58px;
-    @media screen and (max-width: 1100px) {
-        gap: 28px;
-    }
-    @media screen and (max-width: 770px) {
-        grid-template: auto / repeat(2, 1fr);
-        gap: 20px;
-    }
-`;
-
 const Main = () => {
     return (
         <>
             <Header />
             <MainEm>
-                <Products>
-                    <ProductInfo />
-                </Products>
+                <ProductInfo />
             </MainEm>
             <Footer />
         </>
