@@ -143,6 +143,20 @@ const RadioLabel = styled.label`
     }
 `;
 
+const StockLabel = styled.div`
+    display: flex;
+`;
+
+const CautionText = styled.strong`
+    display: inline-block;
+    margin-left: 45px;
+    margin-bottom: 10px;
+    color: red;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+`;
+
 const BtnContainer = styled.div`
     margin-top: 50px;
     text-align: right;
@@ -201,7 +215,12 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
         stock?: number;
     };
 
-    const { register, handleSubmit, setValue } = useForm<Inputs>({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<Inputs>({
         mode: 'onChange',
     });
 
@@ -391,13 +410,25 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                             <Unit>원</Unit>
                         </Field>
                         <div>
-                            <Label htmlFor="stock">재고</Label>
+                            <StockLabel>
+                                <Label htmlFor="stock">재고</Label>
+                                {errors.stock && (
+                                    <CautionText>
+                                        {errors.stock.message}
+                                    </CautionText>
+                                )}
+                            </StockLabel>
                             <Input
                                 id="stock"
                                 type="number"
                                 width="166px"
                                 {...register('stock', {
                                     required: '필수정보 입니다.',
+                                    min: {
+                                        value: 1,
+                                        message:
+                                            '재고는 1개 이상 입력해야 합니다.',
+                                    },
                                 })}
                             />
                             <Unit>개</Unit>

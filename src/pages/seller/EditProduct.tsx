@@ -84,6 +84,8 @@ const EditProduct = () => {
                     <H4>*상품 등록 주의 사항</H4>
                     <CautionBox>
                         <p>- 너무 귀여운 사진은 심장이 아파올 수 있습니다.</p>
+                        <p>- 상품명은 20자까지만 등록 가능합니다.</p>
+                        <p>- 재고는 1개 이상 입력해야 합니다.</p>
                     </CautionBox>
                 </CautionWrap>
                 <ProductInput detail={productDetail} />
