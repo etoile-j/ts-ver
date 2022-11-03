@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
-import Logo from '../../assets/Logo-hodu.png';
+import Logo from '../../assets/icon-logoImg.png';
+import LogoTextt from '../../assets/icon-logoText.png';
 import SearchIcon from '../../assets/search.svg';
 import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
 import UserIcon from '../../assets/icon-user.svg';
@@ -37,15 +38,25 @@ const Wrap = styled.div`
     align-items: center;
 `;
 
+const Logos = styled.div`
+    display: flex;
+    align-items: center;
+`;
 const LogoImg = styled.h1`
-    width: 124px;
+    width: 36px;
     height: 38px;
-    margin-right: 30px;
+    margin-right: 4px;
     background-image: url(${Logo});
     background-repeat: no-repeat;
     background-size: contain;
+`;
+const LogoText = styled(LogoImg)`
+    background-image: url(${LogoTextt});
+    width: 73px;
+    height: 30px;
+    margin-right: 25px;
     @media screen and (max-width: 900px) {
-        margin-right: 17px;
+        margin-right: 10px;
     }
 `;
 
@@ -140,7 +151,10 @@ const Header = () => {
             <Nav>
                 <Wrap>
                     <Link to="/">
-                        <LogoImg />
+                        <Logos>
+                            <LogoImg />
+                            <LogoText />
+                        </Logos>
                     </Link>
                     <SearchContainer>
                         <Search

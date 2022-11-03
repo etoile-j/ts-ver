@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/Logo-hodu.png';
+import Logo from '../../assets/icon-logoImg.png';
+import LogoTextt from '../../assets/icon-logoText.png';
 import styled from 'styled-components';
 
 const HeaderEl = styled.header`
@@ -28,13 +29,22 @@ const Wrap = styled.div`
     align-items: center;
 `;
 
+const Logos = styled.div`
+    display: flex;
+    align-items: center;
+`;
 const LogoImg = styled.h1`
-    width: 80px;
-    height: 24px;
-    margin-right: 15px;
+    width: 33px;
+    height: 30px;
     background-image: url(${Logo});
     background-repeat: no-repeat;
     background-size: contain;
+`;
+const LogoText = styled(LogoImg)`
+    background-image: url(${LogoTextt});
+    width: 67px;
+    height: 27px;
+    margin-right: 15px;
 `;
 
 const Container = styled.div`
@@ -54,7 +64,10 @@ const SellerCenterHeader = () => {
             <Nav>
                 <Wrap>
                     <Link to="/">
-                        <LogoImg />
+                        <Logos>
+                            <LogoImg />
+                            <LogoText />
+                        </Logos>
                     </Link>
                     <Container>
                         <H2>판매자 센터</H2>

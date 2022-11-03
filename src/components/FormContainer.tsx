@@ -1,9 +1,26 @@
 import { ReactElement } from 'react';
+import Logo from '../assets/icon-logoImg.png';
+import LogoTextt from '../assets/icon-logoText.png';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const Logo = styled.h1`
+const Logos = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+const LogoImg = styled.h1`
     margin: 70px 0;
-    text-align: center;
+    width: 100px;
+    height: 90px;
+    background-image: url(${Logo});
+    background-repeat: no-repeat;
+    background-size: contain;
+`;
+const LogoText = styled(LogoImg)`
+    background-image: url(${LogoTextt});
+    width: 175px;
+    height: 70px;
 `;
 
 const Container = styled.div`
@@ -57,6 +74,7 @@ const BuyerTap = styled(SellerTap)`
         position: absolute;
         background-color: #ffffff;
         top: 59px;
+        right: -20px;
         width: 90px;
         height: 19px;
     }
@@ -77,7 +95,12 @@ interface IForm {
 const FormContainer = (props: IForm) => {
     return (
         <>
-            <Logo>로고</Logo>
+            <Link to="/">
+                <Logos>
+                    <LogoImg />
+                    <LogoText />
+                </Logos>
+            </Link>
             <Container>
                 <Ul>
                     {props.typeBuyer ? (
