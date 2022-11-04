@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import Logo from '../assets/icon-logoImg.png';
-import LogoTextt from '../assets/icon-logoText.png';
+import Logo from '../../assets/icon-logoImg.png';
+import LogoTextt from '../../assets/icon-logoText.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import FormContainer from 'components/FormContainer';
-import JoinContent from 'components/JoinContent';
+import FormContainer from 'components/register/FormContainer';
+import JoinContent from 'components/register/JoinContent';
 
 const Join = () => {
     const [typeBuyer, setTypeBuyer] = useState(true);

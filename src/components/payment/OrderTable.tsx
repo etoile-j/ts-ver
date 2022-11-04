@@ -98,6 +98,9 @@ const OrderTable = ({ info }: IDirectOrder) => {
                     <Title width="228px">배송비</Title>
                     <Title width="231px">주문금액</Title>
                 </TitleLi>
+                {/* 여기서부터 따로 분리하고 맵 돌리실게요~? */}
+                {/* 다이렉트 오더가 아니면(값이 없으면) Effect 돌리면 되겠다? */}
+                무조건 맵을 돌리는데 다이렉트 오더로 오는 값이 없으면 그 에피아이 돌려서 그 값으로..
                 <OrderLi>
                     <Title width="589px">
                         <Wrap>

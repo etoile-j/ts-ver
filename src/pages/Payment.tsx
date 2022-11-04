@@ -2,11 +2,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
-import DeliveryInfo from 'components/DeliveryInfo';
-import FinalPaymentInfo from 'components/FinalPaymentInfo';
+import DeliveryInfo from 'components/payment/DeliveryInfo';
+import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import OrderTable from 'components/OrderTable';
+import OrderTable from 'components/payment/OrderTable';
 import styled from 'styled-components';
 
 const Main = styled.main`

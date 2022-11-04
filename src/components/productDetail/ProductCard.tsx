@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
-import CountButton from './CountButton';
-import Modal from './modal/Modal';
-import ModalContainer from './modal/ModalContainer';
+import CountButton from '../common/CountButton';
+import Modal from '../modal/Modal';
+import ModalContainer from '../modal/ModalContainer';
 import styled from 'styled-components';
 
 const Wrap = styled.div`

@@ -1,6 +1,6 @@
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
-import ProductCard from 'components/ProductCard';
+import ProductCard from 'components/productDetail/ProductCard';
 import styled from 'styled-components';
 
 const Main = styled.main`

@@ -1,6 +1,6 @@
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import ProductInfo from 'components/ProductInfo';
+import ProductInfo from 'components/main/ProductInfo';
 import styled from 'styled-components';
 
 const MainEm = styled.main`

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
-import Check_off from '../assets/icon-check-off.svg';
-import Check_on from '../assets/icon-check-on.svg';
+import Check_off from '../../assets/icon-check-off.svg';
+import Check_on from '../../assets/icon-check-on.svg';
 import styled from 'styled-components';
 
 interface styledCompo {

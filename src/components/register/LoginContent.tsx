@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { BASE_URL } from '../constants/constants';
+import { BASE_URL } from '../../constants/constants';
 import styled from 'styled-components';
 
 const Form = styled.form`

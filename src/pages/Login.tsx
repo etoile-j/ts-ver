@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import FormContainer from 'components/FormContainer';
-import LoginContent from 'components/LoginContent';
+import FormContainer from 'components/register/FormContainer';
+import LoginContent from 'components/register/LoginContent';
 import styled from 'styled-components';
 
 const Main = styled.main`
