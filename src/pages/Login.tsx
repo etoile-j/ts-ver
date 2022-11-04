@@ -5,8 +5,7 @@ import LoginContent from 'components/register/LoginContent';
 import styled from 'styled-components';
 
 const Main = styled.main`
-    /* width: 550px; */
-    /* margin: 0 auto; */
+    min-width: 767px;
     margin: 0 25px;
 `;
 
