@@ -11,6 +11,7 @@ import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
 import CompletePayment from 'pages/CompletePayment';
 import CompleteJoin from 'pages/CompleteJoin';
+import NotFound from 'pages/NotFound';
 import { GlobalStyle } from './styles/global';
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/seller" element={<DashBoard />} />
                     <Route path="/seller/upload" element={<UploadProduct />} />
                     <Route path="/seller/edit" element={<EditProduct />} />
+                    <Route path="/*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider>
