@@ -11,7 +11,6 @@ interface Iproduct {
 }
 
 const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
-    const [data, setData] = useState([]);
     const token = localStorage.getItem('token');
 
     interface IData {
@@ -34,7 +33,7 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
             );
             console.log(response);
             setCount(response.data.count);
-            setData(response.data.results);
+            return response.data.results;
         } catch (err) {
             console.error(err);
         }
@@ -56,7 +55,7 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
         }
     }, [currentPage, queryClient]);
 
-    const { isLoading } = useQuery(
+    const { data } = useQuery(
         ['product', currentPage],
         () => getProductList(currentPage),
         { keepPreviousData: true },

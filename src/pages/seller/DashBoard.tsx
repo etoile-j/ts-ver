@@ -134,10 +134,17 @@ const PageNum = styled.div`
     text-align: center;
 `;
 
+const Page = styled.button`
+    padding: 0 12px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+`;
+
 const PreviousPage = styled.button`
     width: 13px;
     height: 17px;
-    padding: 0 25px;
+    padding: 0 20px;
     background-image: url(${PreIcon});
     background-repeat: no-repeat;
     background-size: contain;
@@ -152,14 +159,17 @@ const DashBoard = () => {
     const [count, setCount] = useState();
     const [currentPage, setCurrentPage] = useState(1);
 
+    const pages = [];
+    for (let i = 0; i < Math.ceil(count! / 15); i++) {
+        pages.push(i + 1);
+    }
+
     return (
         <>
             <SellerCenterHeader />
             <Main>
                 <HeadingWrap>
-                    <h2>
-                        대시보드<StoreName>스토어 이름</StoreName>
-                    </h2>
+                    <h2>대시보드</h2>
                     <ProductUpload
                         onClick={() =>
                             (window.location.href = '/seller/upload')
@@ -214,7 +224,22 @@ const DashBoard = () => {
                                         : `url(${PreIcon})`,
                             }}
                         />
-                        {currentPage}
+                        {pages.map((page) => {
+                            return (
+                                <Page
+                                    key="page"
+                                    onClick={() => setCurrentPage(page)}
+                                    style={{
+                                        color:
+                                            currentPage === page
+                                                ? '#000000'
+                                                : '#c4c4c4',
+                                    }}
+                                >
+                                    {page}
+                                </Page>
+                            );
+                        })}
                         <NextPage
                             disabled={currentPage >= Math.ceil(count! / 15)}
                             onClick={() =>
