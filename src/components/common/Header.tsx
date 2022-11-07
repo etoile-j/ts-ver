@@ -199,6 +199,12 @@ const Header = () => {
                             >
                                 <img src={UserIcon} />
                                 <span>마이페이지</span>
+                                {openDropdown && (
+                                    <Dropdown
+                                        mouseOver={() => setOpenDropdown(true)}
+                                        mouseOut={() => setOpenDropdown(false)}
+                                    />
+                                )}
                             </MyPage>
                         ) : (
                             <MyPage
@@ -213,7 +219,7 @@ const Header = () => {
                     </li>
                 </Ul>
             </Nav>
-            {openModal ? (
+            {openModal && (
                 <ModalContainer>
                     <Modal
                         close={handleModal}
@@ -223,15 +229,7 @@ const Header = () => {
                         text="로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                     />
                 </ModalContainer>
-            ) : null}
-            {openDropdown ? (
-                <ModalContainer>
-                    <Dropdown
-                        mouseOver={() => setOpenDropdown(true)}
-                        mouseOut={() => setOpenDropdown(false)}
-                    />
-                </ModalContainer>
-            ) : null}
+            )}
         </HeaderEl>
     );
 };

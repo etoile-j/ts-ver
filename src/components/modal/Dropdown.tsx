@@ -10,12 +10,11 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-    position: fixed;
+    position: relative;
     z-index: 10;
-    top: 70px;
-    right: 20px;
+    right: 40px;
     background-color: #ffffff;
-    width: 115px;
+    width: 113px;
     height: 108px;
     padding: 10px;
     border-radius: 10px;
