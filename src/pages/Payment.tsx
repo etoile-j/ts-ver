@@ -80,6 +80,8 @@ interface IDirectOrder {
     shipping_fee: number;
     price: number;
     total: number;
+    total_price: number;
+    total_shipping: number;
 }
 
 const Payment = ({ defaultValues }: any) => {
@@ -116,29 +118,30 @@ const Payment = ({ defaultValues }: any) => {
 
     const onSubmit = (data: Inputs) => {
         console.log('훅폼', data, data.address2);
-        handleDirectOrder(data);
+        handleOrder(data);
     };
 
     const token = localStorage.getItem('token');
 
-    const handleDirectOrder = async (data: Inputs) => {
+    const handleOrder = async (data: Inputs) => {
         try {
             const url: string = BASE_URL + '/order/';
             const response = await axios.post(
                 url,
                 {
                     product_id: info.product_id,
-                    quantity: info.quantity,
+                    quantity: order[0].quantity,
                     order_kind: info.order_kind,
-
+                    total_price:
+                        info.order_kind === 'cart_order'
+                            ? info.total_price + info.total_shipping
+                            : info.total,
                     receiver: data.name,
                     receiver_phone_number:
                         data.phone1 + data.phone2 + data.phone3,
                     address: data.address1 + ' ' + data.address2,
                     address_message: data.deliveryMessage,
                     payment_method: data.paymentMethod,
-
-                    total_price: info.price * info.quantity + info.shipping_fee,
                 },
                 {
                     headers: {
@@ -171,7 +174,11 @@ const Payment = ({ defaultValues }: any) => {
                     <Total>
                         총 주문금액
                         <strong>
-                            {info.total.toLocaleString('ko-KR')}
+                            {info.order_kind === 'cart_order'
+                                ? (
+                                      info.total_price + info.total_shipping
+                                  ).toLocaleString('ko-KR')
+                                : info.total.toLocaleString('ko-KR')}
                             <span>원</span>
                         </strong>
                     </Total>
@@ -234,11 +241,14 @@ const Payment = ({ defaultValues }: any) => {
                         </section>
                         <Section>
                             <Heading>최종결제 정보</Heading>
-                            {/* <FinalPaymentInfo
-                                info={info}
+                            <FinalPaymentInfo
+                                info={order}
+                                type={info.order_kind}
+                                price={info.total_price}
+                                shipping={info.total_shipping}
                                 register={register}
                                 isValid={isValid}
-                            /> */}
+                            />
                         </Section>
                     </Container>
                 </form>
