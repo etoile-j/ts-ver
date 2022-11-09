@@ -203,7 +203,8 @@ const Cart = () => {
             navigate('/payment', {
                 state: {
                     order_kind: 'cart_order',
-                    total: totalPrice + totalShipping,
+                    total_price: totalPrice,
+                    total_shipping: totalShipping,
                     order_product: checkedproduct,
                 },
             });

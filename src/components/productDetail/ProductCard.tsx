@@ -326,13 +326,23 @@ const ProductCard = () => {
                                     navigate('/payment', {
                                         state: {
                                             product_id: product_id,
-                                            totalCount: count,
                                             order_kind: 'direct_order',
-                                            image: product?.image,
-                                            SellerName: product?.store_name,
-                                            productName: product?.product_name,
-                                            shippingFee: product?.shipping_fee,
-                                            price: product?.price,
+                                            total:
+                                                count * product?.price! +
+                                                product?.shipping_fee!,
+                                            order_product: [
+                                                {
+                                                    quantity: count,
+                                                    image: product?.image,
+                                                    store_name:
+                                                        product?.store_name,
+                                                    product_name:
+                                                        product?.product_name,
+                                                    shipping_fee:
+                                                        product?.shipping_fee,
+                                                    price: product?.price,
+                                                },
+                                            ],
                                         },
                                     });
                                 }
@@ -391,7 +401,7 @@ const ProductCard = () => {
                 <ModalContainer>
                     <Modal
                         close={handleAddedModal}
-                        ok={() => (window.location.href = '/shoppingcart')}
+                        ok={() => (window.location.href = '/cart')}
                         leftBtn="아니오"
                         rightBtn="예"
                         text="장바구니에 상품이 담겼습니다. 장바구니로 가시겠습니까?"

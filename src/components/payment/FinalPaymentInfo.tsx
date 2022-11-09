@@ -80,19 +80,23 @@ const GrayBtn = styled.button`
 `;
 
 interface IDirectOrder {
-    info: {
-        product_id: number;
-        totalCount: number;
-        order_kind: string;
-        image: string;
-        SellerName: string;
-        productName: string;
-        shippingFee: number;
-        price: number;
-    };
+    quantity: number;
+    shipping_fee: number;
+    price: number;
 }
 
-const FinalPaymentInfo = ({ info, register, isValid }: IDirectOrder | any) => {
+const FinalPaymentInfo = ({
+    info,
+    type,
+    price,
+    shipping,
+    register,
+    isValid,
+}: IDirectOrder | any) => {
+    console.log('info', info);
+    console.log('info..', info[0].price);
+    console.log('type', type);
+
     return (
         <>
             <Container>
@@ -100,9 +104,11 @@ const FinalPaymentInfo = ({ info, register, isValid }: IDirectOrder | any) => {
                     <Div>
                         <H4>- 상품금액</H4>
                         <Price>
-                            {(info.price * info.totalCount).toLocaleString(
-                                'ko-KR',
-                            )}
+                            {type === 'cart_order'
+                                ? price.toLocaleString('ko-KR')
+                                : (
+                                      info[0].price * info[0].quantity
+                                  ).toLocaleString('ko-KR')}
                             <span>원</span>
                         </Price>
                     </Div>
@@ -115,17 +121,21 @@ const FinalPaymentInfo = ({ info, register, isValid }: IDirectOrder | any) => {
                     <Div>
                         <H4>- 배송비</H4>
                         <Price>
-                            {info.shippingFee.toLocaleString('ko-KR')}
+                            {type === 'cart_order'
+                                ? shipping.toLocaleString('ko-KR')
+                                : info[0].shipping_fee.toLocaleString('ko-KR')}
                             <span>원</span>
                         </Price>
                     </Div>
                     <PaymentDiv>
                         <H4>- 결제금액</H4>
                         <PaymentPrice>
-                            {(
-                                info.price * info.totalCount +
-                                info.shippingFee
-                            ).toLocaleString('ko-KR')}
+                            {type === 'cart_order'
+                                ? (price + shipping).toLocaleString('ko-KR')
+                                : (
+                                      info[0].price * info[0].quantity +
+                                      info[0].shipping_fee
+                                  ).toLocaleString('ko-KR')}
                             <span>원</span>
                         </PaymentPrice>
                     </PaymentDiv>

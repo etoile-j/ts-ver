@@ -346,13 +346,20 @@ const CartContent = (cartData: ICartData) => {
                         navigate('/payment', {
                             state: {
                                 product_id: detail?.product_id,
-                                quantity: cartData.quantity,
                                 order_kind: 'cart_one_order',
-                                image: detail?.image,
-                                Seller_name: detail?.store_name,
-                                product_name: detail?.product_name,
-                                shipping_fee: detail?.shipping_fee,
-                                price: detail?.price,
+                                total:
+                                    cartData.quantity * detail?.price! +
+                                    detail?.shipping_fee!,
+                                order_product: [
+                                    {
+                                        quantity: cartData.quantity,
+                                        image: detail?.image,
+                                        store_name: detail?.store_name,
+                                        product_name: detail?.product_name,
+                                        shipping_fee: detail?.shipping_fee,
+                                        price: detail?.price,
+                                    },
+                                ],
                             },
                         })
                     }
