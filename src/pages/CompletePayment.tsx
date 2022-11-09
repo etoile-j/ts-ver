@@ -1,8 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import Header from 'components/common/Header';
+import Notification from 'components/common/Notification';
 import styled from 'styled-components';
 
 const Main = styled.main`
+    position: relative;
     max-width: 1280px;
     margin: 0 20px;
 `;
@@ -21,12 +23,19 @@ const CompletePayment = () => {
         <>
             <Header />
             <Main>
-                <h2>주문이 완료되었습니다.</h2>
-                <OrderNum>
-                    주문번호 :{' '}
-                    {info.created_at.slice(0, 10).replaceAll('-', '')} - 0000
-                    {info.order_number}
-                </OrderNum>
+                <Notification
+                    mainText="주문이 완료되었습니다."
+                    subText1={`주문번호 :${' '}
+                    ${info.created_at.slice(0, 10).replaceAll('-', '')} - 0000${
+                        info.order_number
+                    }`}
+                    subText2={`주문일자 : ${info.created_at
+                        .slice(0, 19)
+                        .replace('T', ' ')}`}
+                    rightText="메인으로"
+                    rightBtn={() => (window.location.href = '/')}
+                    leftNone="none"
+                />
             </Main>
         </>
     );
