@@ -5,7 +5,7 @@ import Login from 'pages/Login';
 import Main from 'pages/Main';
 import Payment from 'pages/Payment';
 import ProductDetails from 'pages/ProductDetails';
-import ShoppingCart from 'pages/ShoppingCart';
+import Cart from 'pages/Cart';
 import UploadProduct from 'pages/seller/UploadProduct';
 import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
@@ -30,7 +30,7 @@ function App() {
                         path="/detail/:product_id"
                         element={<ProductDetails />}
                     />
-                    <Route path="/shoppingcart" element={<ShoppingCart />} />
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="/payment" element={<Payment />} />
                     <Route
                         path="/complete_payment"

@@ -173,9 +173,7 @@ const Header = () => {
                             </ShoppingCartBtn>
                         ) : localStorage.getItem('login_type') === 'BUYER' ? (
                             <ShoppingCartBtn
-                                onClick={() =>
-                                    (window.location.href = '/shoppingcart')
-                                }
+                                onClick={() => (window.location.href = '/cart')}
                             >
                                 <img src={ShoppingCartIcon} />
                                 <span>장바구니</span>
