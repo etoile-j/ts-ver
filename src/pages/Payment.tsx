@@ -14,6 +14,21 @@ const Main = styled.main`
     margin: 0 20px;
 `;
 
+const Total = styled.div`
+    text-align: right;
+    margin: 30px 0 90px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 23px;
+    & > strong {
+        margin-left: 10px;
+        color: red;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+    }
+`;
+
 const Section = styled.section`
     margin-left: 40px;
 `;
@@ -57,18 +72,23 @@ const KakkoLabel = styled(Label)`
 
 interface IDirectOrder {
     product_id: number;
-    totalCount: number;
+    quantity: number;
     order_kind: string;
     image: string;
-    SellerName: string;
-    productName: string;
-    shippingFee: number;
+    store_name: string;
+    product_name: string;
+    shipping_fee: number;
     price: number;
+    total: number;
 }
 
 const Payment = ({ defaultValues }: any) => {
     const navigate = useNavigate();
     const info: IDirectOrder = useLocation().state;
+    const order = useLocation().state.order_product;
+    console.log(info);
+    console.log(order);
+
     type Inputs = {
         name: string;
         phone1: number;
@@ -108,16 +128,17 @@ const Payment = ({ defaultValues }: any) => {
                 url,
                 {
                     product_id: info.product_id,
-                    quantity: info.totalCount,
+                    quantity: info.quantity,
                     order_kind: info.order_kind,
+
                     receiver: data.name,
                     receiver_phone_number:
                         data.phone1 + data.phone2 + data.phone3,
                     address: data.address1 + ' ' + data.address2,
                     address_message: data.deliveryMessage,
                     payment_method: data.paymentMethod,
-                    total_price:
-                        info.price * info.totalCount + info.shippingFee,
+
+                    total_price: info.price * info.quantity + info.shipping_fee,
                 },
                 {
                     headers: {
@@ -146,7 +167,14 @@ const Payment = ({ defaultValues }: any) => {
                 <h2>주문/결제하기</h2>
                 <section>
                     {/* <Heading>주문 목록</Heading> */}
-                    <OrderTable info={info} />
+                    <OrderTable info={order} />
+                    <Total>
+                        총 주문금액
+                        <strong>
+                            {info.total.toLocaleString('ko-KR')}
+                            <span>원</span>
+                        </strong>
+                    </Total>
                 </section>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <section>
@@ -206,11 +234,11 @@ const Payment = ({ defaultValues }: any) => {
                         </section>
                         <Section>
                             <Heading>최종결제 정보</Heading>
-                            <FinalPaymentInfo
+                            {/* <FinalPaymentInfo
                                 info={info}
                                 register={register}
                                 isValid={isValid}
-                            />
+                            /> */}
                         </Section>
                     </Container>
                 </form>

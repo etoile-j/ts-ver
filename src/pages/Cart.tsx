@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../constants/constants';
-import CartContent from 'components/shoppingCart/CartContent';
+import CartContent from 'components/cart/CartContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
-import NoneCartContent from 'components/shoppingCart/NoneCartContent';
+import NoneCartContent from 'components/cart/NoneCartContent';
 import MinusIcon from '../assets/icon-minus-line.svg';
 import PlusIcon from '../assets/icon-plus-line.svg';
 import styled from 'styled-components';
@@ -136,13 +137,16 @@ const Won = styled.span`
     line-height: 23px;
 `;
 
-const ShoppingCart = () => {
-    const [cartData, setCartData] = useState<any[]>([]);
+const Cart = () => {
+    const [cartData, setCartData] = useState<ICartData[]>([]);
     const [cartCount, setCartCount] = useState();
     const [changeActive, setChangeActive] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalShipping, setTotalShipping] = useState(0);
     const token = localStorage.getItem('token');
+    const [allSwitch, setAllSwitch] = useState(false);
+    const [checkedproduct, setCheckedproduct] = useState([]);
+    const [putInfo, setPutInfo] = useState(false);
 
     const handleGetCart = async () => {
         try {
@@ -173,26 +177,42 @@ const ShoppingCart = () => {
     const [checkItems, setCheckItems] = useState<number[]>([]);
     const handleAllCheck = (checked: boolean) => {
         if (checked) {
+            setTotalPrice(0);
+            setTotalShipping(0);
             const idArray: number[] = [];
             cartData.forEach((el) => idArray.push(el.cart_item_id));
-            const idArray22: number[] = [];
-            cartData.forEach((el) => idArray22.push(el.quantity));
-            console.log(idArray22);
             setCheckItems(idArray);
+            setAllSwitch(!allSwitch);
         } else {
             setCheckItems([]);
             setTotalPrice(0);
             setTotalShipping(0);
+            setAllSwitch(!allSwitch);
         }
     };
     console.log(checkItems);
 
-    // const all = document.getElementById('All') as HTMLInputElement;
-    // useEffect(() => {
-    //     if (all != null) {
-    //         all.checked = true;
-    //     }
-    // }, [handleGetCart]);
+    const navigate = useNavigate();
+
+    const handlePutInfo = () => {
+        setPutInfo((bool: boolean) => !bool);
+    };
+
+    const handleSubmit = () => {
+        if (checkedproduct.length !== 0) {
+            navigate('/payment', {
+                state: {
+                    order_kind: 'cart_order',
+                    total: totalPrice + totalShipping,
+                    order_product: checkedproduct,
+                },
+            });
+        }
+    };
+
+    useEffect(() => {
+        handleSubmit();
+    }, [handlePutInfo]);
 
     return (
         <>
@@ -232,11 +252,14 @@ const ShoppingCart = () => {
                                             checkItems={checkItems}
                                             setCheckItems={setCheckItems}
                                             changeActive={changeActive}
-                                            totalPrice={totalPrice}
                                             setTotalPrice={setTotalPrice}
-                                            totalShipping={totalShipping}
                                             setTotalShipping={setTotalShipping}
                                             handleAllCheck={handleAllCheck}
+                                            allSwitch={allSwitch}
+                                            setCheckedproduct={
+                                                setCheckedproduct
+                                            }
+                                            putInfo={putInfo}
                                         />
                                     </Container>
                                 );
@@ -276,7 +299,10 @@ const ShoppingCart = () => {
                             </Result>
                         </CartResult>
                         <OrderBtnBig
-                            onClick={() => setChangeActive(true)}
+                            onClick={() => {
+                                setChangeActive(true);
+                                handlePutInfo();
+                            }}
                             style={{
                                 backgroundColor:
                                     checkItems.length === 0
@@ -298,4 +324,4 @@ const ShoppingCart = () => {
         </>
     );
 };
-export default ShoppingCart;
+export default Cart;

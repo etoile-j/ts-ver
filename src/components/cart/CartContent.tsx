@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
-import CountButton from 'components/CountButton';
+import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
 import DeleteIcon from '../../assets/icon-delete.svg';
@@ -144,11 +144,12 @@ interface ICartData {
     checkItems: number[];
     setCheckItems: React.Dispatch<React.SetStateAction<number[]>>;
     changeActive: boolean;
-    totalPrice: number;
     setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
-    totalShipping: number;
     setTotalShipping: React.Dispatch<React.SetStateAction<number>>;
     handleAllCheck: Function;
+    allSwitch: boolean;
+    setCheckedproduct: React.Dispatch<React.SetStateAction<any>>;
+    putInfo: boolean;
 }
 
 const CartContent = (cartData: ICartData) => {
@@ -183,7 +184,11 @@ const CartContent = (cartData: ICartData) => {
             setDetail(response.data);
             console.log(response);
             if (response.status === 200) {
-                cartData.handleAllCheck(true);
+                setDetail((pre: any) => ({
+                    ...pre,
+                    quantity: cartData.quantity,
+                }));
+                // cartData.handleAllCheck(true);
             }
         } catch (err) {
             console.error(err);
@@ -240,21 +245,17 @@ const CartContent = (cartData: ICartData) => {
         if (checked) {
             cartData.setCheckItems([...cartData.checkItems, id]);
             cartData.setTotalPrice(
-                cartData.totalPrice + detail?.price! * cartData.quantity,
+                (pre) => pre + detail?.price! * cartData.quantity,
             );
-            cartData.setTotalShipping(
-                cartData.totalShipping + detail?.shipping_fee!,
-            );
+            cartData.setTotalShipping((pre) => pre + detail?.shipping_fee!);
         } else {
             cartData.setCheckItems(
                 cartData.checkItems.filter((el) => el !== id),
             );
             cartData.setTotalPrice(
-                cartData.totalPrice - detail?.price! * cartData.quantity,
+                (pre) => pre - detail?.price! * cartData.quantity,
             );
-            cartData.setTotalShipping(
-                cartData.totalShipping - detail?.shipping_fee!,
-            );
+            cartData.setTotalShipping((pre) => pre - detail?.shipping_fee!);
         }
     };
 
@@ -264,6 +265,25 @@ const CartContent = (cartData: ICartData) => {
     ) {
         handelPutCount(false);
     }
+
+    useEffect(() => {
+        if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
+            cartData.setTotalPrice(
+                (pre) => pre + detail?.price! * cartData.quantity,
+            );
+            cartData.setTotalShipping((pre) => pre + detail?.shipping_fee!);
+        }
+    }, [cartData.allSwitch]);
+
+    useEffect(() => {
+        if (
+            // cartData.putInfo === true &&
+            cartData.checkItems.includes(cartData.cart_item_id) === true
+        ) {
+            cartData.setCheckedproduct((pre: any) => [...pre, detail]);
+        }
+    }, [cartData.putInfo]);
+    console.log('detail', detail);
 
     return (
         <>
@@ -326,12 +346,12 @@ const CartContent = (cartData: ICartData) => {
                         navigate('/payment', {
                             state: {
                                 product_id: detail?.product_id,
-                                totalCount: cartData.quantity,
+                                quantity: cartData.quantity,
                                 order_kind: 'cart_one_order',
                                 image: detail?.image,
-                                SellerName: detail?.store_name,
-                                productName: detail?.product_name,
-                                shippingFee: detail?.shipping_fee,
+                                Seller_name: detail?.store_name,
+                                product_name: detail?.product_name,
+                                shipping_fee: detail?.shipping_fee,
                                 price: detail?.price,
                             },
                         })

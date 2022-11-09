@@ -60,35 +60,18 @@ const Price = styled.strong`
     line-height: 23px;
 `;
 
-const Total = styled.div`
-    text-align: right;
-    margin: 30px 0 90px;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 23px;
-    & > strong {
-        margin-left: 10px;
-        color: red;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 30px;
-    }
-`;
-
 interface IDirectOrder {
-    info: {
-        product_id: number;
-        totalCount: number;
-        order_kind: string;
-        image: string;
-        SellerName: string;
-        productName: string;
-        shippingFee: number;
-        price: number;
-    };
+    quantity: number;
+    image: string;
+    store_name: string;
+    product_name: string;
+    shipping_fee: number;
+    price: number;
 }
 
-const OrderTable = ({ info }: IDirectOrder) => {
+const OrderTable = ({ info }: { info: [] }) => {
+    console.log(info);
+
     return (
         <>
             <ul>
@@ -98,46 +81,43 @@ const OrderTable = ({ info }: IDirectOrder) => {
                     <Title width="228px">배송비</Title>
                     <Title width="231px">주문금액</Title>
                 </TitleLi>
-                {/* 여기서부터 따로 분리하고 맵 돌리실게요~? */}
-                {/* 다이렉트 오더가 아니면(값이 없으면) Effect 돌리면 되겠다? */}
-                무조건 맵을 돌리는데 다이렉트 오더로 오는 값이 없으면 그 에피아이 돌려서 그 값으로..
-                <OrderLi>
-                    <Title width="589px">
-                        <Wrap>
-                            <ProductImg src={info.image}></ProductImg>
-                            <div>
-                                <GrayFont>{info.SellerName}</GrayFont>
-                                <ProductName>{info.productName} </ProductName>
-                                <GrayFont>수량: {info.totalCount}개</GrayFont>
-                            </div>
-                        </Wrap>
-                    </Title>
-                    <Title width="232px">-</Title>
-                    <Title width="228px">
-                        {info.shippingFee === 0
-                            ? '무료배송'
-                            : `${info.shippingFee.toLocaleString('ko-KR')}원`}
-                    </Title>
-                    <Title width="231px">
-                        <Price>
-                            {(info.price * info.totalCount).toLocaleString(
-                                'ko-KR',
-                            )}
-                            원
-                        </Price>
-                    </Title>
-                </OrderLi>
+                {info.map((info: IDirectOrder) => {
+                    return (
+                        <OrderLi>
+                            <Title width="589px">
+                                <Wrap>
+                                    <ProductImg src={info.image}></ProductImg>
+                                    <div>
+                                        <GrayFont>{info.store_name}</GrayFont>
+                                        <ProductName>
+                                            {info.product_name}{' '}
+                                        </ProductName>
+                                        <GrayFont>
+                                            수량: {info.quantity}개
+                                        </GrayFont>
+                                    </div>
+                                </Wrap>
+                            </Title>
+                            <Title width="232px">-</Title>
+                            <Title width="228px">
+                                {info.shipping_fee === 0
+                                    ? '무료배송'
+                                    : `${info.shipping_fee.toLocaleString(
+                                          'ko-KR',
+                                      )}원`}
+                            </Title>
+                            <Title width="231px">
+                                <Price>
+                                    {(
+                                        info.price * info.quantity
+                                    ).toLocaleString('ko-KR')}
+                                    원
+                                </Price>
+                            </Title>
+                        </OrderLi>
+                    );
+                })}
             </ul>
-            <Total>
-                총 주문금액
-                <strong>
-                    {(
-                        info.price * info.totalCount +
-                        info.shippingFee
-                    ).toLocaleString('ko-KR')}
-                    <span>원</span>
-                </strong>
-            </Total>
         </>
     );
 };
