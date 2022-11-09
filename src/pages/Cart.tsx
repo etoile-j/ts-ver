@@ -14,7 +14,8 @@ interface styledCompo {
 }
 
 const Main = styled.main`
-    max-width: 1280px;
+    max-width: 1300px;
+    min-width: 767px;
     margin: 0 auto;
     padding: 0 20px;
 `;
@@ -72,6 +73,7 @@ const CartResult = styled.ul`
     align-items: center;
     height: 150px;
     margin: 80px 0 40px;
+    padding: 0 10px;
     border-radius: 10px;
 `;
 
@@ -129,12 +131,20 @@ const ResultPrice = styled.strong`
     font-weight: 700;
     font-size: 36px;
     line-height: 45px;
+    @media screen and (max-width: 830px) {
+        font-size: 30px;
+        line-height: 38px;
+    }
 `;
 const Won = styled.span`
     color: red;
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
+    @media screen and (max-width: 830px) {
+        font-size: 16px;
+        line-height: 20px;
+    }
 `;
 
 const Cart = () => {
@@ -218,8 +228,8 @@ const Cart = () => {
     return (
         <>
             <Header />
-            <h2>장바구니</h2>
             <Main>
+                <h2>장바구니</h2>
                 <TitleLi>
                     <Content width="90px">
                         <input

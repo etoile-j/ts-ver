@@ -10,8 +10,10 @@ import OrderTable from 'components/payment/OrderTable';
 import styled from 'styled-components';
 
 const Main = styled.main`
-    max-width: 1280px;
-    margin: 0 20px;
+    max-width: 1300px;
+    min-width: 767px;
+    margin: 0 auto;
+    padding: 0 20px;
 `;
 
 const Total = styled.div`

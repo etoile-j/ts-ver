@@ -25,6 +25,9 @@ const Label = styled.label`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
+    @media screen and (max-width: 820px) {
+        width: 98px;
+    }
 `;
 
 const Input = styled.input`

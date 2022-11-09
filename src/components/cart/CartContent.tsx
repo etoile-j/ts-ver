@@ -71,6 +71,12 @@ const Count = styled.button`
     font-size: 18px;
     line-height: 23px;
     text-align: center;
+    @media screen and (max-width: 830px) {
+        width: 41px;
+        height: 41px;
+        font-size: 16px;
+        line-height: 20px;
+    }
 `;
 
 const CountBtn = styled.button.attrs({ type: 'button' })`
@@ -83,6 +89,11 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
     color: transparent;
     font-weight: 500;
     font-size: 18px;
+    @media screen and (max-width: 830px) {
+        width: 41px;
+        height: 41px;
+        font-size: 16px;
+    }
     ::before {
         content: '';
         background-color: #c4c4c4;
@@ -91,6 +102,11 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
         left: 15px;
         width: 18px;
         height: 2px;
+        @media screen and (max-width: 830px) {
+            top: 19px;
+            left: 13px;
+            width: 14px;
+        }
     }
 `;
 
@@ -104,6 +120,11 @@ const CountBtnplus = styled(CountBtn)`
         left: 23px;
         width: 2px;
         height: 18px;
+        @media screen and (max-width: 830px) {
+            top: 13px;
+            left: 19px;
+            height: 14px;
+        }
     }
 `;
 

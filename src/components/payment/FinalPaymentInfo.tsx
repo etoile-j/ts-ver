@@ -8,6 +8,9 @@ const Container = styled.div`
     width: 480px;
     border: 2px solid #6997f7;
     border-radius: 10px;
+    @media screen and (max-width: 820px) {
+        width: 425px;
+    }
 `;
 
 const WhiteWrap = styled.div`
@@ -94,8 +97,6 @@ const FinalPaymentInfo = ({
     isValid,
 }: IDirectOrder | any) => {
     console.log('info', info);
-    console.log('info..', info[0].price);
-    console.log('type', type);
 
     return (
         <>
