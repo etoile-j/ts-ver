@@ -140,6 +140,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [id, setId] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
     const [passText, setPassText] = useState<string>();
+    const [passId, setPassId] = useState(false);
+
+    console.log('passId', passId);
 
     type Inputs = {
         id: string;
@@ -161,11 +164,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         handleSubmit,
         getValues,
         formState: { errors, isValid },
-    } = useForm<Inputs>({ mode: 'onBlur' });
+    } = useForm<Inputs>({ mode: 'onChange' });
 
     const onSubmit = (data: any) => {
         console.log('훅', data);
-        if (typeBuyers === true) {
+        if (!passId) {
+            setCautionText('중복확인을 해주세요.');
+        } else if (typeBuyers === true) {
             handleBuyerJoin(data);
         } else {
             handleSellerJoin(data);
@@ -175,10 +180,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     useEffect(() => {
         setCautionText('');
         setPassText('');
+        setPassId(false);
     }, [id]);
 
-    const regex = /^[a-z]+[a-z0-9]{5,19}$/g; //수정예정
-
+    const regex = /^[A-za-z0-9]{6,19}/g;
     const idValidCheck = async () => {
         try {
             if (!id) {
@@ -197,6 +202,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 });
                 console.log(response);
                 setPassText('사용 가능한 아이디입니다 :)');
+                setPassId(true);
             }
         } catch (err) {
             console.error(err);
@@ -232,7 +238,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
-        } catch (err) {}
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const handleSellerJoin = async (data: Inputs) => {
@@ -251,7 +259,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
-        } catch (err) {}
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -266,7 +276,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         {...register('id', {
                             required: '필수정보 입니다.',
                             pattern: {
-                                value: /^[a-z]+[a-z0-9]{5,19}$/g,
+                                value: regex,
                                 message:
                                     '6~20자의 영문 소문자, 대문자, 숫자만 사용 가능합니다.',
                             },
@@ -357,6 +367,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         width="100%"
                         {...register('name', {
                             required: '필수정보 입니다.',
+                            pattern: {
+                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                message: '한글, 영문만 입력 가능합니다.',
+                            },
                         })}
                     />
                 </div>
@@ -376,6 +390,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                     value: 3,
                                     message: '모두 입력해주세요.',
                                 },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
+                                },
                             })}
                         />
                         <PhoneInput
@@ -388,6 +406,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                     value: 3,
                                     message: '모두 입력해주세요.',
                                 },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
+                                },
                             })}
                         />
                         <PhoneInput
@@ -399,6 +421,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 minLength: {
                                     value: 4,
                                     message: '모두 입력해주세요.',
+                                },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
                                 },
                             })}
                         />
@@ -446,6 +472,11 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 width="346px"
                                 {...register('companyNum', {
                                     required: '필수정보 입니다.',
+                                    pattern: {
+                                        value: /^[0-9]{10}$/,
+                                        message:
+                                            '숫자 10자리만 입력 가능합니다.',
+                                    },
                                 })}
                             />
                             <VaildCheckBtn
@@ -455,6 +486,11 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 인증
                             </VaildCheckBtn>
                         </div>
+                        {errors.companyNum && (
+                            <CautionText>
+                                {errors.companyNum.message}
+                            </CautionText>
+                        )}
                         <Div>
                             <Label htmlFor="storeName">스토어 이름</Label>
                             <Input
