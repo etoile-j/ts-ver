@@ -66,7 +66,7 @@ const Footer = () => {
         <FooterEl>
             <Div>
                 <Ul>
-                    <Li>ㅇㅇ샵 소개</Li>
+                    <Li>OUR SHOP 소개</Li>
                     <Li>이용약관</Li>
                     <Li>개인정보처리방침</Li>
                     <Li>전자금융거래약관</Li>
@@ -80,9 +80,9 @@ const Footer = () => {
                     />
                 </Ul>
                 <Address>
-                    <Strong>(주)ㅇㅇ SHOP</Strong>
+                    <Strong>(주)OUR SHOP</Strong>
                     <br />
-                    제주특별자치도 제주시 한립읍 123
+                    서울특별시 서초구 OUR로 1
                     <br /> 사업자 번호 : 123-4567-8910 | 통신판매업
                     <br /> 대표 : 임수진
                 </Address>

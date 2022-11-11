@@ -108,13 +108,16 @@ const PhoneInput = styled(Input)`
 `;
 
 const Div2 = styled.div`
-    /* width: 550px; */
-    /* margin: 0 auto; */
     margin-top: 40px;
     color: #767676;
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
+`;
+
+const Agree = styled.input`
+    float: left;
+    margin: 12px 10px 15px 0;
 `;
 
 const JoinBtn = styled.button`
@@ -472,13 +475,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 )}
                 <Div2>
                     <label>
-                        <input
+                        <Agree
                             type="checkbox"
                             {...register('agreement', {
                                 required: true,
                             })}
                         />
-                        ㅇㅇ샵의 이용약관 및 개인정보처리방침에 대한 내용을
+                        OUR SHOP의 이용약관 및 개인정보처리방침에 대한 내용을
                         확인하였고 동의합니다.
                     </label>
                     <JoinBtn
