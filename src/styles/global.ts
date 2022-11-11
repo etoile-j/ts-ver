@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body{
     background-color: #ffffff;
-    margin: 90px 0 294px;
+    margin: 90px 0 0px;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
   a {

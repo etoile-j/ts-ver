@@ -3,14 +3,18 @@ import styled from 'styled-components';
 
 const FooterEl = styled.footer`
     background-color: #f2f2f2;
-    /* position: absolute; */
     bottom: 0;
+    left: 0;
     width: 100%;
     padding: 0 15px 0;
+    height: 294px;
+    margin-top: 110px;
 `;
 
 const Div = styled.div`
+    background-color: #f2f2f2;
     max-width: 1280px;
+    min-width: 750px;
     margin: 0 auto;
 `;
 
