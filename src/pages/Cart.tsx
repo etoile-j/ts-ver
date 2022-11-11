@@ -15,7 +15,6 @@ interface styledCompo {
 
 const Main = styled.main`
     max-width: 1300px;
-    min-width: 767px;
     margin: 0 auto;
     padding: 0 20px;
 `;

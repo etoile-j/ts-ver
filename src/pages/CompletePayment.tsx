@@ -9,8 +9,6 @@ const Main = styled.main`
     margin: 0 20px;
 `;
 
-const OrderNum = styled.p``;
-
 interface IInfo {
     created_at: string;
     order_number: number;

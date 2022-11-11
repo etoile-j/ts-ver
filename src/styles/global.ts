@@ -11,6 +11,9 @@ export const GlobalStyle = createGlobalStyle`
     margin: 90px 0 0px;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
+  main{
+    min-width: 767px;
+  }
   a {
     color: inherit;
     text-decoration: none;

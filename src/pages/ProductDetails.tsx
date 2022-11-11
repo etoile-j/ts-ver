@@ -6,7 +6,6 @@ import styled from 'styled-components';
 const Main = styled.main`
     padding: 80px 20px 60px;
     max-width: 1300px;
-    min-width: 767px;
     margin: 0 auto;
 `;
 
