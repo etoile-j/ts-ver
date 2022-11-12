@@ -11,4 +11,3 @@ const ModalContainer = ({ children }: Props) => {
 };
 
 export default ModalContainer;
-export {};

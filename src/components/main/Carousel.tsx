@@ -1,21 +1,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Poster from '../../assets/poster1.png';
-import styled from 'styled-components';
-
-const Container = styled.div`
-    margin: 0 auto;
-    padding-bottom: 80px;
-`;
-
-const Temp = styled.div`
-    background-color: lightblue;
-    height: 430px;
-`;
-const Temp2 = styled(Temp)`
-    background-color: lightgray;
-`;
+import { Container, Temp, Temp2 } from './CarouselStyle';
 
 const Carousel = () => {
     const settings = {
@@ -23,6 +9,7 @@ const Carousel = () => {
         infinite: true,
         autoplay: true,
         autoplaySpeed: 2500,
+        arrows: false,
     };
 
     return (
