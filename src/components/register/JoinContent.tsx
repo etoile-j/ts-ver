@@ -32,8 +32,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [cautionText, setCautionText] = useState<string>();
     const [passText, setPassText] = useState<string>();
     const [passId, setPassId] = useState(false);
+    const [passCompany, setPassCompany] = useState(false);
 
     console.log('passId', passId);
+    console.log('passCompany', passCompany);
 
     type Inputs = {
         id: string;
@@ -61,6 +63,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         console.log('훅', data);
         if (!passId) {
             setCautionText('중복확인을 해주세요.');
+            alert('아이디 중복확인이 필요합니다.');
         } else if (typeBuyers === true) {
             handleBuyerJoin(data);
         } else {
@@ -110,6 +113,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 company_registration_number: getValues('companyNum'),
             });
             console.log(response);
+            setPassCompany(true);
         } catch (err) {
             console.error(err);
         }
@@ -137,6 +141,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const handleSellerJoin = async (data: Inputs) => {
         try {
             const url: string = BASE_URL + '/accounts/signup_seller/';
+            if (passCompany == false) {
+                alert('사업자 등록번호 인증이 필요합니다.');
+            }
             const response = await axios.post(url, {
                 username: data.id,
                 password: data.password,
@@ -146,6 +153,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 company_registration_number: data.companyNum,
                 store_name: data.storeName,
             });
+
             console.log(response);
             if (response.status === 201) {
                 window.location.replace('/complete_join');
@@ -165,7 +173,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         width="346px"
                         value={id || ''}
                         {...register('id', {
-                            required: '필수정보 입니다.',
+                            required: '필수 정보입니다.',
                             pattern: {
                                 value: regex,
                                 message:
@@ -191,7 +199,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="password"
                             width="100%"
                             {...register('password', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 pattern: {
                                     value: /^[0-8a-z]+$/,
                                     message:
@@ -221,7 +229,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="password"
                             width="100%"
                             {...register('passwordCheck', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 validate: {
                                     matchingPw: (value) => {
                                         const password = getValues('password');
@@ -257,7 +265,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         type="text"
                         width="100%"
                         {...register('name', {
-                            required: '필수정보 입니다.',
+                            required: '필수 정보입니다.',
                             pattern: {
                                 value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
                                 message: '한글, 영문만 입력 가능합니다.',
@@ -276,14 +284,15 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             width="152px"
                             maxLength={3}
                             {...register('phone1', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 minLength: {
                                     value: 3,
-                                    message: '모두 입력해주세요.',
+                                    message: '모두 입력해 주세요.',
                                 },
                                 pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: '숫자만 입력 가능합니다.',
+                                    value: /^01[0-9]+$/,
+                                    message:
+                                        '01으로 시작하는 숫자만 입력 가능합니다.',
                                 },
                             })}
                         />
@@ -292,10 +301,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             width="152px"
                             maxLength={4}
                             {...register('phone2', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 minLength: {
                                     value: 3,
-                                    message: '모두 입력해주세요.',
+                                    message: '모두 입력해 주세요.',
                                 },
                                 pattern: {
                                     value: /^[0-9]+$/,
@@ -308,10 +317,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             width="152px"
                             maxLength={4}
                             {...register('phone3', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 minLength: {
                                     value: 4,
-                                    message: '모두 입력해주세요.',
+                                    message: '모두 입력해 주세요.',
                                 },
                                 pattern: {
                                     value: /^[0-9]+$/,
@@ -321,16 +330,22 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                     </PhoneNumber>
                 </Div>
-                {errors.phone1 && (
+                {(errors.phone1 && (
                     <CautionText>{errors.phone1.message}</CautionText>
-                )}
+                )) ||
+                    (errors.phone2 && (
+                        <CautionText>{errors.phone2.message}</CautionText>
+                    )) ||
+                    (errors.phone3 && (
+                        <CautionText>{errors.phone3.message}</CautionText>
+                    ))}
                 <Div>
                     <Label>이메일</Label>
                     <Input
                         type="text"
                         width="220px"
                         {...register('emailId', {
-                            required: '필수정보 입니다.',
+                            required: '필수 정보입니다.',
                             pattern: {
                                 value: /^[a-zA-Z0-9-.]+$/,
                                 message: '잘못된 이메일 형식입니다.',
@@ -342,7 +357,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         type="text"
                         width="220px"
                         {...register('emailDomain', {
-                            required: '필수정보 입니다.',
+                            required: '필수 정보입니다.',
                             pattern: {
                                 value: /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                                 message: '잘못된 이메일 형식입니다.',
@@ -350,8 +365,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         })}
                     />
                 </Div>
-                {(errors.emailId || errors.emailDomain) &&
-                    (<CautionText>{errors.emailId?.message}</CautionText> || (
+                {(errors.emailId && (
+                    <CautionText>{errors.emailId?.message}</CautionText>
+                )) ||
+                    (errors.emailDomain && (
                         <CautionText>{errors.emailDomain?.message}</CautionText>
                     ))}
                 {typeBuyers === false && (
@@ -362,11 +379,14 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 type="text"
                                 width="346px"
                                 {...register('companyNum', {
-                                    required: '필수정보 입니다.',
+                                    required: '필수 정보입니다.',
                                     pattern: {
                                         value: /^[0-9]{10}$/,
                                         message:
-                                            '숫자 10자리만 입력 가능합니다.',
+                                            '숫자 10자까지만 입력 가능합니다.',
+                                    },
+                                    onChange(event) {
+                                        setPassCompany(false);
                                     },
                                 })}
                             />
@@ -414,6 +434,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     <JoinBtn
                         type="submit"
                         disabled={isValid ? false : true}
+                        style={{
+                            cursor: isValid ? 'pointer' : 'default',
+                        }}
                         color={isValid ? '#6997f7' : '#c4c4c4'}
                     >
                         가입하기
