@@ -60,7 +60,7 @@ const Payment = ({ defaultValues }: any) => {
     const {
         register,
         handleSubmit,
-        formState: { isValid },
+        formState: { isValid, errors },
     } = methods;
 
     console.log(isValid);
@@ -135,7 +135,7 @@ const Payment = ({ defaultValues }: any) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <section>
                         <Heading>배송 정보</Heading>
-                        <DeliveryInfo register={register} />
+                        <DeliveryInfo register={register} errors={errors} />
                     </section>
                     <Container>
                         <section>

@@ -7,9 +7,10 @@ import {
     AddressInput,
     Hyphen,
     PostCodeBtn,
+    CautionText,
 } from './DeliveryInfoStyle';
 
-const DeliveryInfo = ({ register }: any) => {
+const DeliveryInfo = ({ register, errors }: any) => {
     return (
         <>
             <fieldset>
@@ -45,9 +46,12 @@ const DeliveryInfo = ({ register }: any) => {
                         type="text"
                         width="334px"
                         {...register('name', {
-                            required: '필수정보 입니다.',
+                            required: '필수 정보입니다.',
                         })}
                     />
+                    {errors.name && (
+                        <CautionText>{errors.name.message}</CautionText>
+                    )}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
@@ -57,7 +61,15 @@ const DeliveryInfo = ({ register }: any) => {
                             width="80px"
                             maxLength={3}
                             {...register('phone1', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
+                                minLength: {
+                                    value: 2,
+                                    message: '모두 입력해 주세요.',
+                                },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
+                                },
                             })}
                         />
                         <Hyphen>-</Hyphen>
@@ -66,7 +78,15 @@ const DeliveryInfo = ({ register }: any) => {
                             width="100px"
                             maxLength={4}
                             {...register('phone2', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
+                                minLength: {
+                                    value: 4,
+                                    message: '모두 입력해 주세요.',
+                                },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
+                                },
                             })}
                         />
                         <Hyphen>-</Hyphen>
@@ -75,22 +95,55 @@ const DeliveryInfo = ({ register }: any) => {
                             width="100px"
                             maxLength={4}
                             {...register('phone3', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
+                                minLength: {
+                                    value: 4,
+                                    message: '모두 입력해 주세요.',
+                                },
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: '숫자만 입력 가능합니다.',
+                                },
                             })}
                         />
+
+                        {(errors.phone1 && (
+                            <CautionText>{errors.phone1.message}</CautionText>
+                        )) ||
+                            (errors.phone2 && (
+                                <CautionText>
+                                    {errors.phone2.message}
+                                </CautionText>
+                            )) ||
+                            (errors.phone3 && (
+                                <CautionText>
+                                    {errors.phone3.message}
+                                </CautionText>
+                            ))}
                     </span>
                 </Line>
                 <Line>
                     <Label>배송주소</Label>
                     <Input type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
+                    {(errors.address1 && (
+                        <CautionText>{errors.address1.message}</CautionText>
+                    )) ||
+                        (errors.address2 && (
+                            <CautionText>{errors.address2.message}</CautionText>
+                        )) ||
+                        (errors.deliveryMessage && (
+                            <CautionText>
+                                {errors.deliveryMessage.message}
+                            </CautionText>
+                        ))}
                     <br />
                     <Label></Label>
                     <AddressInput
                         type="text"
                         width="600px"
                         {...register('address1', {
-                            required: '필수정보 입니다.',
+                            required: '주소를 입력해 주세요.',
                         })}
                     />
                     <br />
@@ -99,7 +152,7 @@ const DeliveryInfo = ({ register }: any) => {
                         type="text"
                         width="600px"
                         {...register('address2', {
-                            required: '필수정보 입니다.',
+                            required: '나머지 주소를 입력해 주세요.',
                         })}
                     />
                 </Line>
@@ -108,7 +161,9 @@ const DeliveryInfo = ({ register }: any) => {
                     <Input
                         type="text"
                         width="600px"
-                        {...register('deliveryMessage')}
+                        {...register('deliveryMessage', {
+                            required: '배송 메세지를 입력해 주세요.',
+                        })}
                     />
                 </Line>
             </fieldset>

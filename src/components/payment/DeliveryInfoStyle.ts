@@ -63,6 +63,11 @@ const PostCodeBtn = styled.button`
     line-height: 20px;
 `;
 
+const CautionText = styled.span`
+    margin-left: 30px;
+    color: red;
+`;
+
 export {
     Legend,
     Line,
@@ -72,4 +77,5 @@ export {
     AddressInput,
     Hyphen,
     PostCodeBtn,
+    CautionText,
 };
