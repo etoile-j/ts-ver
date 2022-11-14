@@ -1,12 +1,5 @@
 import Notification from 'components/common/Notification';
-import styled from 'styled-components';
-
-const Main = styled.main`
-    position: relative;
-    max-width: 1300px;
-    margin: 0 auto;
-    text-align: center;
-`;
+import { Main } from './style';
 
 const CompleteJoin = () => {
     return (

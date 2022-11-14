@@ -7,69 +7,17 @@ import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import OrderTable from 'components/payment/OrderTable';
-import styled from 'styled-components';
-
-const Main = styled.main`
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-`;
-
-const Total = styled.div`
-    text-align: right;
-    margin: 30px 0 90px;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 23px;
-    & > strong {
-        margin-left: 10px;
-        color: red;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 30px;
-    }
-`;
-
-const Section = styled.section`
-    margin-left: 40px;
-`;
-
-const Container = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-top: 70px;
-`;
-
-const Wrap = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    padding: 15px 0;
-    border-top: 2px solid #c4c4c4;
-    border-bottom: 2px solid #c4c4c4;
-    line-height: 30px;
-`;
-
-const Heading = styled.h3`
-    padding-bottom: 18px;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-`;
-
-const RadioiInput = styled.input.attrs({
-    type: 'radio',
-    name: 'paymentMethod',
-})`
-    margin: 0 10px 0 8px;
-`;
-
-const Label = styled.label`
-    width: 126px;
-`;
-
-const KakkoLabel = styled(Label)`
-    margin-right: 30px;
-`;
+import {
+    Main,
+    Total,
+    Section,
+    Container,
+    Wrap,
+    Heading,
+    RadioInput,
+    Label,
+    KakkoLabel,
+} from './style';
 
 interface IDirectOrder {
     product_id: number;
@@ -194,7 +142,7 @@ const Payment = ({ defaultValues }: any) => {
                             <Heading>결제수단</Heading>
                             <Wrap>
                                 <Label>
-                                    <RadioiInput
+                                    <RadioInput
                                         value="CARD"
                                         {...register('paymentMethod', {
                                             required: true,
@@ -203,7 +151,7 @@ const Payment = ({ defaultValues }: any) => {
                                     신용/체크카드
                                 </Label>
                                 <Label>
-                                    <RadioiInput
+                                    <RadioInput
                                         value="DEPOSIT"
                                         {...register('paymentMethod', {
                                             required: true,
@@ -212,7 +160,7 @@ const Payment = ({ defaultValues }: any) => {
                                     무통장 입금
                                 </Label>
                                 <Label>
-                                    <RadioiInput
+                                    <RadioInput
                                         value="PHONE_PAYMENT"
                                         {...register('paymentMethod', {
                                             required: true,
@@ -221,7 +169,7 @@ const Payment = ({ defaultValues }: any) => {
                                     휴대폰 결제
                                 </Label>
                                 <Label>
-                                    <RadioiInput
+                                    <RadioInput
                                         value="NAVERPAY"
                                         {...register('paymentMethod', {
                                             required: true,
@@ -230,7 +178,7 @@ const Payment = ({ defaultValues }: any) => {
                                     네이버페이
                                 </Label>
                                 <KakkoLabel>
-                                    <RadioiInput
+                                    <RadioInput
                                         value="KAKAOPAY"
                                         {...register('paymentMethod', {
                                             required: true,

@@ -1,13 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import Header from 'components/common/Header';
 import Notification from 'components/common/Notification';
-import styled from 'styled-components';
-
-const Main = styled.main`
-    position: relative;
-    max-width: 1280px;
-    margin: 0 20px;
-`;
+import { Main } from './style';
 
 interface IInfo {
     created_at: string;

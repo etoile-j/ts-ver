@@ -1,12 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Notification from 'components/common/Notification';
-import styled from 'styled-components';
-
-const Main = styled.main`
-    max-width: 1300px;
-    margin: 0 auto;
-    position: relative;
-`;
+import { Main } from './style';
 
 const NotFound = () => {
     const navigate = useNavigate();

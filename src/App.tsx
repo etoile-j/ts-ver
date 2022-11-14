@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Join from 'pages/Join';
-import Login from 'pages/Login';
-import Main from 'pages/Main';
-import Payment from 'pages/Payment';
-import ProductDetails from 'pages/ProductDetails';
-import Cart from 'pages/Cart';
+import Join from 'pages/join/Join';
+import Login from 'pages/login/Login';
+import Main from 'pages/main/Main';
+import Payment from 'pages/payment/Payment';
+import ProductDetails from 'pages/productDetails/ProductDetails';
+import Cart from 'pages/cart/Cart';
 import UploadProduct from 'pages/seller/UploadProduct';
 import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
-import CompletePayment from 'pages/CompletePayment';
-import CompleteJoin from 'pages/CompleteJoin';
-import NotFound from 'pages/NotFound';
+import CompletePayment from 'pages/notification/CompletePayment';
+import CompleteJoin from 'pages/notification/CompleteJoin';
+import NotFound from 'pages/notification/NotFound';
 import { GlobalStyle } from './styles/global';
 
 const queryClient = new QueryClient();
