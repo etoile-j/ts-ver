@@ -118,13 +118,14 @@ const RadioInput = styled.input.attrs({
     type: 'radio',
     name: 'shippingMethod',
 })`
-    display: none;
+    opacity: 0;
+    margin: 0;
 `;
 const RadioLabel = styled.label`
     display: inline-block;
     background-color: ${(props: styledCompo) => props.color};
     width: 220px;
-    padding: 16px 0;
+    padding: 16px 45px 16px 25px;
     margin-right: 10px;
     border: ${(props: styledCompo) => props.border};
     border-radius: 5px;
@@ -135,11 +136,12 @@ const RadioLabel = styled.label`
     text-align: center;
     cursor: pointer;
     @media screen and (min-width: 870px) and (max-width: 1400px) {
-        width: 154px;
+        width: 156px;
+        padding: 16px 10px 16px 0;
     }
 `;
 
-const StockLabel = styled.div`
+const LabelWrap = styled.div`
     display: flex;
 `;
 
@@ -155,6 +157,7 @@ const CautionText = styled.strong`
 
 const BtnContainer = styled.div`
     margin-top: 50px;
+    margin-bottom: 100px;
     text-align: right;
 `;
 
@@ -195,7 +198,7 @@ export {
     Unit,
     RadioInput,
     RadioLabel,
-    StockLabel,
+    LabelWrap,
     CautionText,
     BtnContainer,
     ColorBtn,

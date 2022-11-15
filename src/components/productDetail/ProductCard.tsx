@@ -33,6 +33,7 @@ interface IProductDetail {
     product_name?: string;
     price?: number;
     shipping_fee: number;
+    shipping_method: string;
     stock: number;
 }
 
@@ -142,9 +143,12 @@ const ProductCard = () => {
                 </div>
                 <div>
                     <DeliveryText>
-                        택배배송 /{' '}
+                        {product?.shipping_method === 'PARCEL'
+                            ? '택배 배송'
+                            : '직접 배송'}{' '}
+                        /{' '}
                         {product?.shipping_fee === 0
-                            ? '무료배송'
+                            ? '무료 배송'
                             : `${product?.shipping_fee.toLocaleString(
                                   'ko-KR',
                               )}원`}

@@ -18,7 +18,7 @@ import {
     Unit,
     RadioInput,
     RadioLabel,
-    StockLabel,
+    LabelWrap,
     CautionText,
     BtnContainer,
     ColorBtn,
@@ -30,6 +30,7 @@ interface IGetDetailForEdit {
     image?: string;
     product_name?: string;
     price?: number;
+    shipping_method?: 'PARCEL' | 'DELIVERY';
     shipping_fee?: number;
     stock?: number;
 }
@@ -69,25 +70,29 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     const onSubmit = (data: Inputs) => {
         console.log('훅폼', data);
         if (detail === undefined) {
-            handelPostProduct(data);
+            handlePostProduct(data);
         } else {
-            handelEditProduct(data);
+            handleEditProduct(data);
         }
     };
 
-    if (detail !== undefined) {
-        setValue('price', detail?.price);
-        setValue('stock', detail?.stock);
-        setValue('shippingFee', detail?.shipping_fee);
-    }
     useEffect(() => {
+        if (detail !== undefined) {
+            setValue('price', detail?.price);
+            setValue('stock', detail?.stock);
+            setValue('shippingFee', detail?.shipping_fee);
+        }
         setName(detail?.product_name);
         setPreImg(detail?.image);
+        if (detail?.shipping_method === 'DELIVERY') {
+            setParcel(false);
+            setDelivery(true);
+        }
     }, [detail]);
 
     const token = localStorage.getItem('token');
 
-    const handelPostProduct = async (data: Inputs) => {
+    const handlePostProduct = async (data: Inputs) => {
         try {
             const url = BASE_URL + '/products/';
             const response = await axios.post(
@@ -118,7 +123,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
         }
     };
 
-    const handelEditProduct = async (data: Inputs) => {
+    const handleEditProduct = async (data: Inputs) => {
         try {
             const response = await axios.patch(
                 BASE_URL + `/products/${detail?.product_id}/`,
@@ -181,19 +186,30 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                             </NameInputWrap>
                         </Field>
                         <Field>
-                            <Label htmlFor="price">판매가</Label>
+                            <LabelWrap>
+                                <Label htmlFor="price">판매가</Label>
+                                {errors.price && (
+                                    <CautionText>
+                                        {errors.price.message}
+                                    </CautionText>
+                                )}
+                            </LabelWrap>
                             <Input
                                 id="price"
                                 type="text"
                                 width="166px"
                                 {...register('price', {
                                     required: '필수정보 입니다.',
+                                    pattern: {
+                                        value: /^[0-9]+$/,
+                                        message: '숫자만 입력 가능합니다.',
+                                    },
                                 })}
                             />
                             <Unit>원</Unit>
                         </Field>
                         <Field>
-                            <Label htmlFor="">배송방법</Label>
+                            <Label htmlFor="">배송 방법</Label>
                             <RadioLabel
                                 onClick={() => {
                                     setParcel(true);
@@ -236,33 +252,44 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                                         required: true,
                                     })}
                                 />
-                                직접배송(화물배달)
+                                직접 배송(화물)
                             </RadioLabel>
                         </Field>
                         <Field>
-                            <Label htmlFor="shippingFee">기본 배송비</Label>
+                            <LabelWrap>
+                                <Label htmlFor="shippingFee">기본 배송비</Label>
+                                {errors.shippingFee && (
+                                    <CautionText>
+                                        {errors.shippingFee.message}
+                                    </CautionText>
+                                )}
+                            </LabelWrap>
                             <Input
                                 id="shippingFee"
                                 type="text"
                                 width="166px"
                                 {...register('shippingFee', {
                                     required: '필수정보 입니다.',
+                                    pattern: {
+                                        value: /^[0-9]+$/,
+                                        message: '숫자만 입력 가능합니다.',
+                                    },
                                 })}
                             />
                             <Unit>원</Unit>
                         </Field>
                         <div>
-                            <StockLabel>
+                            <LabelWrap>
                                 <Label htmlFor="stock">재고</Label>
                                 {errors.stock && (
                                     <CautionText>
                                         {errors.stock.message}
                                     </CautionText>
                                 )}
-                            </StockLabel>
+                            </LabelWrap>
                             <Input
                                 id="stock"
-                                type="number"
+                                type="text"
                                 width="166px"
                                 {...register('stock', {
                                     required: '필수정보 입니다.',
@@ -270,6 +297,10 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                                         value: 1,
                                         message:
                                             '재고는 1개 이상 입력해야 합니다.',
+                                    },
+                                    pattern: {
+                                        value: /^[0-9]+$/,
+                                        message: '숫자만 입력 가능합니다.',
                                     },
                                 })}
                             />
