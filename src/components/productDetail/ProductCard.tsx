@@ -202,17 +202,22 @@ const ProductCard = () => {
                             }}
                             style={{
                                 backgroundColor:
-                                    loginType === 'SELLER'
+                                    loginType === 'SELLER' ||
+                                    product?.stock === 0
                                         ? '#c4c4c4'
                                         : '#6997f7',
                                 cursor:
-                                    loginType === 'SELLER'
+                                    loginType === 'SELLER' ||
+                                    product?.stock === 0
                                         ? 'default'
                                         : 'pointer',
                             }}
-                            disabled={loginType === 'SELLER' && true}
+                            disabled={
+                                loginType === 'SELLER' ||
+                                (product?.stock === 0 && true)
+                            }
                         >
-                            바로 구매
+                            {product?.stock === 0 ? '품절' : '바로 구매'}
                         </ColorBtn>
                         <GrayBtn
                             onClick={() => {
@@ -224,15 +229,20 @@ const ProductCard = () => {
                             }}
                             style={{
                                 backgroundColor:
-                                    loginType === 'SELLER'
+                                    loginType === 'SELLER' ||
+                                    product?.stock === 0
                                         ? '#c4c4c4'
                                         : '#6997f7',
                                 cursor:
-                                    loginType === 'SELLER'
+                                    loginType === 'SELLER' ||
+                                    product?.stock === 0
                                         ? 'default'
                                         : 'pointer',
                             }}
-                            disabled={loginType === 'SELLER' && true}
+                            disabled={
+                                loginType === 'SELLER' ||
+                                (product?.stock === 0 && true)
+                            }
                         >
                             장바구니
                         </GrayBtn>
