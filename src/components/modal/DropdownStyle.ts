@@ -15,7 +15,7 @@ const Container = styled.div`
     right: 40px;
     background-color: #ffffff;
     width: 113px;
-    height: 108px;
+    height: 104px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
@@ -31,7 +31,7 @@ const Button = styled.button.attrs({
     margin-bottom: 5px;
     color: #767676;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     border: 1px solid #ffffff;
     border-radius: 5px;
