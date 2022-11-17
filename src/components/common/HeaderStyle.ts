@@ -129,8 +129,7 @@ const IconUpload = styled.img`
 `;
 
 const MyPage = styled(ShoppingCartBtn)`
-    width: 73px;
-    /* width: 66px; */
+    width: 72px;
     margin-right: 0;
 `;
 

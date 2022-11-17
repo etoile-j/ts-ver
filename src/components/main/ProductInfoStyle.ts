@@ -1,5 +1,16 @@
 import InfiniteScroll from 'react-infinite-scroller';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
 
 const Products = styled(InfiniteScroll)`
     display: grid;
@@ -12,6 +23,10 @@ const Products = styled(InfiniteScroll)`
         grid-template: auto / repeat(2, 1fr);
         gap: 20px;
     }
+`;
+
+const Li = styled.li`
+    animation: ${fadeIn} 1.1s ease-in-out;
 `;
 
 const ImgContainer = styled.div`
@@ -67,6 +82,7 @@ const Won = styled.span`
 
 export {
     Products,
+    Li,
     ImgContainer,
     ProductImg,
     ProductName,

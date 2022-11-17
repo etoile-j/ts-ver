@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
 import {
     Products,
+    Li,
     ImgContainer,
     ProductImg,
     ProductName,
@@ -15,12 +16,8 @@ import {
 const ProductInfo = () => {
     const getProductList = async (url: string) => {
         try {
-            const response = await axios.get(
-                // BASE_URL + `/products/?page=${pageParam}`,
-                url,
-            );
+            const response = await axios.get(url);
             return response.data;
-            console.log(response);
         } catch (err) {
             console.error(err);
         }
@@ -35,7 +32,7 @@ const ProductInfo = () => {
     }
 
     const initialUrl = `${BASE_URL}/products/`;
-    const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
+    const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
         'products',
         ({ pageParam = initialUrl }) => {
             console.log('pageParam', { pageParam });
@@ -46,8 +43,6 @@ const ProductInfo = () => {
         },
     );
 
-    if (isLoading) return <h2>로딩ㅇ중이요</h2>;
-
     return (
         <>
             <Products
@@ -57,7 +52,7 @@ const ProductInfo = () => {
                 {data?.pages.map((pageData) => {
                     return pageData.results.map((products: IProductProps) => {
                         return (
-                            <li key={products.product_id}>
+                            <Li key={products.product_id}>
                                 <Link to={`/detail/${products.product_id}`}>
                                     <ImgContainer>
                                         <ProductImg
@@ -77,7 +72,7 @@ const ProductInfo = () => {
                                         <Won>원</Won>
                                     </Price>
                                 </Link>
-                            </li>
+                            </Li>
                         );
                     });
                 })}
