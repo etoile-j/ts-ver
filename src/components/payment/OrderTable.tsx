@@ -19,8 +19,6 @@ interface IDirectOrder {
 }
 
 const OrderTable = ({ info }: { info: [] }) => {
-    console.log(info);
-
     return (
         <>
             <ul>

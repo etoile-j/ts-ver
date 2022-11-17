@@ -17,7 +17,6 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
     const [id, setId] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
-    console.log(typeBuyers);
 
     const idRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
@@ -26,7 +25,6 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(id, password);
         try {
             const url: string = BASE_URL + '/accounts/login/';
             const response = await axios.post(url, {
@@ -34,11 +32,9 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
                 password: password,
                 login_type: typeBuyers ? 'BUYER' : 'SELLER',
             });
-            console.log(typeBuyers ? 'BUYER' : 'SELLER');
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('login_type', response.data.user_type);
             window.location.replace('/');
-            console.log(response);
         } catch (err) {
             console.error(err);
             if (id === undefined) {

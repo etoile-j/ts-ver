@@ -34,9 +34,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [passId, setPassId] = useState(false);
     const [passCompany, setPassCompany] = useState(false);
 
-    console.log('passId', passId);
-    console.log('passCompany', passCompany);
-
     type Inputs = {
         id: string;
         password: string;
@@ -60,7 +57,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     } = useForm<Inputs>({ mode: 'onChange' });
 
     const onSubmit = (data: Inputs) => {
-        console.log('훅', data);
         if (!passId) {
             setCautionText('중복확인을 해주세요.');
             alert('아이디 중복확인이 필요합니다.');
@@ -94,7 +90,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 const response = await axios.post(url, {
                     username: id,
                 });
-                console.log(response);
                 setPassText('사용 가능한 아이디입니다 :)');
                 setPassId(true);
             }
@@ -112,7 +107,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             const response = await axios.post(url, {
                 company_registration_number: getValues('companyNum'),
             });
-            console.log(response);
             setPassCompany(true);
         } catch (err) {
             console.error(err);
@@ -129,7 +123,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 phone_number: data.phone1 + data.phone2 + data.phone3,
                 name: data.name,
             });
-            console.log(response);
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
@@ -154,7 +147,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 store_name: data.storeName,
             });
 
-            console.log(response);
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }

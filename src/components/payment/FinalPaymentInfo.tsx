@@ -24,8 +24,6 @@ const FinalPaymentInfo = ({
     register,
     isValid,
 }: IDirectOrder | any) => {
-    console.log('info', info);
-
     return (
         <>
             <Container>

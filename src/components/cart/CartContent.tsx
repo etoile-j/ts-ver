@@ -66,7 +66,6 @@ const CartContent = (cartData: ICartData) => {
             const url: string = BASE_URL + `/products/${cartData.product_id}/`;
             const response = await axios.get(url);
             setDetail(response.data);
-            console.log(response);
             if (response.status === 200) {
                 setDetail((pre: any) => ({
                     ...pre,
@@ -98,7 +97,6 @@ const CartContent = (cartData: ICartData) => {
                     },
                 },
             );
-            console.log(response);
             if (response.status === 200 && countModal) {
                 handleCountModal();
                 window.location.reload();
@@ -116,7 +114,6 @@ const CartContent = (cartData: ICartData) => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            console.log(response);
             if (response.status === 204) {
                 window.location.reload();
             }
@@ -167,7 +164,6 @@ const CartContent = (cartData: ICartData) => {
             cartData.setCheckedproduct((pre: any) => [...pre, detail]);
         }
     }, [cartData.putInfo]);
-    console.log('detail', detail);
 
     return (
         <>

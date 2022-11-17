@@ -15,7 +15,6 @@ const EditProduct = () => {
             const response = await axios.get(
                 BASE_URL + `/products/${product_id}`,
             );
-            console.log(response);
             setProductDetail(response.data);
         } catch (err) {
             console.error(err);

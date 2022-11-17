@@ -35,7 +35,6 @@ const ProductInfo = () => {
     const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
         'products',
         ({ pageParam = initialUrl }) => {
-            console.log('pageParam', { pageParam });
             return getProductList(pageParam);
         },
         {

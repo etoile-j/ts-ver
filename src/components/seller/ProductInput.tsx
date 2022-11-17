@@ -68,7 +68,6 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     });
 
     const onSubmit = (data: Inputs) => {
-        console.log('훅폼', data);
         if (detail === undefined) {
             handlePostProduct(data);
         } else {
@@ -114,7 +113,6 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                     },
                 },
             );
-            console.log(response);
             window.location.replace(`/detail/${response.data.product_id}`);
             URL.revokeObjectURL(preImg);
             setPreImg('');
@@ -143,7 +141,6 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                     },
                 },
             );
-            console.log(response);
             window.location.replace(`/detail/${response.data.product_id}`);
             URL.revokeObjectURL(preImg);
             setPreImg('');

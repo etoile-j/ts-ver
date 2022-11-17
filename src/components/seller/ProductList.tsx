@@ -31,7 +31,6 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
                     },
                 },
             );
-            console.log(response);
             setCount(response.data.count);
             return response.data.results;
         } catch (err) {
@@ -44,7 +43,6 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
 
     const queryClient = useQueryClient();
     const totalPage = Math.ceil(count! / 15);
-    console.log(totalPage);
 
     useEffect(() => {
         if (currentPage < totalPage!) {

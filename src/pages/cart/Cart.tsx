@@ -46,7 +46,6 @@ const Cart = () => {
             });
             setCartData(response.data.results);
             setCartCount(response.data.count);
-            console.log(response);
         } catch (err) {
             console.error(err);
         }
@@ -60,7 +59,6 @@ const Cart = () => {
         product_id: number;
         quantity: number;
     }
-    console.log(cartData);
 
     const [checkItems, setCheckItems] = useState<number[]>([]);
     const handleAllCheck = (checked: boolean) => {
@@ -78,7 +76,6 @@ const Cart = () => {
             setAllSwitch(!allSwitch);
         }
     };
-    console.log(checkItems);
 
     const navigate = useNavigate();
 

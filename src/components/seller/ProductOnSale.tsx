@@ -42,7 +42,6 @@ const ProductOnSale = (data: IData) => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            console.log(response);
             if (response.status === 204) {
                 window.location.reload();
             }

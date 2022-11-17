@@ -66,7 +66,6 @@ const ProductCard = () => {
             const response = await axios.get(
                 BASE_URL + `/products/${product_id}/`,
             );
-            console.log(response);
             setProduct(response.data);
         } catch (err) {
             console.error(err);
@@ -86,17 +85,14 @@ const ProductCard = () => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            console.log(response);
             interface ICartData {
                 product_id: number;
             }
             const InCart = response.data.results.map(
                 (cart: ICartData) => cart.product_id,
             );
-            console.log('InCart', InCart);
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);
-            console.log('checkCart', checkCart);
             checkCart === true ? handleAddMoreModal() : postCart(true);
         } catch (err) {
             console.error(err);
@@ -119,7 +115,6 @@ const ProductCard = () => {
                     },
                 },
             );
-            console.log(response);
             if (response.status === 201) {
                 handleAddedModal();
             }

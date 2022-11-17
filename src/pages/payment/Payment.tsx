@@ -37,8 +37,6 @@ const Payment = ({ defaultValues }: any) => {
     const navigate = useNavigate();
     const info: IDirectOrder = useLocation().state;
     const order = useLocation().state.order_product;
-    console.log(info);
-    console.log(order);
 
     type Inputs = {
         name: string;
@@ -63,10 +61,7 @@ const Payment = ({ defaultValues }: any) => {
         formState: { isValid, errors },
     } = methods;
 
-    console.log(isValid);
-
     const onSubmit = (data: Inputs) => {
-        console.log('훅폼', data, data.address2);
         handleOrder(data);
     };
 
@@ -98,7 +93,6 @@ const Payment = ({ defaultValues }: any) => {
                     },
                 },
             );
-            console.log(response);
             if (response.status === 200) {
                 navigate('/complete_payment', {
                     state: {
