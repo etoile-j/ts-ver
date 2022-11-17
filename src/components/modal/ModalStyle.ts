@@ -40,6 +40,8 @@ const Wrap = styled.div`
     border: 1px solid #c4c4c4;
     border-radius: 8px;
     animation: ${fadeIn} 0.15s ease-in-out;
+    box-shadow: rgb(0 0 0 / 20%) 0px 1px 5px -1px,
+        rgb(0 0 0 / 10%) 0px -1px 2px -1px;
 `;
 
 const CloseBtn = styled.button`
@@ -57,8 +59,8 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 210px;
-    height: 110px;
+    width: 247px;
+    height: 113px;
     margin: 0 auto;
     line-height: 20px;
 `;

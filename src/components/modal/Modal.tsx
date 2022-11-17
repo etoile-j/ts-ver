@@ -16,6 +16,7 @@ interface IModal {
     leftBtn?: string;
     rightBtn: string;
     text?: string;
+    text2?: string;
     component?: ReactElement;
     leftNone?: string;
 }
@@ -36,7 +37,10 @@ const Modal = (modal: IModal) => {
                     <CloseBtn onClick={modal.close} />
                     <Content>
                         {modal.component}
-                        <p>{modal.text}</p>
+                        <div>
+                            <p>{modal.text}</p>
+                            <p>{modal.text2}</p>
+                        </div>
                         <div>
                             <BtnLeft
                                 onClick={modal.close}

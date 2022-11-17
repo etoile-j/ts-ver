@@ -256,7 +256,8 @@ const ProductCard = () => {
                         ok={() => (window.location.href = '/login')}
                         leftBtn="아니오"
                         rightBtn="예"
-                        text="로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
+                        text="로그인이 필요한 서비스입니다."
+                        text2="로그인 하시겠습니까?"
                     />
                 </ModalContainer>
             )}
@@ -267,7 +268,8 @@ const ProductCard = () => {
                         ok={() => (window.location.href = '/cart')}
                         leftBtn="아니오"
                         rightBtn="예"
-                        text="장바구니에 상품이 담겼습니다. 장바구니로 가시겠습니까?"
+                        text="장바구니에 상품이 담겼습니다."
+                        text2="장바구니로 가시겠습니까?"
                     />
                 </ModalContainer>
             )}
@@ -281,7 +283,8 @@ const ProductCard = () => {
                         }}
                         leftBtn="아니오"
                         rightBtn="예"
-                        text="장바구니에 동일한 상품이 있습니다. 더 추가하시겠습니까?"
+                        text="장바구니에 동일한 상품이 있습니다."
+                        text2="더 추가하시겠습니까?"
                     />
                 </ModalContainer>
             )}
@@ -291,7 +294,8 @@ const ProductCard = () => {
                         close={handleStockModal}
                         ok={handleStockModal}
                         rightBtn="확인"
-                        text="현재 재고보다 더 많은 수량을 담을 수 없습니다."
+                        text="현재 재고보다 더 많은 수량을"
+                        text2="담을 수 없습니다."
                         leftNone="none"
                     />
                 </ModalContainer>
