@@ -193,9 +193,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             {...register('password', {
                                 required: '필수 정보입니다.',
                                 pattern: {
-                                    value: /^[0-8a-z]+$/,
+                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                                     message:
-                                        '8자 이상, 영문 대소문자, 숫자, 특수문자를 이용하세요.',
+                                        '8자 이상, 최소 하나의 문자 및 하나의 문자를 사용해야 합니다.',
                                 },
                             })}
                         />
