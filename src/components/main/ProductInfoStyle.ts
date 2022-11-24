@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 const fadeIn = keyframes`
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -26,7 +26,7 @@ const Products = styled(InfiniteScroll)`
 `;
 
 const Li = styled.li`
-    animation: ${fadeIn} 1.1s ease-in-out;
+    animation: ${fadeIn} 1s ease;
 `;
 
 const ImgContainer = styled.div`

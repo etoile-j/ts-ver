@@ -76,6 +76,7 @@ const OnListBtn = styled(ListBtn)`
 
 const TableWrap = styled.div`
     overflow: hidden;
+    margin-bottom: 100px;
 `;
 
 const Table = styled.div`
