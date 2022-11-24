@@ -60,10 +60,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         if (!passId) {
             setCautionText('중복확인을 해주세요.');
             alert('아이디 중복확인이 필요합니다.');
-        } else if (typeBuyers === true) {
-            handleBuyerJoin(data);
+        } else if (typeBuyers === false && passCompany == false) {
+            alert('사업자 등록번호 인증이 필요합니다.');
         } else {
-            handleSellerJoin(data);
+            handleJoin(data);
         }
     };
 
@@ -113,30 +113,11 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         }
     };
 
-    const handleBuyerJoin = async (data: Inputs) => {
+    const handleJoin = async (data: Inputs) => {
         try {
-            const url: string = BASE_URL + '/accounts/signup/';
-            const response = await axios.post(url, {
-                username: data.id,
-                password: data.password,
-                password2: data.passwordCheck,
-                phone_number: data.phone1 + data.phone2 + data.phone3,
-                name: data.name,
-            });
-            if (response.status === 201) {
-                window.location.replace('/complete_join');
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const handleSellerJoin = async (data: Inputs) => {
-        try {
-            const url: string = BASE_URL + '/accounts/signup_seller/';
-            if (passCompany == false) {
-                alert('사업자 등록번호 인증이 필요합니다.');
-            }
+            const url =
+                BASE_URL +
+                `/accounts/${typeBuyers ? 'signup/' : 'signup_seller/'}`;
             const response = await axios.post(url, {
                 username: data.id,
                 password: data.password,
@@ -146,7 +127,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 company_registration_number: data.companyNum,
                 store_name: data.storeName,
             });
-
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
