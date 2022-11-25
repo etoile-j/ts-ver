@@ -70,6 +70,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
     const idValidCheck = async () => {
         try {
+            if (idRegex.test(getValues('id')) === false) return;
             const url: string = BASE_URL + '/accounts/signup/valid/username/';
             const response = await axios.post(url, {
                 username: getValues('id'),
@@ -127,7 +128,6 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             }
         } catch (err) {
             console.error(err);
-            // if (axios.isAxiosError(err)) {
             if (err instanceof AxiosError) {
                 if (err.response?.data.phone_number) {
                     setError(
