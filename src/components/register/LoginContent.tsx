@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import {
@@ -17,6 +18,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
     const [id, setId] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [cautionText, setCautionText] = useState<string>();
+    const navigate = useNavigate();
 
     const idRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
@@ -34,7 +36,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('login_type', response.data.user_type);
-            window.location.replace('/');
+            if (response.status === 200) navigate(-1);
         } catch (err) {
             console.error(err);
             if (id === undefined) {
