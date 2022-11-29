@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ScrollToTop from 'components/common/ScrollToTop';
 import Join from 'pages/join/Join';
 import Login from 'pages/login/Login';
 import Main from 'pages/main/Main';
@@ -21,6 +22,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <GlobalStyle />
             <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="/login" element={<Login />} />
