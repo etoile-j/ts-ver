@@ -54,12 +54,12 @@ const Payment = ({ defaultValues }: any) => {
             | 'KAKAOPAY';
         agreement: HTMLInputElement;
     };
-    const methods = useForm({ mode: 'onChange', defaultValues });
+
     const {
         register,
         handleSubmit,
         formState: { isValid, errors },
-    } = methods;
+    } = useForm({ mode: 'onChange', defaultValues });
 
     const onSubmit = (data: Inputs) => {
         handleOrder(data);

@@ -1,4 +1,10 @@
 import {
+    UseFormRegister,
+    FieldValues,
+    FieldError,
+    DeepMap,
+} from 'react-hook-form';
+import {
     Legend,
     Line,
     Label,
@@ -10,7 +16,17 @@ import {
     CautionText,
 } from './DeliveryInfoStyle';
 
-const DeliveryInfo = ({ register, errors }: any) => {
+interface IForm {
+    register: UseFormRegister<FieldValues>;
+    errors: FieldErrors<FieldValues>;
+}
+
+type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
+    TFieldValues,
+    FieldError
+>;
+
+const DeliveryInfo = ({ register, errors }: IForm) => {
     return (
         <>
             <fieldset>

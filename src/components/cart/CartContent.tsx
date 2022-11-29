@@ -30,7 +30,7 @@ interface ICartData {
     changeActive: boolean;
     setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
     setTotalShipping: React.Dispatch<React.SetStateAction<number>>;
-    handleAllCheck: Function;
+    handleAllCheck: (checked: boolean) => void;
     allSwitch: boolean;
     setCheckedproduct: React.Dispatch<React.SetStateAction<any>>;
     putInfo: boolean;

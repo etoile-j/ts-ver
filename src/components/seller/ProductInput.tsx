@@ -36,8 +36,8 @@ interface IGetDetailForEdit {
 }
 
 const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
-    const [preImg, setPreImg] = useState<any>();
-    const [img, setImg] = useState<any>();
+    const [preImg, setPreImg] = useState<string>();
+    const [img, setImg] = useState<{}>();
     const [name, setName] = useState<string>();
     const [parcel, setParcel] = useState(true);
     const [delivery, setDelivery] = useState(false);
@@ -45,7 +45,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     const uploadImg = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
         const file = target.files![0];
-        setPreImg(URL.createObjectURL(file));
+        setPreImg(URL.createObjectURL(file) ?? '');
         const formData = new FormData();
         formData.append('image', file);
         setImg(file);
@@ -114,7 +114,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                 },
             );
             window.location.replace(`/detail/${response.data.product_id}`);
-            URL.revokeObjectURL(preImg);
+            URL.revokeObjectURL(preImg!);
             setPreImg('');
         } catch (err) {
             console.error(err);
@@ -142,7 +142,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
                 },
             );
             window.location.replace(`/detail/${response.data.product_id}`);
-            URL.revokeObjectURL(preImg);
+            URL.revokeObjectURL(preImg!);
             setPreImg('');
         } catch (err) {
             console.error(err);
