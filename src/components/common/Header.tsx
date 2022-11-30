@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
 import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
 import UserIcon from '../../assets/icon-user.svg';
 import BagIcon from '../../assets/icon-shopping-bag.svg';
+
 import {
     HeaderEl,
     Nav,
@@ -16,6 +17,7 @@ import {
     SearchContainer,
     Search,
     Ul,
+    ClearBtn,
     SearchBtn,
     ShoppingCartBtn,
     ShoppingCartImg,
@@ -24,13 +26,31 @@ import {
     MyPage,
 } from './HeaderStyle';
 
-const Header = () => {
+interface ISearch {
+    searchKeyword?: string;
+}
+
+const Header = ({ searchKeyword }: ISearch) => {
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+    const [keyword, setKeyword] = useState(searchKeyword || '');
     const [openModal, setOpenModal] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
 
     const handleModal = () => {
         setOpenModal(!openModal);
+    };
+
+    const handleSearch = () => {
+        if (keyword.trim() === '') {
+            return;
+        } else {
+            navigate('/search', {
+                state: {
+                    keyword: keyword.trim(),
+                },
+            });
+        }
     };
 
     return (
@@ -46,9 +66,17 @@ const Header = () => {
                     <SearchContainer>
                         <Search
                             type="text"
+                            value={keyword}
                             placeholder="상품을 검색해보세요!"
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => setKeyword(e.target.value)}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') handleSearch();
+                            }}
                         />
-                        <SearchBtn />
+                        {keyword && <ClearBtn onClick={() => setKeyword('')} />}
+                        <SearchBtn onClick={() => handleSearch()} />
                     </SearchContainer>
                 </Wrap>
                 <Ul>

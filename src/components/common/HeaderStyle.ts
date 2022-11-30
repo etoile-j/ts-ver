@@ -1,6 +1,7 @@
 import Logo from '../../assets/icon-logoImg.png';
 import LogoTextt from '../../assets/icon-logoText.png';
 import SearchIcon from '../../assets/search.svg';
+import ClearIcon from '../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
 const HeaderEl = styled.header`
@@ -62,7 +63,7 @@ const SearchContainer = styled.div`
 
 const Search = styled.input`
     width: 100%;
-    padding: 11px 53px 11px 20px;
+    padding: 11px 87px 11px 20px;
     border: 2px solid #6997f7;
     border-radius: 50px;
     font-weight: 400;
@@ -76,6 +77,19 @@ const Search = styled.input`
 const Ul = styled.ul`
     display: flex;
     align-items: center;
+`;
+
+const ClearBtn = styled.button.attrs({ type: 'button' })`
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    width: 26px;
+    height: 26px;
+    background-image: url(${ClearIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    /* border: 1px solid pink; */
 `;
 
 const SearchBtn = styled.button`
@@ -143,6 +157,7 @@ export {
     SearchContainer,
     Search,
     Ul,
+    ClearBtn,
     SearchBtn,
     ShoppingCartBtn,
     ShoppingCartImg,
