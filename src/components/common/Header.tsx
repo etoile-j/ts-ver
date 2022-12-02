@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
@@ -37,6 +37,10 @@ const Header = ({ searchKeyword }: ISearch) => {
     const [openModal, setOpenModal] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
 
+    useEffect(() => {
+        setKeyword(searchKeyword!);
+    }, [searchKeyword]);
+
     const handleModal = () => {
         setOpenModal(!openModal);
     };
@@ -66,8 +70,9 @@ const Header = ({ searchKeyword }: ISearch) => {
                     <SearchContainer>
                         <Search
                             type="text"
-                            value={keyword}
+                            value={keyword || ''}
                             placeholder="상품을 검색해보세요!"
+                            maxLength={20}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>,
                             ) => setKeyword(e.target.value)}

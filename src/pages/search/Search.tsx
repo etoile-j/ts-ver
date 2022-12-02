@@ -1,11 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import Header from 'components/common/Header';
-import styled from 'styled-components';
 import SearchContent from 'components/search/SearchContent';
-
-const Ul = styled.ul`
-    display: flex;
-`;
+import Footer from 'components/common/Footer';
 
 const Search = () => {
     const keyword = useLocation().state.keyword;
@@ -14,6 +10,7 @@ const Search = () => {
         <>
             <Header searchKeyword={keyword} />
             <SearchContent keyword={keyword} />
+            <Footer />
         </>
     );
 };

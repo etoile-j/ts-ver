@@ -6,7 +6,7 @@ import TypeRoute from 'components/route/TypeRoute';
 import Join from 'pages/join/Join';
 import Login from 'pages/login/Login';
 import Main from 'pages/main/Main';
-import Search from 'pages/Search';
+import Search from 'pages/search/Search';
 import Payment from 'pages/payment/Payment';
 import ProductDetails from 'pages/productDetails/ProductDetails';
 import Cart from 'pages/cart/Cart';

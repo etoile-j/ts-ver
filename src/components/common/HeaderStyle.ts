@@ -89,7 +89,10 @@ const ClearBtn = styled.button.attrs({ type: 'button' })`
     background-repeat: no-repeat;
     background-position: center;
     background-size: 18px 18px;
-    /* border: 1px solid pink; */
+    :hover {
+        border-radius: 50%;
+        background-color: whitesmoke;
+    }
 `;
 
 const SearchBtn = styled.button`
