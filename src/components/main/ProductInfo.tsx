@@ -1,17 +1,8 @@
-import { Link } from 'react-router-dom';
 import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from 'constants/constants';
-import {
-    Products,
-    Li,
-    ImgContainer,
-    ProductImg,
-    ProductName,
-    SellerName,
-    Price,
-    Won,
-} from './ProductInfoStyle';
+import ProductList from 'components/common/ProductList';
+import { Products } from './ProductInfoStyle';
 
 const ProductInfo = () => {
     const getProductList = async (url: string) => {
@@ -48,33 +39,22 @@ const ProductInfo = () => {
                 loadMore={(pageParam: any) => fetchNextPage(pageParam)}
                 hasMore={hasNextPage}
             >
-                {data?.pages.map((pageData) => {
-                    return pageData.results.map((products: IProductProps) => {
-                        return (
-                            <Li key={products.product_id}>
-                                <Link to={`/detail/${products.product_id}`}>
-                                    <ImgContainer>
-                                        <ProductImg
-                                            src={products.image}
-                                        ></ProductImg>
-                                    </ImgContainer>
-                                    <SellerName>
-                                        {products.store_name}
-                                    </SellerName>
-                                    <ProductName>
-                                        {products.product_name}
-                                    </ProductName>
-                                    <Price>
-                                        {products.price?.toLocaleString(
-                                            'Ko-KR',
-                                        )}
-                                        <Won>원</Won>
-                                    </Price>
-                                </Link>
-                            </Li>
+                {data?.pages ? (
+                    data?.pages.map((pageData) => {
+                        return pageData.results.map(
+                            (products: IProductProps) => {
+                                return (
+                                    <ProductList
+                                        key={products.product_id}
+                                        products={products}
+                                    />
+                                );
+                            },
                         );
-                    });
-                })}
+                    })
+                ) : (
+                    <></>
+                )}
             </Products>
         </>
     );
