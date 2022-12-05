@@ -12,7 +12,7 @@ import {
 
 interface IModal {
     close: React.MouseEventHandler<HTMLButtonElement>;
-    ok: React.MouseEventHandler<HTMLButtonElement>;
+    ok?: () => void;
     leftBtn?: string;
     rightBtn: string;
     text?: string;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -42,13 +43,20 @@ const ProductOnSale = (data: IData) => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            if (response.status === 204) {
-                window.location.reload();
-            }
         } catch (err) {
             console.error(err);
         }
     };
+
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(deleteProduct, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('product');
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
 
     return (
         <>
@@ -90,7 +98,7 @@ const ProductOnSale = (data: IData) => {
                 <ModalContainer>
                     <Modal
                         close={handleModal}
-                        ok={deleteProduct}
+                        ok={mutate}
                         leftBtn="취소"
                         rightBtn="확인"
                         text="상품을 삭제 하시겠습니까?"
