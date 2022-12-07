@@ -36,7 +36,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('login_type', response.data.user_type);
-            if (response.status === 200) navigate(-1);
+            if (response.status === 200) window.location.replace('/');
         } catch (err) {
             console.error(err);
             if (id === undefined) {
