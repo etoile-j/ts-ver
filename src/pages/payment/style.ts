@@ -55,7 +55,7 @@ const RadioInput = styled.input.attrs({
 `;
 
 const Label = styled.label`
-    width: 126px;
+    width: 135px;
 `;
 
 const KakkoLabel = styled(Label)`
