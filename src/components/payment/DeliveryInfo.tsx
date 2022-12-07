@@ -63,6 +63,10 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="334px"
                         {...register('name', {
                             required: '필수 정보입니다.',
+                            pattern: {
+                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                message: '한글, 영문만 입력 가능합니다.',
+                            },
                         })}
                     />
                     {errors.name && (
@@ -160,6 +164,10 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
+                            pattern: {
+                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                message: '한글, 영문만 입력 가능합니다.',
+                            },
                         })}
                     />
                     <br />
@@ -179,6 +187,10 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
+                            pattern: {
+                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                message: '한글, 영문만 입력 가능합니다.',
+                            },
                         })}
                     />
                 </Line>
