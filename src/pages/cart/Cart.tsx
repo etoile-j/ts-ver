@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import CartContent from 'components/cart/CartContent';
@@ -11,7 +12,6 @@ import {
     TitleLi,
     Content,
     Container,
-    OrderBtn,
     OrderBtnBig,
     CartResult,
     List,
@@ -26,15 +26,14 @@ import {
 } from './style';
 
 const Cart = () => {
-    const [cartData, setCartData] = useState<ICartData[]>([]);
     const [cartCount, setCartCount] = useState();
     const [changeActive, setChangeActive] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalShipping, setTotalShipping] = useState(0);
-    const token = localStorage.getItem('token');
     const [allSwitch, setAllSwitch] = useState(false);
     const [checkedproduct, setCheckedproduct] = useState([]);
     const [putInfo, setPutInfo] = useState(false);
+    const token = localStorage.getItem('token');
 
     const handleGetCart = async () => {
         try {
@@ -44,8 +43,8 @@ const Cart = () => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            setCartData(response.data.results);
             setCartCount(response.data.count);
+            return response.data.results;
         } catch (err) {
             console.error(err);
         }
@@ -54,6 +53,7 @@ const Cart = () => {
         handleGetCart();
     }, []);
 
+    const { data: cartData } = useQuery(['cartData'], handleGetCart);
     interface ICartData {
         cart_item_id: number;
         product_id: number;
@@ -66,7 +66,7 @@ const Cart = () => {
             setTotalPrice(0);
             setTotalShipping(0);
             const idArray: number[] = [];
-            cartData.forEach((el) => idArray.push(el.cart_item_id));
+            cartData.forEach((el: ICartData) => idArray.push(el.cart_item_id));
             setCheckItems(idArray);
             setAllSwitch(!allSwitch);
         } else {
@@ -113,7 +113,7 @@ const Cart = () => {
                             name="All"
                             onChange={(e) => handleAllCheck(e.target.checked)}
                             checked={
-                                checkItems.length === cartData.length
+                                checkItems.length === cartData?.length
                                     ? true
                                     : false
                             }

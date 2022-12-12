@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import CountButton from 'components/common/CountButton';
@@ -71,7 +72,9 @@ const CartContent = (cartData: ICartData) => {
                     ...pre,
                     quantity: cartData.quantity,
                 }));
-                // cartData.handleAllCheck(true);
+                // setTimeout(() => {
+                //     cartData.handleAllCheck(true);
+                // }, 700);
             }
         } catch (err) {
             console.error(err);
@@ -97,14 +100,29 @@ const CartContent = (cartData: ICartData) => {
                     },
                 },
             );
-            if (response.status === 200 && countModal) {
-                handleCountModal();
-                window.location.reload();
-            }
         } catch (err) {
             console.error(err);
         }
     };
+
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation((bool) => handelPutCount(true), {
+        onSuccess: () => {
+            if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
+                cartData.setTotalPrice(
+                    (pre) =>
+                        pre -
+                        detail?.price! * cartData.quantity +
+                        detail?.price! * count,
+                );
+            }
+            queryClient.invalidateQueries(['cartData']);
+            handleCountModal();
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
 
     const handleDeleteCart = async () => {
         try {
@@ -114,13 +132,22 @@ const CartContent = (cartData: ICartData) => {
                     Authorization: `JWT ${token}`,
                 },
             });
-            if (response.status === 204) {
-                window.location.reload();
-            }
         } catch (err) {
             console.error(err);
         }
     };
+
+    const { mutate: mutateDel } = useMutation(handleDeleteCart, {
+        onSuccess: () => {
+            if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
+                handleSingleCheck(false, cartData.cart_item_id);
+            }
+            queryClient.invalidateQueries(['cartData']);
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
 
     const handleSingleCheck = (checked: boolean, id: number) => {
         if (checked) {
@@ -157,10 +184,7 @@ const CartContent = (cartData: ICartData) => {
     }, [cartData.allSwitch]);
 
     useEffect(() => {
-        if (
-            // cartData.putInfo === true &&
-            cartData.checkItems.includes(cartData.cart_item_id) === true
-        ) {
+        if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
             cartData.setCheckedproduct((pre: any) => [...pre, detail]);
         }
     }, [cartData.putInfo]);
@@ -182,9 +206,6 @@ const CartContent = (cartData: ICartData) => {
                             ? true
                             : false
                     }
-                    // value={`${detail?.price! * cartData.quantity} ${
-                    //     detail?.shipping_fee
-                    // }`}
                 ></input>
             </Content>
             <Content width="611px">
@@ -252,7 +273,7 @@ const CartContent = (cartData: ICartData) => {
                 <ModalContainer>
                     <Modal
                         close={handleDeleteModal}
-                        ok={handleDeleteCart}
+                        ok={mutateDel}
                         leftBtn="취소"
                         rightBtn="확인"
                         text="상품을 삭제 하시겠습니까?"
@@ -263,7 +284,7 @@ const CartContent = (cartData: ICartData) => {
                 <ModalContainer>
                     <Modal
                         close={handleCountModal}
-                        ok={() => handelPutCount(true)}
+                        ok={mutate}
                         leftBtn="취소"
                         rightBtn="수정"
                         component={
