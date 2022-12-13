@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import banner from '../../assets/img-banner.png';
+import banner2 from '../../assets/img-banner2.png';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -8,17 +9,18 @@ const Container = styled.div`
 
 const Banner = styled.div`
     padding-top: 150px;
-    background-color: #6997f7;
-    height: 430px;
-`;
-const Banner2 = styled(Banner)`
     padding-left: 75px;
-    background-color: #d7d0ca;
-    background-image: url(${banner});
+    height: 430px;
+    background-color: #0e0f0b;
+    background-image: url(${banner2});
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
     cursor: pointer;
+`;
+const Banner2 = styled(Banner)`
+    background-color: #d7d0ca;
+    background-image: url(${banner});
 `;
 const Banner3 = styled(Banner2)`
     padding-top: 120px;
@@ -40,7 +42,7 @@ const MainText = styled.p`
     color: #ffffff;
     font-family: 'SpoqaHanSansNeo-Medium', sans-serif;
     font-size: 50px;
-    font-weight: 520;
+    font-weight: 500;
 `;
 
 const SubText = styled.p`

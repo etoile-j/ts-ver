@@ -24,15 +24,14 @@ const Carousel = () => {
     return (
         <Container>
             <Slider {...settings}>
-                <Banner>
-                    {/* <Wrap>
-                        <MainText>OUR SHOP 이달의 이벤트</MainText>
-                    </Wrap> */}
-                </Banner>
                 <Banner2 onClick={() => (window.location.href = '/detail/298')}>
                     <MainText>샐러드 무료 배송</MainText>
                     <SubText>~ 재고 소진 시까지</SubText>
                 </Banner2>
+                <Banner onClick={() => (window.location.href = '/detail/323')}>
+                    <MainText>어디서나 최상의 원두와</MainText>
+                    <SubText>OUR SHOP 단독 판매</SubText>
+                </Banner>
                 <Banner3>
                     <MainText>OO카드 간편 결제 시</MainText>
                     <PointText>최대 7% 청구 할인</PointText>
