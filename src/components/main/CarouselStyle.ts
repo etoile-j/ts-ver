@@ -38,8 +38,9 @@ const Wrap = styled.div`
 
 const MainText = styled.p`
     color: #ffffff;
+    font-family: 'SpoqaHanSansNeo-Medium', sans-serif;
     font-size: 50px;
-    font-weight: 600;
+    font-weight: 520;
 `;
 
 const SubText = styled.p`

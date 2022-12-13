@@ -35,6 +35,7 @@ const SellerName = styled.p`
 
 const ProductName = styled.p`
     margin: 10px 0;
+    font-family: 'SpoqaHanSansNeo-Regular';
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;

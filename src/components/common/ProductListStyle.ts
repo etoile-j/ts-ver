@@ -36,6 +36,7 @@ const ProductImg = styled.img`
 
 const ProductName = styled.p`
     padding: 10px 0;
+    font-family: 'SpoqaHanSansNeo-Regular';
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
@@ -48,6 +49,7 @@ const ProductName = styled.p`
 const SellerName = styled.p`
     margin-top: 7px;
     color: #767676;
+    font-family: 'SpoqaHanSansNeo-Regular';
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
