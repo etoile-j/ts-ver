@@ -1,5 +1,7 @@
 # ✨ OUR SHOP
 
+<img width="956" alt="m" src="https://user-images.githubusercontent.com/102905624/208031267-8557a802-6d20-4fc4-b131-92ada1667f2b.png">
+
 ### 📍 https://etoile-ourshop.netlify.app
 
 ```
@@ -34,13 +36,14 @@
 
 ### Front-End
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white"> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
 
 -   React.js 18.2
 -   TypeScript 4.8
 -   styled-components 5.3
 -   react-router-dom 6.4
 -   React-hook-form 7
+-   react-query 3.3
 -   axios
 -   react-slick
 
@@ -60,13 +63,11 @@
 - 유효성 검사
 
 🏠 메인
+- 검색: 상품 이름, 상품 판매자
+- 캐러셀
 - 상품 목록
 - 상품 클릭 시 해당 상세 페이지로 이동
-- 캐러셀
 - 무한 스크롤
-
-🔍 검색
-- 상품 이름, 상품 판매자 검색
 
 🛍 상품 상세
 - 상세 정보 표출
