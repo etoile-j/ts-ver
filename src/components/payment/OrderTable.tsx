@@ -16,6 +16,7 @@ interface IDirectOrder {
     product_name: string;
     shipping_fee: number;
     price: number;
+    product_id: number;
 }
 
 const OrderTable = ({ info }: { info: [] }) => {
@@ -30,7 +31,7 @@ const OrderTable = ({ info }: { info: [] }) => {
                 </TitleLi>
                 {info.map((info: IDirectOrder) => {
                     return (
-                        <OrderLi>
+                        <OrderLi key={info.product_id}>
                             <Title width="589px">
                                 <Wrap>
                                     <ProductImg src={info.image}></ProductImg>

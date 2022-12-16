@@ -38,7 +38,6 @@ const SearchContent = ({ keyword }: ISearch) => {
         const pageLength = Math.ceil(total! / 15);
         for (let i = 2; i < pageLength + 1; i++) {
             getProductList(i);
-            console.log('i', i);
         }
     }, [total]);
 
@@ -63,7 +62,7 @@ const SearchContent = ({ keyword }: ISearch) => {
             </H2>
             <Container>
                 {filtering.map((i: IProductProps) => {
-                    return <ProductList products={i} />;
+                    return <ProductList key={i.product_id} products={i} />;
                 })}
             </Container>
             {filtering.length === 0 && (
