@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
 import {
@@ -15,12 +14,10 @@ interface ILoginType {
 }
 
 const LoginContent = ({ typeBuyers }: ILoginType) => {
-    const [id, setId] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [cautionText, setCautionText] = useState<string>();
-    const navigate = useNavigate();
-
     const idRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [cautionText, setCautionText] = useState<string>();
+
     useEffect(() => {
         idRef.current?.focus();
     }, []);
@@ -30,8 +27,8 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
         try {
             const url: string = BASE_URL + '/accounts/login/';
             const response = await axios.post(url, {
-                username: id,
-                password: password,
+                username: idRef.current?.value,
+                password: passwordRef.current?.value,
                 login_type: typeBuyers ? 'BUYER' : 'SELLER',
             });
             localStorage.setItem('token', response.data.token);
@@ -39,12 +36,12 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             if (response.status === 200) window.location.replace('/');
         } catch (err) {
             console.error(err);
-            if (id === undefined) {
+            if (idRef.current?.value.trim() === '') {
                 setCautionText('아이디를 입력해주세요.');
-            } else if (password === undefined) {
+            } else if (passwordRef.current?.value.trim() === '') {
                 setCautionText('비밀번호를 입력해주세요.');
-            } else {
-                setPassword('');
+            } else if (passwordRef.current?.value) {
+                passwordRef.current.value = '';
                 setCautionText('아이디 또는 비밀번호가 일치하지 않습니다.');
             }
         }
@@ -52,23 +49,8 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Input
-                type="text"
-                placeholder="아이디"
-                value={id || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setId(e.target.value);
-                }}
-                ref={idRef}
-            />
-            <Input
-                type="password"
-                placeholder="비밀번호"
-                value={password || ''}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPassword(e.target.value);
-                }}
-            />
+            <Input type="text" placeholder="아이디" ref={idRef} />
+            <Input type="password" placeholder="비밀번호" ref={passwordRef} />
             <Div>
                 <CautionText>{cautionText}</CautionText>
             </Div>
