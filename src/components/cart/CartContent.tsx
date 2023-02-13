@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/constants';
+import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
 import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -42,7 +43,6 @@ const CartContent = (cartData: ICartData) => {
     const [countModal, setCountModal] = useState(false);
     const [count, setCount] = useState(cartData.quantity);
     const [deleteModal, setDeleteModal] = useState(false);
-    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const handleDeleteModal = () => {
@@ -84,70 +84,52 @@ const CartContent = (cartData: ICartData) => {
         handleGetDetail();
     }, []);
 
-    const handelPutCount = async (bool: boolean) => {
-        try {
-            const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
-            const response = await axios.put(
-                url,
-                {
-                    product_id: cartData.product_id,
-                    quantity: count,
-                    is_active: bool,
-                },
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                    },
-                },
-            );
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const queryClient = useQueryClient();
-    const { mutate } = useMutation((bool) => handelPutCount(true), {
-        onSuccess: () => {
-            if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
-                cartData.setTotalPrice(
-                    (pre) =>
-                        pre -
-                        detail?.price! * cartData.quantity +
-                        detail?.price! * count,
-                );
-            }
-            queryClient.invalidateQueries(['cartData']);
-            handleCountModal();
+    const { mutate } = useMutation(
+        (bool) =>
+            putCartItemQuantity(
+                true,
+                cartData.cart_item_id,
+                count,
+                cartData.product_id,
+            ),
+        {
+            onSuccess: () => {
+                if (
+                    cartData.checkItems.includes(cartData.cart_item_id) === true
+                ) {
+                    cartData.setTotalPrice(
+                        (pre) =>
+                            pre -
+                            detail?.price! * cartData.quantity +
+                            detail?.price! * count,
+                    );
+                }
+                queryClient.invalidateQueries(['cartData']);
+                handleCountModal();
+            },
+            onError: (err) => {
+                console.error(err);
+            },
         },
-        onError: (err) => {
-            console.error(err);
-        },
-    });
+    );
 
-    const handleDeleteCart = async () => {
-        try {
-            const url = BASE_URL + `/cart/${cartData.cart_item_id}/`;
-            const response = await axios.delete(url, {
-                headers: {
-                    Authorization: `JWT ${token}`,
-                },
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const { mutate: mutateDel } = useMutation(handleDeleteCart, {
-        onSuccess: () => {
-            if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
-                handleSingleCheck(false, cartData.cart_item_id);
-            }
-            queryClient.invalidateQueries(['cartData']);
+    const { mutate: mutateDel } = useMutation(
+        () => deleteCartItem(cartData.cart_item_id),
+        {
+            onSuccess: () => {
+                if (
+                    cartData.checkItems.includes(cartData.cart_item_id) === true
+                ) {
+                    handleSingleCheck(false, cartData.cart_item_id);
+                }
+                queryClient.invalidateQueries(['cartData']);
+            },
+            onError: (err) => {
+                console.error(err);
+            },
         },
-        onError: (err) => {
-            console.error(err);
-        },
-    });
+    );
 
     const handleSingleCheck = (checked: boolean, id: number) => {
         if (checked) {
@@ -171,7 +153,7 @@ const CartContent = (cartData: ICartData) => {
         cartData.changeActive &&
         cartData.checkItems.includes(cartData.cart_item_id) === false
     ) {
-        handelPutCount(false);
+        putCartItemQuantity(false);
     }
 
     useEffect(() => {
