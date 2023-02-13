@@ -113,6 +113,21 @@ API 관련 코드나 인터페이스 등을 별도의 파일로 분리하는 것
 
 <br><br>
 
+## 📋 리팩토링
+
+<details>
+<summary>1. <code>state</code> -> <code>ref</code>로 변경</summary>
+<div markdown="1">
+
+현재 코드 상에서는 입력이 발생할 때마다 렌더링 될 필요없는 값.<br>
+로그인 버튼을 클릭하는 순간 input의 값을 받아오고,<br>
+그 외에는 필요하지 않은 상태이기 때문에 state -> ref로 변경하였습니다.
+
+</div>
+</details>
+
+<br><br>
+
 ## 📋 폴더 구조
 
 ```
