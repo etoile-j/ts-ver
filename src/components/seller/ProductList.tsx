@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { getProductListOfId } from 'apis/seller';
 import ProductOnSale from './ProductOnSale';
 
 interface Iproduct {
@@ -11,8 +10,6 @@ interface Iproduct {
 }
 
 const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
-    const token = localStorage.getItem('token');
-
     interface IData {
         product_id?: string;
         image?: string;
@@ -22,21 +19,11 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
     }
 
     const getProductList = async (pageNum: number) => {
-        try {
-            const response = await axios.get(
-                BASE_URL + `/seller/?page=${pageNum}`,
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                    },
-                },
-            );
-            setCount(response.data.count);
-            return response.data.results;
-        } catch (err) {
-            console.error(err);
-        }
+        const result = await getProductListOfId(pageNum);
+        setCount(result.count);
+        return result.results;
     };
+
     useEffect(() => {
         getProductList(currentPage);
     }, []);

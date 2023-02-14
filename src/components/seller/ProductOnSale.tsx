@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { deleteProduct } from 'apis/seller';
 import ModalContainer from 'components/modal/ModalContainer';
 import Modal from 'components/modal/Modal';
 import {
@@ -33,23 +32,8 @@ const ProductOnSale = (data: IData) => {
         setCloseModal(!closeModal);
     };
 
-    const token = localStorage.getItem('token');
-
-    const deleteProduct = async () => {
-        try {
-            const url = BASE_URL + `/products/${data.product_id}/`;
-            const response = await axios.delete(url, {
-                headers: {
-                    Authorization: `JWT ${token}`,
-                },
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const queryClient = useQueryClient();
-    const { mutate } = useMutation(deleteProduct, {
+    const { mutate } = useMutation(() => deleteProduct(data.product_id!), {
         onSuccess: () => {
             queryClient.invalidateQueries('product');
         },

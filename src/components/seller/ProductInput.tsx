@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { patchProductInfo, postProduct } from 'apis/seller';
 import {
     Wrap,
     InputContainer,
@@ -90,62 +89,41 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
     }, [detail]);
 
     const token = localStorage.getItem('token');
-
     const handlePostProduct = async (data: Inputs) => {
-        try {
-            const url = BASE_URL + '/products/';
-            const response = await axios.post(
-                url,
-                {
-                    product_name: name,
-                    image: img,
-                    price: data.price,
-                    shipping_method: data.shippingMethod,
-                    shipping_fee: data.shippingFee,
-                    stock: data.stock,
-                    product_info: '정보입니다.',
-                    token: `JWT ${token}`,
-                },
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                },
-            );
-            window.location.replace(`/detail/${response.data.product_id}`);
-            URL.revokeObjectURL(preImg!);
-            setPreImg('');
-        } catch (err) {
-            console.error(err);
-        }
+        const requestData = {
+            product_name: name,
+            image: img,
+            price: data.price,
+            shipping_method: data.shippingMethod,
+            shipping_fee: data.shippingFee,
+            stock: data.stock,
+            product_info: '정보입니다.',
+            token: `JWT ${token}`,
+        };
+        const productId = await postProduct(requestData);
+        window.location.replace(`/detail/${productId}`);
+        URL.revokeObjectURL(preImg!);
+        setPreImg('');
     };
 
     const handleEditProduct = async (data: Inputs) => {
-        try {
-            const response = await axios.patch(
-                BASE_URL + `/products/${detail?.product_id}/`,
-                {
-                    product_name: name,
-                    image: img,
-                    price: data.price,
-                    shipping_method: data.shippingMethod,
-                    shipping_fee: data.shippingFee,
-                    stock: data.stock,
-                    product_info: '정보입니다.',
-                },
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                },
+        const requestData = {
+            product_name: name,
+            image: img,
+            price: data.price,
+            shipping_method: data.shippingMethod,
+            shipping_fee: data.shippingFee,
+            stock: data.stock,
+            product_info: '상품 정보',
+        };
+        if (typeof detail?.product_id === 'number') {
+            const productId = await patchProductInfo(
+                detail.product_id,
+                requestData,
             );
-            window.location.replace(`/detail/${response.data.product_id}`);
+            window.location.replace(`/detail/${productId}`);
             URL.revokeObjectURL(preImg!);
             setPreImg('');
-        } catch (err) {
-            console.error(err);
         }
     };
 
