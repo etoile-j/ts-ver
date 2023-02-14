@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { BASE_URL } from 'constants/constants';
+import { getProductDetail } from 'apis/products';
+import { getCartItem, postCartItem } from 'apis/cart';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
 import ModalContainer from '../modal/ModalContainer';
@@ -47,6 +47,7 @@ const ProductCard = () => {
     const [addMoreModal, setAddMoreModal] = useState(false);
     const [stockModal, setStockModal] = useState(false);
     const loginType = localStorage.getItem('login_type');
+    const token = localStorage.getItem('token');
 
     const handleLoginModal = () => {
         setLoginModal(!loginModal);
@@ -61,65 +62,41 @@ const ProductCard = () => {
         setStockModal(!stockModal);
     };
 
-    const getProductDetail = async () => {
-        try {
-            const response = await axios.get(
-                BASE_URL + `/products/${product_id}/`,
-            );
-            setProduct(response.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
     useEffect(() => {
-        getProductDetail();
+        (async () => {
+            if (typeof product_id === 'string') {
+                const productDetail = await getProductDetail(product_id);
+                setProduct(productDetail);
+            }
+        })();
     }, []);
 
-    const token = localStorage.getItem('token');
-
     const handleGetCart = async () => {
-        try {
-            const url: string = BASE_URL + '/cart/';
-            const response = await axios.get(url, {
-                headers: {
-                    Authorization: `JWT ${token}`,
-                },
-            });
+        const cartItem = await getCartItem();
+        if (cartItem) {
             interface ICartData {
                 product_id: number;
             }
-            const InCart = response.data.results.map(
+            const InCart = cartItem.results.map(
                 (cart: ICartData) => cart.product_id,
             );
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);
             checkCart === true ? handleAddMoreModal() : postCart(true);
-        } catch (err) {
-            console.error(err);
         }
     };
 
     const postCart = async (checkCart: boolean) => {
-        try {
-            const url = BASE_URL + '/cart/';
-            const response = await axios.post(
-                url,
-                {
-                    product_id: product_id,
-                    quantity: count,
-                    check: checkCart,
-                },
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                    },
-                },
-            );
-            if (response.status === 201) {
-                handleAddedModal();
-            }
-        } catch (err) {
-            console.error(err);
+        const requestData = {
+            product_id: product_id,
+            quantity: count,
+            check: checkCart,
+        };
+
+        const responseStatusCode = await postCartItem(requestData);
+        if (responseStatusCode === 201) {
+            handleAddedModal();
+        } else {
             handleStockModal();
         }
     };
