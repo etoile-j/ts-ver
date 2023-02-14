@@ -71,7 +71,7 @@ const ProductCard = () => {
         })();
     }, []);
 
-    const handleGetCart = async () => {
+    const handleCheckIsInCart = async () => {
         const cartItem = await getCartItem();
         if (cartItem) {
             interface ICartData {
@@ -82,11 +82,11 @@ const ProductCard = () => {
             );
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);
-            checkCart === true ? handleAddMoreModal() : postCart(true);
+            checkCart === true ? handleAddMoreModal() : handlePostCart(true);
         }
     };
 
-    const postCart = async (checkCart: boolean) => {
+    const handlePostCart = async (checkCart: boolean) => {
         const requestData = {
             product_id: product_id,
             quantity: count,
@@ -196,7 +196,7 @@ const ProductCard = () => {
                                 if (!token) {
                                     handleLoginModal();
                                 } else {
-                                    handleGetCart();
+                                    handleCheckIsInCart();
                                 }
                             }}
                             style={{
@@ -250,7 +250,7 @@ const ProductCard = () => {
                     <Modal
                         close={handleAddMoreModal}
                         ok={() => {
-                            postCart(false);
+                            handlePostCart(false);
                             handleAddMoreModal();
                         }}
                         leftBtn="아니오"
