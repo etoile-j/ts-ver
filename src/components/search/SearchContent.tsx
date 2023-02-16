@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BASE_URL } from 'constants/constants';
+import { axiosApi } from 'apis/axiosInstance';
 import ProductList from 'components/common/ProductList';
 import {
     Main,
@@ -21,9 +20,7 @@ const SearchContent = ({ keyword }: ISearch) => {
 
     const getProductList = async (num: number) => {
         try {
-            const response = await axios.get(
-                BASE_URL + `/products/?page=${num}`,
-            );
+            const response = await axiosApi.get(`/products/?page=${num}`);
             setTotal(response.data.count);
             setProducts((products) => [...products, ...response.data.results]);
         } catch (err) {

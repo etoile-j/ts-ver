@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { BASE_URL } from 'constants/constants';
+import { postOrder } from 'apis/order';
 import DeliveryInfo from 'components/payment/DeliveryInfo';
 import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
@@ -65,44 +64,29 @@ const Payment = ({ defaultValues }: any) => {
         handleOrder(data);
     };
 
-    const token = localStorage.getItem('token');
-
     const handleOrder = async (data: Inputs) => {
-        try {
-            const url: string = BASE_URL + '/order/';
-            const response = await axios.post(
-                url,
-                {
-                    product_id: info.product_id,
-                    quantity: order[0].quantity,
-                    order_kind: info.order_kind,
-                    total_price:
-                        info.order_kind === 'cart_order'
-                            ? info.total_price + info.total_shipping
-                            : info.total,
-                    receiver: data.name,
-                    receiver_phone_number:
-                        data.phone1 + data.phone2 + data.phone3,
-                    address: data.address1 + ' ' + data.address2,
-                    address_message: data.deliveryMessage,
-                    payment_method: data.paymentMethod,
+        const requestData = {
+            product_id: info.product_id,
+            quantity: order[0].quantity,
+            order_kind: info.order_kind,
+            total_price:
+                info.order_kind === 'cart_order'
+                    ? info.total_price + info.total_shipping
+                    : info.total,
+            receiver: data.name,
+            receiver_phone_number: data.phone1 + data.phone2 + data.phone3,
+            address: data.address1 + ' ' + data.address2,
+            address_message: data.deliveryMessage,
+            payment_method: data.paymentMethod,
+        };
+        const responseData = await postOrder(requestData);
+        if (responseData) {
+            navigate('/complete_payment', {
+                state: {
+                    created_at: responseData.created_at,
+                    order_number: responseData.order_number,
                 },
-                {
-                    headers: {
-                        Authorization: `JWT ${token}`,
-                    },
-                },
-            );
-            if (response.status === 200) {
-                navigate('/complete_payment', {
-                    state: {
-                        created_at: response.data.created_at,
-                        order_number: response.data.order_number,
-                    },
-                });
-            }
-        } catch (err) {
-            console.error(err);
+            });
         }
     };
 

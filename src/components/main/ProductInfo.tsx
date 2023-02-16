@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
-import { BASE_URL } from 'constants/constants';
 import ProductList from 'components/common/ProductList';
 import { Products } from './ProductInfoStyle';
 
@@ -22,7 +21,7 @@ const ProductInfo = () => {
         price?: number;
     }
 
-    const initialUrl = `${BASE_URL}/products/`;
+    const initialUrl = 'https://openmarket.weniv.co.kr/products/';
     const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
         'products',
         ({ pageParam = initialUrl }) => {
@@ -34,29 +33,25 @@ const ProductInfo = () => {
     );
 
     return (
-        <>
-            <Products
-                loadMore={(pageParam: any) => fetchNextPage(pageParam)}
-                hasMore={hasNextPage}
-            >
-                {data?.pages ? (
-                    data?.pages.map((pageData) => {
-                        return pageData.results.map(
-                            (products: IProductProps) => {
-                                return (
-                                    <ProductList
-                                        key={products.product_id}
-                                        products={products}
-                                    />
-                                );
-                            },
+        <Products
+            loadMore={(pageParam: any) => fetchNextPage(pageParam)}
+            hasMore={hasNextPage}
+        >
+            {data?.pages ? (
+                data?.pages.map((pageData) => {
+                    return pageData.results.map((products: IProductProps) => {
+                        return (
+                            <ProductList
+                                key={products.product_id}
+                                products={products}
+                            />
                         );
-                    })
-                ) : (
-                    <></>
-                )}
-            </Products>
-        </>
+                    });
+                })
+            ) : (
+                <></>
+            )}
+        </Products>
     );
 };
 export default ProductInfo;
