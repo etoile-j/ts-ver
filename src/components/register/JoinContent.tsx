@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios, { AxiosError } from 'axios';
-import { BASE_URL } from 'constants/constants';
+import { axiosApi } from '../../apis/axiosInstance';
+import { AxiosError } from 'axios';
 import Check_off from '../../assets/icon-check-off.svg';
 import Check_on from '../../assets/icon-check-on.svg';
 import {
@@ -32,6 +32,8 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [passIdText, setPassIdText] = useState<string>();
     const [passCompany, setPassCompany] = useState(false);
     const [passCompanyText, setPassCompanyText] = useState<string>();
+    const idRegex = /^[A-za-z0-9]{1,19}$/g;
+    const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
 
     type Inputs = {
         id: string;
@@ -66,13 +68,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         }
     };
 
-    const idRegex = /^[A-za-z0-9]{1,19}$/g;
-    const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
     const idValidCheck = async () => {
         try {
             if (idRegex.test(getValues('id')) === false) return;
-            const url: string = BASE_URL + '/accounts/signup/valid/username/';
-            const response = await axios.post(url, {
+            await axiosApi.post('/accounts/signup/valid/username/', {
                 username: getValues('id'),
             });
             setPassIdText('사용 가능한 아이디입니다 :)');
@@ -96,10 +95,8 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const companyValidCheck = async () => {
         try {
             if (getValues('companyNum').length !== 10) return;
-            const url: string =
-                BASE_URL +
-                '/accounts/signup/valid/company_registration_number/';
-            const response = await axios.post(url, {
+            const url = '/accounts/signup/valid/company_registration_number/';
+            const response = await axiosApi.post(url, {
                 company_registration_number: getValues('companyNum'),
             });
             setPassCompany(true);
@@ -111,10 +108,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
 
     const handleJoin = async (data: Inputs) => {
         try {
-            const url =
-                BASE_URL +
-                `/accounts/${typeBuyers ? 'signup/' : 'signup_seller/'}`;
-            const response = await axios.post(url, {
+            const url = `/accounts/${
+                typeBuyers ? 'signup/' : 'signup_seller/'
+            }`;
+            const response = await axiosApi.post(url, {
                 username: data.id,
                 password: data.password,
                 password2: data.passwordCheck,

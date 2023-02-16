@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { axiosApi } from 'apis/axiosInstance';
 import {
     Form,
     Input,
@@ -25,15 +24,14 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const url: string = BASE_URL + '/accounts/login/';
-            const response = await axios.post(url, {
+            const response = await axiosApi.post('/accounts/login/', {
                 username: idRef.current?.value,
                 password: passwordRef.current?.value,
                 login_type: typeBuyers ? 'BUYER' : 'SELLER',
             });
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('login_type', response.data.user_type);
-            if (response.status === 200) window.location.replace('/');
+            window.location.replace('/');
         } catch (err) {
             console.error(err);
             if (idRef.current?.value.trim() === '') {
