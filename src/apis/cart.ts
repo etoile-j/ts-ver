@@ -4,7 +4,7 @@ export const getCartItem = async () => {
     try {
         const response = await axiosApi.get('/cart/');
         console.log(response);
-        return response.data;
+        return response.data.results;
     } catch (err) {
         console.error(err);
     }

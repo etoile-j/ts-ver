@@ -77,9 +77,7 @@ const ProductCard = () => {
             interface ICartData {
                 product_id: number;
             }
-            const InCart = cartItem.results.map(
-                (cart: ICartData) => cart.product_id,
-            );
+            const InCart = cartItem.map((cart: ICartData) => cart.product_id);
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);
             checkCart === true ? handleAddMoreModal() : handlePostCart(true);

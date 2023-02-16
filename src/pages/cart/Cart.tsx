@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { axiosApi } from 'apis/axiosInstance';
 import CartContent from 'components/cart/CartContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
@@ -33,16 +32,10 @@ const Cart = () => {
     const [allSwitch, setAllSwitch] = useState(false);
     const [checkedproduct, setCheckedproduct] = useState([]);
     const [putInfo, setPutInfo] = useState(false);
-    const token = localStorage.getItem('token');
 
     const handleGetCart = async () => {
         try {
-            const url: string = BASE_URL + '/cart/';
-            const response = await axios.get(url, {
-                headers: {
-                    Authorization: `JWT ${token}`,
-                },
-            });
+            const response = await axiosApi.get('/cart/');
             setCartCount(response.data.count);
             return response.data.results;
         } catch (err) {
@@ -96,9 +89,7 @@ const Cart = () => {
         }
     };
 
-    useEffect(() => {
-        handleSubmit();
-    }, [handlePutInfo]);
+    useEffect(handleSubmit, [handlePutInfo]);
 
     return (
         <>
