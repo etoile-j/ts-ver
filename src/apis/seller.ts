@@ -24,16 +24,11 @@ export const postProduct = async (requestData: {}) => {
 
 export const patchProductInfo = async (productId: number, requestData: {}) => {
     try {
-        const response = await axiosApi.patch(
-            `/products/${productId}/`,
-            requestData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        await axiosApi.patch(`/products/${productId}/`, requestData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
-        );
-        return response.data.product_id;
+        });
     } catch (err) {
         console.error(err);
     }

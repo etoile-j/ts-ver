@@ -116,7 +116,7 @@ const Unit = styled.button`
 
 const RadioInput = styled.input.attrs({
     type: 'radio',
-    name: 'shippingMethod',
+    name: 'shipping_method',
 })`
     opacity: 0;
     margin: 0;
