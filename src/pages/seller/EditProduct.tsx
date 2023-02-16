@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
+import { getProductDetail } from 'apis/products';
 import ProductInput from 'components/seller/ProductInput';
 import SellerCenterHeader from 'components/seller/SellerCenterHeader';
 import { Main, H3, CautionWrap, H4, CautionBox } from './style';
@@ -10,18 +9,11 @@ const EditProduct = () => {
     const product_id = useLocation().state.product_id;
     const [productDetail, setProductDetail] = useState({});
 
-    const getProductDetail = async () => {
-        try {
-            const response = await axios.get(
-                BASE_URL + `/products/${product_id}`,
-            );
-            setProductDetail(response.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
     useEffect(() => {
-        getProductDetail();
+        (async () => {
+            const productDetail = await getProductDetail(product_id);
+            setProductDetail(productDetail);
+        })();
     }, []);
 
     return (

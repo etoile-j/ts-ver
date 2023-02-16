@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import axios from 'axios';
-import { BASE_URL } from '../../constants/constants';
 import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
+import { getProductDetail } from 'apis/products';
 import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -62,26 +61,18 @@ const CartContent = (cartData: ICartData) => {
         stock: number;
     }
 
-    const handleGetDetail = async () => {
-        try {
-            const url: string = BASE_URL + `/products/${cartData.product_id}/`;
-            const response = await axios.get(url);
-            setDetail(response.data);
-            if (response.status === 200) {
-                setDetail((pre: any) => ({
-                    ...pre,
-                    quantity: cartData.quantity,
-                }));
-                // setTimeout(() => {
-                //     cartData.handleAllCheck(true);
-                // }, 700);
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
     useEffect(() => {
-        handleGetDetail();
+        const handleGetProductDetail = async () => {
+            const detailData = await getProductDetail(
+                cartData.product_id.toString(),
+            );
+            setDetail(detailData);
+            setDetail((pre: any) => ({
+                ...pre,
+                quantity: cartData.quantity,
+            }));
+        };
+        handleGetProductDetail();
     }, []);
 
     const queryClient = useQueryClient();
