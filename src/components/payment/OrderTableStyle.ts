@@ -33,7 +33,7 @@ const Wrap = styled.div`
     text-align: left;
 `;
 
-const ProductImg = styled.img`
+const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     width: 104px;
     height: 104px;
     margin-right: 36px;

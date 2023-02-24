@@ -31,7 +31,7 @@ const ProductWrap = styled.div`
     cursor: pointer;
 `;
 
-const Img = styled.img`
+const Img = styled.img.attrs({ alt: '상품 이미지' })`
     width: 70px;
     height: 70px;
     margin: 0 20px 0 10px;

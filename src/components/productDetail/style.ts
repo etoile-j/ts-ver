@@ -24,7 +24,7 @@ const Wrap = styled.div`
     }
 `;
 
-const ProductImg = styled.img`
+const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     width: 50%;
     height: 100%;
     object-fit: cover;

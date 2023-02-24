@@ -21,7 +21,7 @@ const ImgContainer = styled.div`
     padding-top: 102%;
 `;
 
-const ProductImg = styled.img`
+const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     position: absolute;
     top: 0;
     bottom: 0;
