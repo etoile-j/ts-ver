@@ -76,6 +76,7 @@ const ImgPreview = styled.img`
 const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     padding: 16px 25px 16px 15px;
+    margin: 0;
     border: 1px solid #c4c4c4;
     border-radius: 5px 0 0 5px;
     font-weight: 400;
@@ -107,6 +108,7 @@ const Unit = styled.button`
     background-color: #c4c4c4;
     width: 54px;
     height: 54px;
+    padding: 1px 6px;
     border-radius: 0 5px 5px 0;
     color: #ffffff;
     font-weight: 400;
