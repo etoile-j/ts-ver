@@ -109,14 +109,17 @@ const SearchBtn = styled.button`
 const ShoppingCartBtn = styled.button`
     display: inline-block;
     width: 66px;
-    height: 32px;
+    height: 46px;
     margin-right: 10px;
     color: #767676;
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;
 `;
-const ShoppingCartImg = styled.img`
+const LiButtonImg = styled.img`
+    height: 30px;
+`;
+const ShoppingCartImg = styled(LiButtonImg)`
     width: 48px;
 `;
 
@@ -164,6 +167,7 @@ export {
     SearchBtn,
     ShoppingCartBtn,
     ShoppingCartImg,
+    LiButtonImg,
     SellerBtn,
     IconUpload,
     MyPage,

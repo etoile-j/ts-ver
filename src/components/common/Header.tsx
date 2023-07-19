@@ -20,6 +20,7 @@ import {
     ClearBtn,
     SearchBtn,
     ShoppingCartBtn,
+    LiButtonImg,
     ShoppingCartImg,
     SellerBtn,
     IconUpload,
@@ -115,7 +116,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                                 onMouseOver={() => setOpenDropdown(true)}
                                 onMouseOut={() => setOpenDropdown(false)}
                             >
-                                <img src={UserIcon} />
+                                <LiButtonImg src={UserIcon} />
                                 <span>마이페이지</span>
                                 {openDropdown && (
                                     <Dropdown
@@ -130,7 +131,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                                     window.location.href = '/login';
                                 }}
                             >
-                                <img src={UserIcon} />
+                                <LiButtonImg src={UserIcon} />
                                 <span>로그인</span>
                             </MyPage>
                         )}
