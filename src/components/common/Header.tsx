@@ -62,7 +62,7 @@ const Header = ({ searchKeyword }: ISearch) => {
         <HeaderEl>
             <Nav>
                 <Wrap>
-                    <Link to="/">
+                    <Link to="/" role="navigation" aria-label="Main">
                         <Logos>
                             <LogoImg />
                             <LogoText />
@@ -82,7 +82,10 @@ const Header = ({ searchKeyword }: ISearch) => {
                             }}
                         />
                         {keyword && <ClearBtn onClick={() => setKeyword('')} />}
-                        <SearchBtn onClick={() => handleSearch()} />
+                        <SearchBtn
+                            onClick={() => handleSearch()}
+                            aria-label="search"
+                        />
                     </SearchContainer>
                 </Wrap>
                 <Ul>

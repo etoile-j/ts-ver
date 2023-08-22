@@ -51,7 +51,7 @@ const GithubLink = styled.button`
 
 const Address = styled.address`
     padding: 30px 0 63px;
-    color: #767676;
+    color: #545454;
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;

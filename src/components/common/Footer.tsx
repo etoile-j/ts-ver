@@ -24,6 +24,7 @@ const Footer = () => {
                         onClick={() =>
                             window.open('https://github.com/etoile-j')
                         }
+                        aria-label="github"
                     />
                 </Ul>
                 <Address>

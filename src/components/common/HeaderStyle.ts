@@ -116,7 +116,7 @@ const ShoppingCartBtn = styled.button`
     font-size: 12px;
     line-height: 14px;
 `;
-const LiButtonImg = styled.img`
+const LiButtonImg = styled.img.attrs({ alt: '' })`
     height: 30px;
 `;
 const ShoppingCartImg = styled(LiButtonImg)`
@@ -141,7 +141,7 @@ const SellerBtn = styled.button`
         margin-right: 10px;
     }
 `;
-const IconUpload = styled.img`
+const IconUpload = styled.img.attrs({ alt: '' })`
     display: inline;
     width: 32px;
     height: 32px;
