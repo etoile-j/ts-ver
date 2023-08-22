@@ -62,7 +62,7 @@ const Header = ({ searchKeyword }: ISearch) => {
         <HeaderEl>
             <Nav>
                 <Wrap>
-                    <Link to="/" role="navigation" aria-label="Main">
+                    <Link to="/" aria-label="OUR-SHOP 메인 페이지 링크">
                         <Logos>
                             <LogoImg />
                             <LogoText />
