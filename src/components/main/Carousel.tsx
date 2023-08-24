@@ -6,7 +6,6 @@ import {
     Banner,
     Banner2,
     Banner3,
-    Wrap,
     MainText,
     SubText,
     PointText,
@@ -17,7 +16,7 @@ const Carousel = () => {
         dots: true,
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 2500,
+        autoplaySpeed: 3000,
         arrows: false,
     };
 

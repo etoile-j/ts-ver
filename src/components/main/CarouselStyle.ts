@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import banner from '../../assets/img-banner.png';
-import banner2 from '../../assets/img-banner2.png';
+import banner from '../../assets/img-banner.jpeg';
+import banner2 from '../../assets/img-banner2.jpeg';
 
 const Container = styled.div`
     margin: 0 auto;
@@ -30,14 +30,6 @@ const Banner3 = styled(Banner2)`
     cursor: default;
 `;
 
-const Wrap = styled.div`
-    width: 760px;
-    height: 430px;
-    margin: 0 auto;
-    text-align: center;
-    border: solid 1px pink;
-`;
-
 const MainText = styled.p`
     color: #ffffff;
     font-family: 'SpoqaHanSansNeo-Medium', sans-serif;
@@ -58,13 +50,4 @@ const PointText = styled.p`
     font-weight: 700;
 `;
 
-export {
-    Container,
-    Banner,
-    Banner2,
-    Banner3,
-    Wrap,
-    MainText,
-    SubText,
-    PointText,
-};
+export { Container, Banner, Banner2, Banner3, MainText, SubText, PointText };
