@@ -40,8 +40,12 @@ const Li = styled.li`
     }
 `;
 
-const GithubLink = styled.button`
+const GithubLi = styled.li`
     float: right;
+`;
+
+const Github = styled.a`
+    display: block;
     width: 32px;
     height: 32px;
     background-image: url(${GithubIcon});
@@ -61,4 +65,4 @@ const Strong = styled.strong`
     font-weight: 700;
 `;
 
-export { FooterEl, Div, Ul, Li, GithubLink, Address, Strong };
+export { FooterEl, Div, Ul, Li, GithubLi, Github, Address, Strong };
