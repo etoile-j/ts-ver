@@ -12,11 +12,14 @@ const Ul = styled.ul`
 const Li = styled.li`
     display: inline;
     position: relative;
-    padding-left: 33px;
     color: #333333;
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
+`;
+
+const LiPseudo = styled(Li)`
+    padding-left: 33px;
     ::after {
         content: '';
         position: absolute;
@@ -28,4 +31,4 @@ const Li = styled.li`
     }
 `;
 
-export { Main, Ul, Li };
+export { Main, Ul, Li, LiPseudo };

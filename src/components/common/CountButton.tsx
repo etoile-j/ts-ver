@@ -45,11 +45,19 @@ const CountButton = (props: IProductDetailProps) => {
     return (
         <>
             <div>
-                <CountBtn onClick={minusBtn} disabled={disabledM}>
+                <CountBtn
+                    onClick={minusBtn}
+                    disabled={disabledM}
+                    aria-label="수량 빼기"
+                >
                     -
                 </CountBtn>
-                <Count>{count}</Count>
-                <CountBtnplus onClick={plusBtn} disabled={disabledP}>
+                <Count aria-label={`현재 수량 ${count}`}>{count}</Count>
+                <CountBtnplus
+                    onClick={plusBtn}
+                    disabled={disabledP}
+                    aria-label="수량 더하기"
+                >
                     +
                 </CountBtnplus>
             </div>

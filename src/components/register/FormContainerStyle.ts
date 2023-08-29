@@ -38,8 +38,6 @@ const SellerTap = styled.li`
     border: 1px solid #c4c4c4;
     border-bottom: 0;
     border-radius: 10px 10px 0 0;
-    font-weight: 500;
-    font-size: 18px;
     line-height: 22px;
     text-align: center;
     cursor: pointer;
@@ -64,6 +62,7 @@ const BuyerTap = styled(SellerTap)`
     background-color: #ffffff;
     width: 550px;
     position: relative;
+    padding: 0;
     border-radius: 10px 10px 0 0;
     border-bottom: 0;
     box-sizing: content-box;
@@ -82,6 +81,18 @@ const BuyerTap2 = styled(BuyerTap)`
     z-index: 2;
 `;
 
+const BuyerBtn = styled.button`
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 19px 0 0 0;
+`;
+const SellerBtn = styled(BuyerBtn)`
+    line-height: 21px;
+    padding: 0;
+    margin: 0;
+`;
+
 export {
     Logos,
     LogoImg,
@@ -92,4 +103,6 @@ export {
     SellerTap2,
     BuyerTap,
     BuyerTap2,
+    BuyerBtn,
+    SellerBtn,
 };

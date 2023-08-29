@@ -10,6 +10,8 @@ import {
     SellerTap2,
     BuyerTap,
     BuyerTap2,
+    BuyerBtn,
+    SellerBtn,
 } from './FormContainerStyle';
 interface IForm {
     buyer: string;
@@ -22,21 +24,27 @@ interface IForm {
 const FormContainer = (props: IForm) => {
     return (
         <>
-            <Link to="/">
+            <Link to="/" aria-label="OUR-SHOP 메인 페이지">
                 <Logos>
                     <LogoImg />
                     <LogoText />
                 </Logos>
             </Link>
             <Container>
-                <Ul>
+                <Ul role="tablist">
                     {props.typeBuyer ? (
                         <>
-                            <BuyerTap>{props.buyer}</BuyerTap>
+                            <BuyerTap>
+                                <BuyerBtn role="tab" aria-selected="true">
+                                    {props.buyer}
+                                </BuyerBtn>
+                            </BuyerTap>
                             <SellerTap
                                 onClick={() => props.setTypeBuyer!(false)}
                             >
-                                {props.seller}
+                                <SellerBtn role="tab" aria-selected="false">
+                                    {props.seller}
+                                </SellerBtn>
                             </SellerTap>
                         </>
                     ) : (
@@ -44,9 +52,15 @@ const FormContainer = (props: IForm) => {
                             <BuyerTap2
                                 onClick={() => props.setTypeBuyer!(true)}
                             >
-                                {props.buyer}
+                                <BuyerBtn role="tab" aria-selected="false">
+                                    {props.buyer}
+                                </BuyerBtn>
                             </BuyerTap2>
-                            <SellerTap2>{props.seller}</SellerTap2>
+                            <SellerTap2>
+                                <SellerBtn role="tab" aria-selected="true">
+                                    {props.seller}
+                                </SellerBtn>
+                            </SellerTap2>
                         </>
                     )}
                 </Ul>
