@@ -1,5 +1,5 @@
 import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
+import Header from 'components/common/header/Header';
 import Carousel from 'components/main/Carousel';
 import ProductInfo from 'components/main/ProductInfo';
 import { MainEm } from './style';

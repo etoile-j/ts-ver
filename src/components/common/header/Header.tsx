@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
-import ShoppingCartIcon from '../../assets/icon-shopping-cart.svg';
-import UserIcon from '../../assets/icon-user.svg';
-import BagIcon from '../../assets/icon-shopping-bag.svg';
-
+import SearchBar from './SearchBar';
+import ShoppingCartIcon from '../../../assets/icon-shopping-cart.svg';
+import UserIcon from '../../../assets/icon-user.svg';
+import BagIcon from '../../../assets/icon-shopping-bag.svg';
 import {
     HeaderEl,
     Nav,
@@ -14,11 +14,7 @@ import {
     Logos,
     LogoImg,
     LogoText,
-    SearchContainer,
-    Search,
     Ul,
-    ClearBtn,
-    SearchBtn,
     ShoppingCartBtn,
     LiButtonImg,
     ShoppingCartImg,
@@ -33,29 +29,11 @@ interface ISearch {
 
 const Header = ({ searchKeyword }: ISearch) => {
     const token = localStorage.getItem('token');
-    const navigate = useNavigate();
-    const [keyword, setKeyword] = useState(searchKeyword || '');
     const [openModal, setOpenModal] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
 
-    useEffect(() => {
-        setKeyword(searchKeyword!);
-    }, [searchKeyword]);
-
     const handleModal = () => {
         setOpenModal(!openModal);
-    };
-
-    const handleSearch = () => {
-        if (keyword.trim() === '') {
-            return;
-        } else {
-            navigate('/search', {
-                state: {
-                    keyword: keyword.trim(),
-                },
-            });
-        }
     };
 
     return (
@@ -68,25 +46,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                             <LogoText />
                         </Logos>
                     </Link>
-                    <SearchContainer>
-                        <Search
-                            type="text"
-                            value={keyword || ''}
-                            placeholder="상품을 검색해보세요!"
-                            maxLength={20}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>,
-                            ) => setKeyword(e.target.value)}
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter') handleSearch();
-                            }}
-                        />
-                        {keyword && <ClearBtn onClick={() => setKeyword('')} />}
-                        <SearchBtn
-                            onClick={() => handleSearch()}
-                            aria-label="검색하기"
-                        />
-                    </SearchContainer>
+                    <SearchBar searchKeyword={searchKeyword} />
                 </Wrap>
                 <Ul>
                     <li>

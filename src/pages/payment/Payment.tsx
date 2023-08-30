@@ -4,7 +4,7 @@ import { postOrder } from 'apis/order';
 import DeliveryInfo from 'components/payment/DeliveryInfo';
 import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
+import Header from 'components/common/header/Header';
 import OrderTable from 'components/payment/OrderTable';
 import {
     Main,

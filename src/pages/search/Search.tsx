@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import Header from 'components/common/Header';
+import Header from 'components/common/header/Header';
 import SearchContent from 'components/search/SearchContent';
 import Footer from 'components/common/Footer';
 

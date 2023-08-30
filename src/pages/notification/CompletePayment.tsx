@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import Header from 'components/common/Header';
+import Header from 'components/common/header/Header';
 import Notification from 'components/common/Notification';
 import { Main } from './style';
 

@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { axiosApi } from 'apis/axiosInstance';
 import CartContent from 'components/cart/CartContent';
 import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
+import Header from 'components/common/header/Header';
 import NoneCartContent from 'components/cart/NoneCartContent';
 import {
     Main,
