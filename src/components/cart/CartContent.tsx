@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
 import { getProductDetail } from 'apis/products';
+import { IProduct } from 'GlobalType';
 import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -38,7 +39,7 @@ interface ICartData {
 }
 
 const CartContent = (cartData: ICartData) => {
-    const [detail, setDetail] = useState<IDetail>();
+    const [detail, setDetail] = useState<IProduct>();
     const [countModal, setCountModal] = useState(false);
     const [count, setCount] = useState(cartData.quantity);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -51,15 +52,6 @@ const CartContent = (cartData: ICartData) => {
     const handleCountModal = () => {
         setCountModal(!countModal);
     };
-    interface IDetail {
-        product_id?: string;
-        image?: string;
-        store_name?: string;
-        product_name?: string;
-        price?: number;
-        shipping_fee: number;
-        stock: number;
-    }
 
     useEffect(() => {
         const handleGetProductDetail = async () => {
