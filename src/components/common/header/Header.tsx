@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ISearch } from 'GlobalType';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -22,10 +23,6 @@ import {
     IconUpload,
     MyPage,
 } from './HeaderStyle';
-
-interface ISearch {
-    searchKeyword?: string;
-}
 
 const Header = ({ searchKeyword }: ISearch) => {
     const token = localStorage.getItem('token');

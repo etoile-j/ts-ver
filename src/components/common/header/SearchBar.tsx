@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ISearch } from 'GlobalType';
 import { SearchContainer, Search, ClearBtn, SearchBtn } from './SearchBarStyle';
-
-interface ISearch {
-    searchKeyword?: string;
-}
 
 const SearchBar = ({ searchKeyword }: ISearch) => {
     const [keyword, setKeyword] = useState(searchKeyword || '');
