@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosApi } from '../../apis/axiosInstance';
 import { AxiosError } from 'axios';
+import { ILoginType } from 'GlobalType';
 import Check_off from '../../assets/icon-check-off.svg';
 import Check_on from '../../assets/icon-check-on.svg';
 import {
@@ -23,8 +24,19 @@ import {
     JoinBtn,
 } from './JoinContentStyle';
 
-interface ILoginType {
-    typeBuyers?: boolean;
+interface IJoinInputs {
+    id: string;
+    password: string;
+    passwordCheck: string;
+    name: string;
+    phone1: number;
+    phone2: number;
+    phone3: number;
+    emailId: string;
+    emailDomain: string;
+    storeName: string;
+    companyNum: string;
+    agreement: boolean;
 }
 
 const JoinContent = ({ typeBuyers }: ILoginType) => {
@@ -35,30 +47,15 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     const idRegex = /^[A-za-z0-9]{1,19}$/g;
     const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
 
-    type Inputs = {
-        id: string;
-        password: string;
-        passwordCheck: string;
-        name: string;
-        phone1: number;
-        phone2: number;
-        phone3: number;
-        emailId: string;
-        emailDomain: string;
-        storeName: string;
-        companyNum: string;
-        agreement: boolean;
-    };
-
     const {
         register,
         handleSubmit,
         getValues,
         setError,
         formState: { errors, isValid },
-    } = useForm<Inputs>({ mode: 'onChange' });
+    } = useForm<IJoinInputs>({ mode: 'onChange' });
 
-    const onSubmit = (data: Inputs) => {
+    const onSubmit = (data: IJoinInputs) => {
         if (!passId) {
             alert('아이디 중복확인이 필요합니다.');
         } else if (typeBuyers === false && passCompany == false) {
@@ -106,7 +103,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         }
     };
 
-    const handleJoin = async (data: Inputs) => {
+    const handleJoin = async (data: IJoinInputs) => {
         try {
             const url = `/accounts/${
                 typeBuyers ? 'signup/' : 'signup_seller/'

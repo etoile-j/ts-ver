@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { postOrder } from 'apis/order';
-import { IDirectOrderInfo, IPaymentInputs } from 'GlobalType';
+import { IDirectOrderInfo } from 'GlobalType';
 import DeliveryInfo from 'components/payment/DeliveryInfo';
 import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
@@ -18,6 +18,23 @@ import {
     Label,
     KakkoLabel,
 } from './style';
+
+interface IPaymentInputs {
+    name: string;
+    phone1: number;
+    phone2: number;
+    phone3: number;
+    address1: string;
+    address2: string;
+    deliveryMessage: string;
+    paymentMethod:
+        | 'CARD'
+        | 'DEPOSIT'
+        | 'PHONE_PAYMENT'
+        | 'NAVERPAY'
+        | 'KAKAOPAY';
+    agreement: HTMLInputElement;
+}
 
 const Payment = ({ defaultValues }: any) => {
     const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { axiosApi } from 'apis/axiosInstance';
+import { ILoginType } from 'GlobalType';
 import {
     Form,
     Input,
@@ -7,10 +8,6 @@ import {
     Div,
     CautionText,
 } from './LoginContentStyle';
-
-interface ILoginType {
-    typeBuyers?: boolean;
-}
 
 const LoginContent = ({ typeBuyers }: ILoginType) => {
     const idRef = useRef<HTMLInputElement>(null);

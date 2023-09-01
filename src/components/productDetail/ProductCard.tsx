@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
-import { IProduct } from 'GlobalType';
+import { IProduct, ICartData } from 'GlobalType';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
 import ModalContainer from '../modal/ModalContainer';
@@ -64,9 +64,6 @@ const ProductCard = () => {
     const handleCheckIsInCart = async () => {
         const cartItem = await getCartItem();
         if (cartItem) {
-            interface ICartData {
-                product_id: number;
-            }
             const InCart = cartItem.map((cart: ICartData) => cart.product_id);
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);

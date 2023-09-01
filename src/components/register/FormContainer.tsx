@@ -13,7 +13,8 @@ import {
     BuyerBtn,
     SellerBtn,
 } from './FormContainerStyle';
-interface IForm {
+
+interface IFormContainer {
     buyer: string;
     seller: string;
     content: ReactElement;
@@ -21,7 +22,7 @@ interface IForm {
     setTypeBuyer: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FormContainer = (props: IForm) => {
+const FormContainer = (props: IFormContainer) => {
     return (
         <>
             <Link to="/" aria-label="OUR-SHOP 메인 페이지">

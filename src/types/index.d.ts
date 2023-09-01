@@ -10,4 +10,26 @@ module 'GlobalType' {
         stock: number;
         quantity: number;
     }
+
+    // pages/Payments.tsx
+    interface IDirectOrderInfo extends IProduct {
+        order_kind: string;
+        total: number;
+        total_price: number;
+        total_shipping: number;
+    }
+
+    interface ICartData {
+        cart_item_id: number;
+        product_id: number;
+        quantity: number;
+    }
+
+    interface ISearch {
+        [keyword: string]: string;
+    }
+
+    interface ILoginType {
+        typeBuyers?: boolean;
+    }
 }

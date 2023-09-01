@@ -3,13 +3,9 @@ import Header from 'components/common/header/Header';
 import Notification from 'components/common/Notification';
 import { Main } from './style';
 
-interface IInfo {
-    created_at: string;
-    order_number: number;
-}
-
 const CompletePayment = () => {
-    const info: IInfo = useLocation().state;
+    const info: { created_at: string; order_number: number } =
+        useLocation().state;
 
     return (
         <>

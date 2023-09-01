@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { axiosApi } from 'apis/axiosInstance';
-import { IProduct } from 'GlobalType';
+import { ISearch, IProduct } from 'GlobalType';
 import ProductList from 'components/common/ProductList';
 import {
     Main,
@@ -10,10 +10,6 @@ import {
     Nothing,
     Description,
 } from './SearchContentStyle';
-
-interface ISearch {
-    keyword: string;
-}
 
 const SearchContent = ({ keyword }: ISearch) => {
     const [products, setProducts] = useState<any[]>([]);
