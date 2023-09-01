@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { postOrder } from 'apis/order';
+import { IDirectOrderInfo } from 'GlobalType';
 import DeliveryInfo from 'components/payment/DeliveryInfo';
 import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
 import Footer from 'components/common/Footer';
@@ -18,53 +19,38 @@ import {
     KakkoLabel,
 } from './style';
 
-interface IDirectOrder {
-    product_id: number;
-    quantity: number;
-    order_kind: string;
-    image: string;
-    store_name: string;
-    product_name: string;
-    shipping_fee: number;
-    price: number;
-    total: number;
-    total_price: number;
-    total_shipping: number;
+interface IPaymentInputs {
+    name: string;
+    phone1: number;
+    phone2: number;
+    phone3: number;
+    address1: string;
+    address2: string;
+    deliveryMessage: string;
+    paymentMethod:
+        | 'CARD'
+        | 'DEPOSIT'
+        | 'PHONE_PAYMENT'
+        | 'NAVERPAY'
+        | 'KAKAOPAY';
+    agreement: HTMLInputElement;
 }
 
 const Payment = ({ defaultValues }: any) => {
     const navigate = useNavigate();
-    const info: IDirectOrder = useLocation().state;
+    const info: IDirectOrderInfo = useLocation().state;
     const order = useLocation().state.order_product;
-
-    type Inputs = {
-        name: string;
-        phone1: number;
-        phone2: number;
-        phone3: number;
-        address1: string;
-        address2: string;
-        deliveryMessage: string;
-        paymentMethod:
-            | 'CARD'
-            | 'DEPOSIT'
-            | 'PHONE_PAYMENT'
-            | 'NAVERPAY'
-            | 'KAKAOPAY';
-        agreement: HTMLInputElement;
-    };
-
     const {
         register,
         handleSubmit,
         formState: { isValid, errors },
     } = useForm({ mode: 'onChange', defaultValues });
 
-    const onSubmit = (data: Inputs) => {
+    const onSubmit = (data: IPaymentInputs) => {
         handleOrder(data);
     };
 
-    const handleOrder = async (data: Inputs) => {
+    const handleOrder = async (data: IPaymentInputs) => {
         const requestData = {
             product_id: info.product_id,
             quantity: order[0].quantity,

@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
+import { IProduct } from 'GlobalType';
 import ProductList from 'components/common/ProductList';
 import { Products } from './ProductInfoStyle';
 
@@ -12,14 +13,6 @@ const ProductInfo = () => {
             console.error(err);
         }
     };
-
-    interface IProductProps {
-        product_id?: string;
-        image?: string;
-        store_name?: string;
-        product_name?: string;
-        price?: number;
-    }
 
     const initialUrl = 'https://openmarket.weniv.co.kr/products/';
     const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
@@ -39,7 +32,7 @@ const ProductInfo = () => {
         >
             {data?.pages ? (
                 data?.pages.map((pageData) => {
-                    return pageData.results.map((products: IProductProps) => {
+                    return pageData.results.map((products: IProduct) => {
                         return (
                             <ProductList
                                 key={products.product_id}

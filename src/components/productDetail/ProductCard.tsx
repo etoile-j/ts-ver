@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
+import { IProduct, ICartData } from 'GlobalType';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
 import ModalContainer from '../modal/ModalContainer';
@@ -26,20 +27,9 @@ import {
     GrayBtn,
 } from './style';
 
-interface IProductDetail {
-    product_id?: string;
-    image?: string;
-    store_name?: string;
-    product_name?: string;
-    price?: number;
-    shipping_fee: number;
-    shipping_method: string;
-    stock: number;
-}
-
 const ProductCard = () => {
     const [count, setCount] = useState(1);
-    const [product, setProduct] = useState<IProductDetail>();
+    const [product, setProduct] = useState<IProduct>();
     const { product_id } = useParams();
     const navigate = useNavigate();
     const [loginModal, setLoginModal] = useState(false);
@@ -74,9 +64,6 @@ const ProductCard = () => {
     const handleCheckIsInCart = async () => {
         const cartItem = await getCartItem();
         if (cartItem) {
-            interface ICartData {
-                product_id: number;
-            }
             const InCart = cartItem.map((cart: ICartData) => cart.product_id);
             const IntId = parseInt(product_id!);
             const checkCart = InCart.includes(IntId);
@@ -136,7 +123,11 @@ const ProductCard = () => {
                             총 수량 <Number>{count}</Number>개
                         </TotalAmount>
                         <TotalPrice>
-                            {(product?.price! * count).toLocaleString('ko-KR')}
+                            {isNaN(product?.price! * count)
+                                ? ''
+                                : (product?.price! * count).toLocaleString(
+                                      'ko-KR',
+                                  )}
                             <TotalWon>원</TotalWon>
                         </TotalPrice>
                     </TotalWrap>

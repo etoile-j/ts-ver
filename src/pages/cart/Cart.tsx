@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { axiosApi } from 'apis/axiosInstance';
+import { ICartData } from 'GlobalType';
 import CartContent from 'components/cart/CartContent';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/header/Header';
@@ -47,11 +48,6 @@ const Cart = () => {
     }, []);
 
     const { data: cartData } = useQuery(['cartData'], handleGetCart);
-    interface ICartData {
-        cart_item_id: number;
-        product_id: number;
-        quantity: number;
-    }
 
     const [checkItems, setCheckItems] = useState<number[]>([]);
     const handleAllCheck = (checked: boolean) => {

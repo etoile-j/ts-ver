@@ -10,7 +10,7 @@ import {
     MainBtn,
 } from './NotificationStyle';
 
-interface IContent {
+interface INotificationContent {
     mainText?: string;
     errorText?: string;
     subText1: string;
@@ -22,7 +22,7 @@ interface IContent {
     leftNone?: string;
 }
 
-const Notification = (content: IContent) => {
+const Notification = (content: INotificationContent) => {
     return (
         <Container>
             <Img src={Logo} alt="로고 이미지" />

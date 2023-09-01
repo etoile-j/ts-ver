@@ -1,3 +1,4 @@
+import { IProduct } from 'GlobalType';
 import {
     TitleLi,
     Title,
@@ -9,16 +10,6 @@ import {
     Price,
 } from './OrderTableStyle';
 
-interface IDirectOrder {
-    quantity: number;
-    image: string;
-    store_name: string;
-    product_name: string;
-    shipping_fee: number;
-    price: number;
-    product_id: number;
-}
-
 const OrderTable = ({ info }: { info: [] }) => {
     return (
         <>
@@ -29,7 +20,7 @@ const OrderTable = ({ info }: { info: [] }) => {
                     <Title width="228px">배송비</Title>
                     <Title width="231px">주문금액</Title>
                 </TitleLi>
-                {info.map((info: IDirectOrder) => {
+                {info.map((info: IProduct) => {
                     return (
                         <OrderLi key={info.product_id}>
                             <Title width="589px">

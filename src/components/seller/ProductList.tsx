@@ -1,23 +1,16 @@
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { getProductListOfId } from 'apis/seller';
+import { IProductSeller } from 'GlobalType';
 import ProductOnSale from './ProductOnSale';
 
-interface Iproduct {
+interface IproductList {
     count: number | undefined;
     setCount: React.Dispatch<React.SetStateAction<undefined>>;
     currentPage: number;
 }
 
-const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
-    interface IData {
-        product_id?: string;
-        image?: string;
-        product_name?: string;
-        stock?: number;
-        price?: number;
-    }
-
+const ProductList = ({ count, setCount, currentPage }: IproductList) => {
     const getProductList = async (pageNum: number) => {
         const result = await getProductListOfId(pageNum);
         setCount(result.count);
@@ -48,7 +41,7 @@ const ProductList = ({ count, setCount, currentPage }: Iproduct) => {
 
     return (
         <>
-            {data?.map((data: IData) => {
+            {data?.map((data: IProductSeller) => {
                 return (
                     <ProductOnSale
                         key={data.product_id}

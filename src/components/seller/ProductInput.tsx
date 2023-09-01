@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
+import { IProductSeller } from 'GlobalType';
 import {
     Wrap,
     InputContainer,
@@ -24,17 +25,7 @@ import {
     WhiteBtn,
 } from './ProductInputStyle';
 
-interface IGetDetailForEdit {
-    product_id?: number;
-    image?: string;
-    product_name?: string;
-    price?: number;
-    shipping_method?: 'PARCEL' | 'DELIVERY';
-    shipping_fee?: number;
-    stock?: number;
-}
-
-const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
+const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
     const [preImg, setPreImg] = useState<string>();
     const [img, setImg] = useState<{}>();
     const [name, setName] = useState<string>();
@@ -50,21 +41,14 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
         setImg(file);
     };
 
-    type Inputs = {
-        price?: number;
-        shipping_method: 'PARCEL' | 'DELIVERY';
-        shipping_fee?: number;
-        stock?: number;
-    };
-
     const {
         register,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<Inputs>({ mode: 'onChange' });
+    } = useForm<IProductSeller>({ mode: 'onChange' });
 
-    const onSubmit = (data: Inputs) => {
+    const onSubmit = (data: IProductSeller) => {
         if (detail === undefined) {
             handlePostProduct(data);
         } else {
@@ -96,7 +80,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
         setPreImg('');
     };
 
-    const handlePostProduct = async (data: Inputs) => {
+    const handlePostProduct = async (data: IProductSeller) => {
         const requestData = {
             ...reqData,
             ...data,
@@ -106,7 +90,7 @@ const ProductInput = ({ detail }: { detail?: IGetDetailForEdit }) => {
         removePreImg();
     };
 
-    const handleEditProduct = async (data: Inputs) => {
+    const handleEditProduct = async (data: IProductSeller) => {
         const requestData = {
             ...reqData,
             ...data,

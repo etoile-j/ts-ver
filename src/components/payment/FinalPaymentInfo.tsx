@@ -1,3 +1,4 @@
+import { IProduct } from 'GlobalType';
 import {
     Container,
     WhiteWrap,
@@ -10,12 +11,6 @@ import {
     GrayBtn,
 } from './FinalPaymentInfoStyle';
 
-interface IDirectOrder {
-    quantity: number;
-    shipping_fee: number;
-    price: number;
-}
-
 const FinalPaymentInfo = ({
     info,
     type,
@@ -23,7 +18,7 @@ const FinalPaymentInfo = ({
     shipping,
     register,
     isValid,
-}: IDirectOrder | any) => {
+}: IProduct | any) => {
     return (
         <>
             <Container>

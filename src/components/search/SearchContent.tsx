@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { axiosApi } from 'apis/axiosInstance';
+import { ISearch, IProduct } from 'GlobalType';
 import ProductList from 'components/common/ProductList';
 import {
     Main,
@@ -9,10 +10,6 @@ import {
     Nothing,
     Description,
 } from './SearchContentStyle';
-
-interface ISearch {
-    keyword: string;
-}
 
 const SearchContent = ({ keyword }: ISearch) => {
     const [products, setProducts] = useState<any[]>([]);
@@ -38,15 +35,8 @@ const SearchContent = ({ keyword }: ISearch) => {
         }
     }, [total]);
 
-    interface IProductProps {
-        product_id?: string;
-        image?: string;
-        store_name?: string;
-        product_name?: string;
-        price?: number;
-    }
     const filtering = products?.filter(
-        (data: IProductProps) =>
+        (data: IProduct) =>
             data.product_name?.includes(keyword) ||
             data.store_name?.includes(keyword),
     );
@@ -58,7 +48,7 @@ const SearchContent = ({ keyword }: ISearch) => {
                 검색 결과
             </H2>
             <Container>
-                {filtering.map((i: IProductProps) => {
+                {filtering.map((i: IProduct) => {
                     return <ProductList key={i.product_id} products={i} />;
                 })}
             </Container>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteProduct } from 'apis/seller';
+import { IProductSeller } from 'GlobalType';
 import ModalContainer from 'components/modal/ModalContainer';
 import Modal from 'components/modal/Modal';
 import {
@@ -16,15 +17,7 @@ import {
     DeleteBtn,
 } from './ProductOnSaleStyle';
 
-interface IData {
-    product_id?: string;
-    image?: string;
-    product_name?: string;
-    stock?: number;
-    price?: number;
-}
-
-const ProductOnSale = (data: IData) => {
+const ProductOnSale = (data: IProductSeller) => {
     const navigate = useNavigate();
     const [closeModal, setCloseModal] = useState(false);
 
@@ -33,7 +26,7 @@ const ProductOnSale = (data: IData) => {
     };
 
     const queryClient = useQueryClient();
-    const { mutate } = useMutation(() => deleteProduct(data.product_id!), {
+    const { mutate } = useMutation(() => deleteProduct(`${data.product_id!}`), {
         onSuccess: () => {
             queryClient.invalidateQueries('product');
         },
