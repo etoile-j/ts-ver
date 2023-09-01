@@ -32,4 +32,15 @@ module 'GlobalType' {
     interface ILoginType {
         typeBuyers?: boolean;
     }
+
+    // seller
+    interface IProductSeller {
+        product_id?: number;
+        image?: string;
+        product_name?: string;
+        price?: number;
+        shipping_method?: 'PARCEL' | 'DELIVERY';
+        shipping_fee?: number;
+        stock?: number;
+    }
 }
