@@ -23,15 +23,26 @@ import {
     TotalPrice,
     TotalWon,
     BtnContainer,
-    ColorBtn,
-    GrayBtn,
+    DirectBuyBtn,
+    CartBtn,
 } from './style';
 
 const ProductCard = () => {
-    const [count, setCount] = useState(1);
-    const [product, setProduct] = useState<IProduct>();
+    const DEFAULT_QUANTITY = 1;
     const { product_id } = useParams();
     const navigate = useNavigate();
+    const [count, setCount] = useState(DEFAULT_QUANTITY);
+    const [product, setProduct] = useState<IProduct>();
+    const {
+        image,
+        price,
+        product_name,
+        shipping_method,
+        shipping_fee,
+        stock,
+        store_name,
+    } = product || {};
+
     const [loginModal, setLoginModal] = useState(false);
     const [addedModal, setAddedModal] = useState(false);
     const [addMoreModal, setAddMoreModal] = useState(false);
@@ -62,12 +73,18 @@ const ProductCard = () => {
     }, []);
 
     const handleCheckIsInCart = async () => {
-        const cartItem = await getCartItem();
-        if (cartItem) {
-            const InCart = cartItem.map((cart: ICartData) => cart.product_id);
-            const IntId = parseInt(product_id!);
-            const checkCart = InCart.includes(IntId);
-            checkCart === true ? handleAddMoreModal() : handlePostCart(true);
+        const cartItems = await getCartItem();
+        if (!cartItems.length) {
+            return handlePostCart(true);
+        }
+
+        const checkCart = cartItems.some(
+            (cart: ICartData) => cart.product_id === parseInt(product_id!, 10),
+        );
+        if (checkCart) {
+            handleAddMoreModal();
+        } else {
+            handlePostCart(true);
         }
     };
 
@@ -86,33 +103,56 @@ const ProductCard = () => {
         }
     };
 
+    const handleDirectBuy = () => {
+        if (!token) {
+            return handleLoginModal();
+        }
+
+        navigate('/payment', {
+            state: {
+                product_id: product_id,
+                order_kind: 'direct_order',
+                total: count * price! + shipping_fee!,
+                order_product: [
+                    {
+                        quantity: count,
+                        image: image,
+                        store_name: store_name,
+                        product_name: product_name,
+                        shipping_fee: shipping_fee,
+                        price: price,
+                    },
+                ],
+            },
+        });
+    };
+
     return (
         <Wrap>
-            <ProductImg src={product?.image}></ProductImg>
+            <ProductImg src={image}></ProductImg>
             <Div>
                 <div>
-                    <SellerName>{product?.store_name}</SellerName>
-                    <ProductName>{product?.product_name}</ProductName>
+                    <SellerName>{store_name}</SellerName>
+                    <ProductName>{product_name}</ProductName>
                     <Price>
-                        {product?.price?.toLocaleString('ko-KR')}
+                        {price && price.toLocaleString('ko-KR')}
                         <Won>원</Won>
                     </Price>
                 </div>
                 <div>
                     <DeliveryText>
-                        {product?.shipping_method === 'PARCEL'
+                        {shipping_method === 'PARCEL'
                             ? '택배 배송'
                             : '직접 배송'}{' '}
                         /{' '}
-                        {product?.shipping_fee === 0
+                        {shipping_fee === 0
                             ? '무료 배송'
-                            : `${product?.shipping_fee.toLocaleString(
-                                  'ko-KR',
-                              )}원`}
+                            : shipping_fee &&
+                              `${shipping_fee.toLocaleString('ko-KR')}원`}
                     </DeliveryText>
                     <CountContainer>
                         <CountButton
-                            stocks={product?.stock}
+                            stocks={stock}
                             count={count}
                             setCount={setCount}
                         />
@@ -123,64 +163,18 @@ const ProductCard = () => {
                             총 수량 <Number>{count}</Number>개
                         </TotalAmount>
                         <TotalPrice>
-                            {isNaN(product?.price! * count)
-                                ? ''
-                                : (product?.price! * count).toLocaleString(
-                                      'ko-KR',
-                                  )}
+                            {price && (price! * count).toLocaleString('ko-KR')}
                             <TotalWon>원</TotalWon>
                         </TotalPrice>
                     </TotalWrap>
                     <BtnContainer>
-                        <ColorBtn
-                            onClick={() => {
-                                if (!token) {
-                                    handleLoginModal();
-                                } else {
-                                    navigate('/payment', {
-                                        state: {
-                                            product_id: product_id,
-                                            order_kind: 'direct_order',
-                                            total:
-                                                count * product?.price! +
-                                                product?.shipping_fee!,
-                                            order_product: [
-                                                {
-                                                    quantity: count,
-                                                    image: product?.image,
-                                                    store_name:
-                                                        product?.store_name,
-                                                    product_name:
-                                                        product?.product_name,
-                                                    shipping_fee:
-                                                        product?.shipping_fee,
-                                                    price: product?.price,
-                                                },
-                                            ],
-                                        },
-                                    });
-                                }
-                            }}
-                            style={{
-                                backgroundColor:
-                                    loginType === 'SELLER' ||
-                                    product?.stock === 0
-                                        ? '#c4c4c4'
-                                        : '#6997f7',
-                                cursor:
-                                    loginType === 'SELLER' ||
-                                    product?.stock === 0
-                                        ? 'default'
-                                        : 'pointer',
-                            }}
-                            disabled={
-                                loginType === 'SELLER' ||
-                                (product?.stock === 0 && true)
-                            }
+                        <DirectBuyBtn
+                            onClick={handleDirectBuy}
+                            disabled={loginType === 'SELLER' || stock === 0}
                         >
-                            {product?.stock === 0 ? '품절' : '바로 구매'}
-                        </ColorBtn>
-                        <GrayBtn
+                            {stock === 0 ? '품절' : '바로 구매'}
+                        </DirectBuyBtn>
+                        <CartBtn
                             onClick={() => {
                                 if (!token) {
                                     handleLoginModal();
@@ -188,25 +182,10 @@ const ProductCard = () => {
                                     handleCheckIsInCart();
                                 }
                             }}
-                            style={{
-                                backgroundColor:
-                                    loginType === 'SELLER' ||
-                                    product?.stock === 0
-                                        ? '#c4c4c4'
-                                        : '#6997f7',
-                                cursor:
-                                    loginType === 'SELLER' ||
-                                    product?.stock === 0
-                                        ? 'default'
-                                        : 'pointer',
-                            }}
-                            disabled={
-                                loginType === 'SELLER' ||
-                                (product?.stock === 0 && true)
-                            }
+                            disabled={loginType === 'SELLER' || stock === 0}
                         >
                             장바구니
-                        </GrayBtn>
+                        </CartBtn>
                     </BtnContainer>
                 </div>
             </Div>

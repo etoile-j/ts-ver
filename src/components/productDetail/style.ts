@@ -156,10 +156,10 @@ const BtnContainer = styled.div`
     width: 100%;
 `;
 
-const ColorBtn = styled.button.attrs({
+const DirectBuyBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: #6997f7;
+    background-color: ${({ disabled }) => (disabled ? '#c4c4c4' : '#6997f7')};
     width: 100%;
     padding: 19px 0;
     color: #ffffff;
@@ -167,10 +167,10 @@ const ColorBtn = styled.button.attrs({
     font-size: 18px;
     line-height: 22px;
     border-radius: 5px;
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
 
-const GrayBtn = styled(ColorBtn)`
-    background-color: #767676;
+const CartBtn = styled(DirectBuyBtn)`
     margin-left: 14px;
 `;
 
@@ -191,6 +191,6 @@ export {
     TotalPrice,
     TotalWon,
     BtnContainer,
-    ColorBtn,
-    GrayBtn,
+    DirectBuyBtn,
+    CartBtn,
 };
