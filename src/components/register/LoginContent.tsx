@@ -20,6 +20,8 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!checkEmptyInputs()) return;
+
         try {
             const response = await axiosApi.post('/accounts/login/', {
                 username: idRef.current?.value,
@@ -31,15 +33,28 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             window.location.replace('/');
         } catch (err) {
             console.error(err);
-            if (idRef.current?.value.trim() === '') {
-                setCautionText('아이디를 입력해주세요.');
-            } else if (passwordRef.current?.value.trim() === '') {
-                setCautionText('비밀번호를 입력해주세요.');
-            } else if (passwordRef.current?.value) {
-                passwordRef.current.value = '';
-                setCautionText('아이디 또는 비밀번호가 일치하지 않습니다.');
-            }
+            notifyLoginError();
         }
+    };
+
+    const checkEmptyInputs = () => {
+        if (idRef.current?.value.trim() === '') {
+            setCautionText('아이디를 입력해주세요.');
+            idRef.current.focus();
+            return false;
+        }
+        if (passwordRef.current?.value.trim() === '') {
+            setCautionText('비밀번호를 입력해주세요.');
+            passwordRef.current.focus();
+            return false;
+        }
+
+        return true;
+    };
+
+    const notifyLoginError = () => {
+        setCautionText('아이디 또는 비밀번호가 일치하지 않습니다.');
+        passwordRef.current!.value = '';
     };
 
     return (
