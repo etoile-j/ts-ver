@@ -1,6 +1,6 @@
 # ✨ OUR SHOP
 
-<img width="956" alt="m" src="https://user-images.githubusercontent.com/102905624/208031267-8557a802-6d20-4fc4-b131-92ada1667f2b.png">
+<img width="850" alt="OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/4a1d8725-e377-4354-a953-798de2bbfd98">
 
 ### 📍 https://etoile-ourshop.netlify.app
 
