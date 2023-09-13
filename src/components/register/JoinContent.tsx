@@ -57,50 +57,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
 
     const onSubmit = (data: IJoinInputs) => {
         if (!passId) {
-            alert('아이디 중복확인이 필요합니다.');
-        } else if (typeBuyers === false && passCompany == false) {
-            alert('사업자 등록번호 인증이 필요합니다.');
-        } else {
-            handleJoin(data);
+            return alert('아이디 중복확인이 필요합니다.');
         }
-    };
+        if (typeBuyers === false && passCompany === false) {
+            return alert('사업자 등록번호 인증이 필요합니다.');
+        }
 
-    const idValidCheck = async () => {
-        try {
-            if (idRegex.test(getValues('id')) === false) return;
-            await axiosApi.post('/accounts/signup/valid/username/', {
-                username: getValues('id'),
-            });
-            setPassIdText('사용 가능한 아이디입니다 :)');
-            setPassId(true);
-        } catch (err) {
-            console.error(err);
-            if (err instanceof AxiosError) {
-                if (err.response?.data.FAIL_Message) {
-                    setError(
-                        'id',
-                        {
-                            message: err.response?.data.FAIL_Message,
-                        },
-                        { shouldFocus: true },
-                    );
-                }
-            }
-        }
-    };
-
-    const companyValidCheck = async () => {
-        try {
-            if (getValues('companyNum').length !== 10) return;
-            const url = '/accounts/signup/valid/company_registration_number/';
-            const response = await axiosApi.post(url, {
-                company_registration_number: getValues('companyNum'),
-            });
-            setPassCompany(true);
-            setPassCompanyText(response.data.Success);
-        } catch (err) {
-            console.error(err);
-        }
+        handleJoin(data);
     };
 
     const handleJoin = async (data: IJoinInputs) => {
@@ -117,11 +80,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 company_registration_number: data.companyNum,
                 store_name: data.storeName,
             });
+
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
         } catch (err) {
             console.error(err);
+
             if (err instanceof AxiosError) {
                 if (err.response?.data.phone_number) {
                     setError(
@@ -131,7 +96,8 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         },
                         { shouldFocus: true },
                     );
-                } else if (err.response?.data.store_name) {
+                }
+                if (err.response?.data.store_name) {
                     setError(
                         'storeName',
                         {
@@ -141,6 +107,50 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     );
                 }
             }
+        }
+    };
+
+    const idValidCheck = async () => {
+        try {
+            if (idRegex.test(getValues('id')) === false) return;
+
+            const response = await axiosApi.post(
+                '/accounts/signup/valid/username/',
+                {
+                    username: getValues('id'),
+                },
+            );
+            if (response.data.Success) {
+                setPassIdText('사용 가능한 아이디입니다 :)');
+                setPassId(true);
+            }
+        } catch (err) {
+            console.error(err);
+
+            if (err instanceof AxiosError && err.response?.data.FAIL_Message) {
+                setError(
+                    'id',
+                    {
+                        message: err.response?.data.FAIL_Message,
+                    },
+                    { shouldFocus: true },
+                );
+            }
+        }
+    };
+
+    const companyValidCheck = async () => {
+        try {
+            if (getValues('companyNum').length !== 10) return;
+
+            const url = '/accounts/signup/valid/company_registration_number/';
+            const response = await axiosApi.post(url, {
+                company_registration_number: getValues('companyNum'),
+            });
+            setPassCompany(true);
+            setPassCompanyText(response.data.Success);
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -294,6 +304,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                         <PhoneInput
                             type="text"
+                            inputMode="tel"
                             width="152px"
                             maxLength={4}
                             {...register('phone3', {
@@ -322,7 +333,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 <Div>
                     <Label>이메일</Label>
                     <Input
-                        type="text"
+                        type="text" // 이거 number로 안 한 이유가 있는 거 같은데 까먹음;;ㅋ
                         width="220px"
                         {...register('emailId', {
                             required: '필수 정보입니다.',
@@ -415,10 +426,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </label>
                     <JoinBtn
                         type="submit"
-                        disabled={isValid ? false : true}
-                        style={{
-                            cursor: isValid ? 'pointer' : 'default',
-                        }}
+                        disabled={!isValid}
                         color={isValid ? '#6997f7' : '#c4c4c4'}
                     >
                         가입하기
