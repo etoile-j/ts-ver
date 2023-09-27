@@ -62,7 +62,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             <Input type="text" placeholder="아이디" ref={idRef} />
             <Input type="password" placeholder="비밀번호" ref={passwordRef} />
             <Div>
-                <CautionText>{cautionText}</CautionText>
+                <CautionText aria-live="assertive">{cautionText}</CautionText>
             </Div>
             <SubmitButton type="submit">로그인</SubmitButton>
         </Form>
