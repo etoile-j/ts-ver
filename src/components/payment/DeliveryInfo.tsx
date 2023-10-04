@@ -1,9 +1,4 @@
-import {
-    UseFormRegister,
-    FieldValues,
-    FieldError,
-    DeepMap,
-} from 'react-hook-form';
+import { UseFormRegister, FieldValues, FieldError, DeepMap } from 'react-hook-form';
 import {
     Legend,
     Line,
@@ -40,11 +35,26 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <PhoneInput type="text" width="80px" maxLength={3} />
+                        <PhoneInput
+                            type="text"
+                            inputMode="tel"
+                            width="80px"
+                            maxLength={3}
+                        />
                         <Hyphen>-</Hyphen>
-                        <PhoneInput type="text" width="100px" maxLength={4} />
+                        <PhoneInput
+                            type="text"
+                            inputMode="tel"
+                            width="100px"
+                            maxLength={4}
+                        />
                         <Hyphen>-</Hyphen>
-                        <PhoneInput type="text" width="100px" maxLength={4} />
+                        <PhoneInput
+                            type="text"
+                            inputMode="tel"
+                            width="100px"
+                            maxLength={4}
+                        />
                     </span>
                 </Line>
                 <Line>
@@ -70,7 +80,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         })}
                     />
                     {errors.name && (
-                        <CautionText>{errors.name.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.name.message}
+                        </CautionText>
                     )}
                 </Line>
                 <Line>
@@ -78,6 +90,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <span>
                         <PhoneInput
                             type="text"
+                            inputMode="tel"
                             width="80px"
                             maxLength={3}
                             {...register('phone1', {
@@ -95,6 +108,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             type="text"
+                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone2', {
@@ -112,6 +126,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             type="text"
+                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone3', {
@@ -128,15 +143,17 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
 
                         {(errors.phone1 && (
-                            <CautionText>{errors.phone1.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.phone1.message}
+                            </CautionText>
                         )) ||
                             (errors.phone2 && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.phone2.message}
                                 </CautionText>
                             )) ||
                             (errors.phone3 && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.phone3.message}
                                 </CautionText>
                             ))}
@@ -147,13 +164,17 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <Input type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
                     {(errors.address1 && (
-                        <CautionText>{errors.address1.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.address1.message}
+                        </CautionText>
                     )) ||
                         (errors.address2 && (
-                            <CautionText>{errors.address2.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.address2.message}
+                            </CautionText>
                         )) ||
                         (errors.deliveryMessage && (
-                            <CautionText>
+                            <CautionText aria-live="assertive">
                                 {errors.deliveryMessage.message}
                             </CautionText>
                         ))}

@@ -125,9 +125,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                                 width="95%"
                                 maxLength={20}
                                 value={name || ''}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>,
-                                ) => {
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     setName(e.target.value);
                                 }}
                             />
@@ -138,7 +136,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <LabelWrap>
                             <Label htmlFor="price">판매가</Label>
                             {errors.price && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.price.message}
                                 </CautionText>
                             )}
@@ -146,6 +144,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <Input
                             id="price"
                             type="text"
+                            inputMode="numeric"
                             width="166px"
                             {...register('price', {
                                 required: '필수정보 입니다.',
@@ -166,11 +165,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             }}
                             color={parcel ? '#6997f7' : '#ffffff'}
                             font={parcel ? '#ffffff' : '#767676'}
-                            border={
-                                parcel
-                                    ? '1px solid #6997f7'
-                                    : '1px solid #c4c4c4'
-                            }
+                            border={parcel ? '1px solid #6997f7' : '1px solid #c4c4c4'}
                         >
                             <RadioInput
                                 value="PARCEL"
@@ -188,11 +183,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             }}
                             color={delivery ? '#6997f7' : '#ffffff'}
                             font={delivery ? '#ffffff' : '#767676'}
-                            border={
-                                delivery
-                                    ? '1px solid #6997f7'
-                                    : '1px solid #c4c4c4'
-                            }
+                            border={delivery ? '1px solid #6997f7' : '1px solid #c4c4c4'}
                         >
                             <RadioInput
                                 value="DELIVERY"
@@ -208,7 +199,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <LabelWrap>
                             <Label htmlFor="shipping_fee">기본 배송비</Label>
                             {errors.shipping_fee && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.shipping_fee.message}
                                 </CautionText>
                             )}
@@ -216,6 +207,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <Input
                             id="shipping_fee"
                             type="text"
+                            inputMode="numeric"
                             width="166px"
                             {...register('shipping_fee', {
                                 required: '필수정보 입니다.',
@@ -231,7 +223,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <LabelWrap>
                             <Label htmlFor="stock">재고</Label>
                             {errors.stock && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.stock.message}
                                 </CautionText>
                             )}
@@ -239,6 +231,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <Input
                             id="stock"
                             type="text"
+                            inputMode="numeric"
                             width="166px"
                             {...register('stock', {
                                 required: '필수정보 입니다.',
