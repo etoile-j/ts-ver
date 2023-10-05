@@ -125,6 +125,7 @@ const JoinBtn = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
 
 export {
