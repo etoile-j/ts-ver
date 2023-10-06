@@ -40,10 +40,10 @@ interface IJoinInputs {
 }
 
 const JoinContent = ({ typeBuyers }: ILoginType) => {
-    const [passId, setPassId] = useState(false);
-    const [passIdText, setPassIdText] = useState<string>();
-    const [passCompany, setPassCompany] = useState(false);
-    const [passCompanyText, setPassCompanyText] = useState<string>();
+    const [isPassId, setIsPassId] = useState(false);
+    const [passIdText, setPassIdText] = useState<string>('');
+    const [isPassCompany, setIsPassCompany] = useState(false);
+    const [passCompanyText, setPassCompanyText] = useState<string>('');
     const idRegex = /^[A-za-z0-9]{1,19}$/g;
     const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
 
@@ -55,59 +55,18 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         formState: { errors, isValid },
     } = useForm<IJoinInputs>({ mode: 'onChange' });
 
-    const onSubmit = (data: IJoinInputs) => {
-        if (!passId) {
-            alert('아이디 중복확인이 필요합니다.');
-        } else if (typeBuyers === false && passCompany == false) {
-            alert('사업자 등록번호 인증이 필요합니다.');
-        } else {
-            handleJoin(data);
-        }
-    };
-
-    const idValidCheck = async () => {
-        try {
-            if (idRegex.test(getValues('id')) === false) return;
-            await axiosApi.post('/accounts/signup/valid/username/', {
-                username: getValues('id'),
-            });
-            setPassIdText('사용 가능한 아이디입니다 :)');
-            setPassId(true);
-        } catch (err) {
-            console.error(err);
-            if (err instanceof AxiosError) {
-                if (err.response?.data.FAIL_Message) {
-                    setError(
-                        'id',
-                        {
-                            message: err.response?.data.FAIL_Message,
-                        },
-                        { shouldFocus: true },
-                    );
-                }
-            }
-        }
-    };
-
-    const companyValidCheck = async () => {
-        try {
-            if (getValues('companyNum').length !== 10) return;
-            const url = '/accounts/signup/valid/company_registration_number/';
-            const response = await axiosApi.post(url, {
-                company_registration_number: getValues('companyNum'),
-            });
-            setPassCompany(true);
-            setPassCompanyText(response.data.Success);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const handleJoin = async (data: IJoinInputs) => {
+        if (!isPassId) {
+            alert('아이디 중복확인이 필요합니다.');
+            return;
+        }
+        if (!typeBuyers && !isPassCompany) {
+            alert('사업자 등록번호 인증이 필요합니다.');
+            return;
+        }
+
         try {
-            const url = `/accounts/${
-                typeBuyers ? 'signup/' : 'signup_seller/'
-            }`;
+            const url = `/accounts/${typeBuyers ? 'signup/' : 'signup_seller/'}`;
             const response = await axiosApi.post(url, {
                 username: data.id,
                 password: data.password,
@@ -117,11 +76,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 company_registration_number: data.companyNum,
                 store_name: data.storeName,
             });
+
             if (response.status === 201) {
                 window.location.replace('/complete_join');
             }
         } catch (err) {
             console.error(err);
+
             if (err instanceof AxiosError) {
                 if (err.response?.data.phone_number) {
                     setError(
@@ -131,7 +92,8 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         },
                         { shouldFocus: true },
                     );
-                } else if (err.response?.data.store_name) {
+                }
+                if (err.response?.data.store_name) {
                     setError(
                         'storeName',
                         {
@@ -144,12 +106,54 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         }
     };
 
+    const idValidCheck = async () => {
+        if (!idRegex.test(getValues('id'))) return;
+
+        try {
+            const response = await axiosApi.post('/accounts/signup/valid/username/', {
+                username: getValues('id'),
+            });
+
+            if (response.data.Success) {
+                setPassIdText('사용 가능한 아이디입니다 :)');
+                setIsPassId(true);
+            }
+        } catch (err) {
+            console.error(err);
+            if (err instanceof AxiosError) {
+                setError(
+                    'id',
+                    {
+                        message: err.response?.data?.FAIL_Message,
+                    },
+                    { shouldFocus: true },
+                );
+            }
+        }
+    };
+
+    const companyValidCheck = async () => {
+        try {
+            if (getValues('companyNum').length !== 10) return;
+
+            const url = '/accounts/signup/valid/company_registration_number/';
+            const response = await axiosApi.post(url, {
+                company_registration_number: getValues('companyNum'),
+            });
+            setIsPassCompany(true);
+            setPassCompanyText(response.data.Success);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(handleJoin)}>
             <fieldset>
                 <Div>
-                    <Label>아이디</Label>
+                    <Label htmlFor="id">아이디</Label>
                     <Input
+                        id="id"
                         type="text"
                         width="346px"
                         {...register('id', {
@@ -161,16 +165,22 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             },
                             onChange(event) {
                                 setPassIdText('');
-                                setPassId(false);
+                                setIsPassId(false);
                             },
                         })}
                     />
-                    <VaildCheckBtn type="button" onClick={idValidCheck}>
+                    <VaildCheckBtn
+                        type="button"
+                        aria-label="아이디 중복 확인하기"
+                        onClick={idValidCheck}
+                    >
                         중복확인
                     </VaildCheckBtn>
                 </Div>
                 <PassText>{passIdText}</PassText>
-                {errors.id && <CautionText>{errors.id.message}</CautionText>}
+                {errors.id && (
+                    <CautionText aria-live="assertive">{errors.id.message}</CautionText>
+                )}
                 <Div>
                     <Label htmlFor="password">비밀번호</Label>
                     <PasswordInput>
@@ -189,9 +199,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                         <PwCheck
                             style={{
-                                backgroundImage: !PwRegex.test(
-                                    getValues('password'),
-                                )
+                                backgroundImage: !PwRegex.test(getValues('password'))
                                     ? `url(${Check_off})`
                                     : `url(${Check_on})`,
                             }}
@@ -199,7 +207,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PasswordInput>
                 </Div>
                 {errors.password && (
-                    <CautionText>{errors.password.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.password.message}
+                    </CautionText>
                 )}
                 <Div>
                     <Label htmlFor="passwordCheck">비밀번호 재확인</Label>
@@ -225,8 +235,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             style={{
                                 backgroundImage:
                                     getValues('password') &&
-                                    getValues('password') ===
-                                        getValues('passwordCheck')
+                                    getValues('password') === getValues('passwordCheck')
                                         ? `url(${Check_on})`
                                         : `url(${Check_off})`,
                             }}
@@ -234,7 +243,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PasswordInput>
                 </Div>
                 {errors.passwordCheck && (
-                    <CautionText>{errors.passwordCheck.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.passwordCheck.message}
+                    </CautionText>
                 )}
             </fieldset>
             <Fieldset>
@@ -254,7 +265,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     />
                 </div>
                 {errors.name && (
-                    <CautionText>{errors.name.message}</CautionText>
+                    <CautionText aria-live="assertive">{errors.name.message}</CautionText>
                 )}
                 <Div>
                     <Label>휴대폰번호</Label>
@@ -263,6 +274,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="text"
                             width="152px"
                             maxLength={3}
+                            title="휴대폰번호 첫 세 자리"
                             {...register('phone1', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -271,8 +283,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 },
                                 pattern: {
                                     value: /^01[0-9]+$/,
-                                    message:
-                                        '01으로 시작하는 숫자만 입력 가능합니다.',
+                                    message: '01으로 시작하는 숫자만 입력 가능합니다.',
                                 },
                             })}
                         />
@@ -280,6 +291,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="text"
                             width="152px"
                             maxLength={4}
+                            title="휴대폰번호 중간 네 자리"
                             {...register('phone2', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -294,8 +306,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                         <PhoneInput
                             type="text"
+                            inputMode="tel"
                             width="152px"
                             maxLength={4}
+                            title="휴대폰번호 마지막 네 자리"
                             {...register('phone3', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -311,19 +325,26 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PhoneNumber>
                 </Div>
                 {(errors.phone1 && (
-                    <CautionText>{errors.phone1.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.phone1.message}
+                    </CautionText>
                 )) ||
                     (errors.phone2 && (
-                        <CautionText>{errors.phone2.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.phone2.message}
+                        </CautionText>
                     )) ||
                     (errors.phone3 && (
-                        <CautionText>{errors.phone3.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.phone3.message}
+                        </CautionText>
                     ))}
                 <Div>
                     <Label>이메일</Label>
                     <Input
                         type="text"
                         width="220px"
+                        title="이메일 주소 중 아이디"
                         {...register('emailId', {
                             required: '필수 정보입니다.',
                             pattern: {
@@ -336,6 +357,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     <Input
                         type="text"
                         width="220px"
+                        title="이메일 주소 중 도메인"
                         {...register('emailDomain', {
                             required: '필수 정보입니다.',
                             pattern: {
@@ -346,40 +368,45 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     />
                 </Div>
                 {(errors.emailId && (
-                    <CautionText>{errors.emailId?.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.emailId?.message}
+                    </CautionText>
                 )) ||
                     (errors.emailDomain && (
-                        <CautionText>{errors.emailDomain?.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.emailDomain?.message}
+                        </CautionText>
                     ))}
-                {typeBuyers === false && (
+                {!typeBuyers && (
                     <Fieldset>
                         <div>
-                            <Label>사업자 등록번호</Label>
+                            <Label htmlFor="companyValid">사업자 등록번호</Label>
                             <Input
+                                id="companyValid"
                                 type="text"
                                 width="346px"
                                 {...register('companyNum', {
                                     required: '필수 정보입니다.',
                                     pattern: {
                                         value: /^[0-9]{10}$/,
-                                        message:
-                                            '숫자 10자까지만 입력 가능합니다.',
+                                        message: '숫자 10자까지만 입력 가능합니다.',
                                     },
                                     onChange(event) {
-                                        setPassCompany(false);
+                                        setIsPassCompany(false);
                                         setPassCompanyText('');
                                     },
                                 })}
                             />
                             <VaildCheckBtn
                                 type="button"
+                                aria-label="사업자 등록번호 인증하기"
                                 onClick={companyValidCheck}
                             >
                                 인증
                             </VaildCheckBtn>
                         </div>
                         {errors.companyNum && (
-                            <CautionText>
+                            <CautionText aria-live="assertive">
                                 {errors.companyNum.message}
                             </CautionText>
                         )}
@@ -396,7 +423,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             />
                         </Div>
                         {errors.storeName && (
-                            <CautionText>
+                            <CautionText aria-live="assertive">
                                 {errors.storeName.message}
                             </CautionText>
                         )}
@@ -410,15 +437,12 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 required: true,
                             })}
                         />
-                        OUR SHOP의 이용약관 및 개인정보처리방침에 대한 내용을
-                        확인하였고 동의합니다.
+                        OUR SHOP의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고
+                        동의합니다.
                     </label>
                     <JoinBtn
                         type="submit"
-                        disabled={isValid ? false : true}
-                        style={{
-                            cursor: isValid ? 'pointer' : 'default',
-                        }}
+                        disabled={!isValid}
                         color={isValid ? '#6997f7' : '#c4c4c4'}
                     >
                         가입하기
