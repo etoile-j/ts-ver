@@ -1,9 +1,4 @@
-import {
-    UseFormRegister,
-    FieldValues,
-    FieldError,
-    DeepMap,
-} from 'react-hook-form';
+import { UseFormRegister, FieldValues, FieldError, DeepMap } from 'react-hook-form';
 import {
     Legend,
     Line,
@@ -34,22 +29,45 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <legend>주문자 정보</legend>
                 </Legend>
                 <Line>
-                    <Label>이름</Label>
-                    <Input type="text" width="334px" />
+                    <Label htmlFor="buyer_name">이름</Label>
+                    <Input
+                        id="buyer_name"
+                        aria-label="주문자 이름"
+                        type="text"
+                        width="334px"
+                    />
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <PhoneInput type="text" width="80px" maxLength={3} />
+                        <PhoneInput
+                            title="휴대폰번호 첫 세 자리"
+                            type="text"
+                            inputMode="tel"
+                            width="80px"
+                            maxLength={3}
+                        />
                         <Hyphen>-</Hyphen>
-                        <PhoneInput type="text" width="100px" maxLength={4} />
+                        <PhoneInput
+                            title="휴대폰번호 중간 네 자리"
+                            type="text"
+                            inputMode="tel"
+                            width="100px"
+                            maxLength={4}
+                        />
                         <Hyphen>-</Hyphen>
-                        <PhoneInput type="text" width="100px" maxLength={4} />
+                        <PhoneInput
+                            title="휴대폰번호 마지막 네 자리"
+                            type="text"
+                            inputMode="tel"
+                            width="100px"
+                            maxLength={4}
+                        />
                     </span>
                 </Line>
                 <Line>
-                    <Label>이메일</Label>
-                    <Input type="email" width="334px" />
+                    <Label htmlFor="email">이메일</Label>
+                    <Input id="email" type="email" width="334px" />
                 </Line>
             </fieldset>
             <fieldset>
@@ -57,8 +75,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <legend>배송지 정보</legend>
                 </Legend>
                 <Line>
-                    <Label>수령인</Label>
+                    <Label htmlFor="receiver">수령인</Label>
                     <Input
+                        id="receiver"
                         type="text"
                         width="334px"
                         {...register('name', {
@@ -70,14 +89,18 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         })}
                     />
                     {errors.name && (
-                        <CautionText>{errors.name.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.name.message}
+                        </CautionText>
                     )}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
+                            title="휴대폰번호 첫 세 자리"
                             type="text"
+                            inputMode="tel"
                             width="80px"
                             maxLength={3}
                             {...register('phone1', {
@@ -94,7 +117,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 중간 네 자리"
                             type="text"
+                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone2', {
@@ -111,7 +136,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 마지막 네 자리"
                             type="text"
+                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone3', {
@@ -128,15 +155,17 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
 
                         {(errors.phone1 && (
-                            <CautionText>{errors.phone1.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.phone1.message}
+                            </CautionText>
                         )) ||
                             (errors.phone2 && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.phone2.message}
                                 </CautionText>
                             )) ||
                             (errors.phone3 && (
-                                <CautionText>
+                                <CautionText aria-live="assertive">
                                     {errors.phone3.message}
                                 </CautionText>
                             ))}
@@ -144,22 +173,27 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                 </Line>
                 <Line>
                     <Label>배송주소</Label>
-                    <Input type="text" width="170px" />
+                    <Input title="우편번호" type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
                     {(errors.address1 && (
-                        <CautionText>{errors.address1.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.address1.message}
+                        </CautionText>
                     )) ||
                         (errors.address2 && (
-                            <CautionText>{errors.address2.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.address2.message}
+                            </CautionText>
                         )) ||
                         (errors.deliveryMessage && (
-                            <CautionText>
+                            <CautionText aria-live="assertive">
                                 {errors.deliveryMessage.message}
                             </CautionText>
                         ))}
                     <br />
                     <Label></Label>
                     <AddressInput
+                        title="기본 주소"
                         type="text"
                         width="600px"
                         {...register('address1', {
@@ -171,8 +205,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         })}
                     />
                     <br />
-                    <Label></Label>
+                    <Label />
                     <Input
+                        title="상세 주소"
                         type="text"
                         width="600px"
                         {...register('address2', {
@@ -181,8 +216,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     />
                 </Line>
                 <Line>
-                    <Label>배송 메시지</Label>
+                    <Label htmlFor="delivery_message">배송 메시지</Label>
                     <Input
+                        id="delivery_message"
                         type="text"
                         width="600px"
                         {...register('deliveryMessage', {

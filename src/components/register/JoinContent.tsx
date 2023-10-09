@@ -151,8 +151,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         <Form onSubmit={handleSubmit(handleJoin)}>
             <fieldset>
                 <Div>
-                    <Label>아이디</Label>
+                    <Label htmlFor="id">아이디</Label>
                     <Input
+                        id="id"
                         type="text"
                         width="346px"
                         {...register('id', {
@@ -168,12 +169,18 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             },
                         })}
                     />
-                    <VaildCheckBtn type="button" onClick={idValidCheck}>
+                    <VaildCheckBtn
+                        type="button"
+                        aria-label="아이디 중복 확인하기"
+                        onClick={idValidCheck}
+                    >
                         중복확인
                     </VaildCheckBtn>
                 </Div>
                 <PassText>{passIdText}</PassText>
-                {errors.id && <CautionText>{errors.id.message}</CautionText>}
+                {errors.id && (
+                    <CautionText aria-live="assertive">{errors.id.message}</CautionText>
+                )}
                 <Div>
                     <Label htmlFor="password">비밀번호</Label>
                     <PasswordInput>
@@ -199,7 +206,11 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                     </PasswordInput>
                 </Div>
-                {errors.password && <CautionText>{errors.password.message}</CautionText>}
+                {errors.password && (
+                    <CautionText aria-live="assertive">
+                        {errors.password.message}
+                    </CautionText>
+                )}
                 <Div>
                     <Label htmlFor="passwordCheck">비밀번호 재확인</Label>
                     <PasswordInput>
@@ -232,7 +243,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PasswordInput>
                 </Div>
                 {errors.passwordCheck && (
-                    <CautionText>{errors.passwordCheck.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.passwordCheck.message}
+                    </CautionText>
                 )}
             </fieldset>
             <Fieldset>
@@ -251,7 +264,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         })}
                     />
                 </div>
-                {errors.name && <CautionText>{errors.name.message}</CautionText>}
+                {errors.name && (
+                    <CautionText aria-live="assertive">{errors.name.message}</CautionText>
+                )}
                 <Div>
                     <Label>휴대폰번호</Label>
                     <PhoneNumber>
@@ -259,6 +274,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="text"
                             width="152px"
                             maxLength={3}
+                            title="휴대폰번호 첫 세 자리"
                             {...register('phone1', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -275,6 +291,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="text"
                             width="152px"
                             maxLength={4}
+                            title="휴대폰번호 중간 네 자리"
                             {...register('phone2', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -292,6 +309,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             inputMode="tel"
                             width="152px"
                             maxLength={4}
+                            title="휴대폰번호 마지막 네 자리"
                             {...register('phone3', {
                                 required: '필수 정보입니다.',
                                 minLength: {
@@ -306,16 +324,27 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                     </PhoneNumber>
                 </Div>
-                {(errors.phone1 && <CautionText>{errors.phone1.message}</CautionText>) ||
+                {(errors.phone1 && (
+                    <CautionText aria-live="assertive">
+                        {errors.phone1.message}
+                    </CautionText>
+                )) ||
                     (errors.phone2 && (
-                        <CautionText>{errors.phone2.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.phone2.message}
+                        </CautionText>
                     )) ||
-                    (errors.phone3 && <CautionText>{errors.phone3.message}</CautionText>)}
+                    (errors.phone3 && (
+                        <CautionText aria-live="assertive">
+                            {errors.phone3.message}
+                        </CautionText>
+                    ))}
                 <Div>
                     <Label>이메일</Label>
                     <Input
                         type="text"
                         width="220px"
+                        title="이메일 주소 중 아이디"
                         {...register('emailId', {
                             required: '필수 정보입니다.',
                             pattern: {
@@ -328,6 +357,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     <Input
                         type="text"
                         width="220px"
+                        title="이메일 주소 중 도메인"
                         {...register('emailDomain', {
                             required: '필수 정보입니다.',
                             pattern: {
@@ -338,16 +368,21 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     />
                 </Div>
                 {(errors.emailId && (
-                    <CautionText>{errors.emailId?.message}</CautionText>
+                    <CautionText aria-live="assertive">
+                        {errors.emailId?.message}
+                    </CautionText>
                 )) ||
                     (errors.emailDomain && (
-                        <CautionText>{errors.emailDomain?.message}</CautionText>
+                        <CautionText aria-live="assertive">
+                            {errors.emailDomain?.message}
+                        </CautionText>
                     ))}
                 {!typeBuyers && (
                     <Fieldset>
                         <div>
-                            <Label>사업자 등록번호</Label>
+                            <Label htmlFor="companyValid">사업자 등록번호</Label>
                             <Input
+                                id="companyValid"
                                 type="text"
                                 width="346px"
                                 {...register('companyNum', {
@@ -362,12 +397,18 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                     },
                                 })}
                             />
-                            <VaildCheckBtn type="button" onClick={companyValidCheck}>
+                            <VaildCheckBtn
+                                type="button"
+                                aria-label="사업자 등록번호 인증하기"
+                                onClick={companyValidCheck}
+                            >
                                 인증
                             </VaildCheckBtn>
                         </div>
                         {errors.companyNum && (
-                            <CautionText>{errors.companyNum.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.companyNum.message}
+                            </CautionText>
                         )}
                         <PassText>{passCompanyText}</PassText>
                         <Div>
@@ -382,7 +423,9 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             />
                         </Div>
                         {errors.storeName && (
-                            <CautionText>{errors.storeName.message}</CautionText>
+                            <CautionText aria-live="assertive">
+                                {errors.storeName.message}
+                            </CautionText>
                         )}
                     </Fieldset>
                 )}

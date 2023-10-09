@@ -104,16 +104,18 @@ const NameLength = styled.span`
     color: #c4c4c4;
 `;
 
-const Unit = styled.button`
+const Unit = styled.span`
     background-color: #c4c4c4;
+    display: inline-block;
     width: 54px;
     height: 54px;
-    padding: 1px 6px;
+    padding: 16px 6px 17px 6px;
     border-radius: 0 5px 5px 0;
     color: #ffffff;
+    text-align: center;
     font-weight: 400;
     font-size: 16px;
-    line-height: 20px;
+    line-height: 21px;
 `;
 
 const RadioInput = styled.input.attrs({
