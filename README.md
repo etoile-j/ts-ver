@@ -13,15 +13,15 @@
 
 -   구매회원
 
-|   `id`   | `password` |
+|   **id**   | **password** |
 | :------: | :--------: |
-| customer |  ourshop1  |
+| `customer` |  `ourshop1`  |
 
 -   판매회원
 
-|  `id`   | `password` |
+|  **id**   | **password** |
 | :-----: | :--------: |
-| oursell |  ourshop1  |
+| `oursell` |  `ourshop1`  |
 
 <br><br>
 
