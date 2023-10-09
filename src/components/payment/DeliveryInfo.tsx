@@ -29,13 +29,19 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <legend>주문자 정보</legend>
                 </Legend>
                 <Line>
-                    <Label>이름</Label>
-                    <Input type="text" width="334px" />
+                    <Label htmlFor="buyer_name">이름</Label>
+                    <Input
+                        id="buyer_name"
+                        aria-label="주문자 이름"
+                        type="text"
+                        width="334px"
+                    />
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
+                            title="휴대폰번호 첫 세 자리"
                             type="text"
                             inputMode="tel"
                             width="80px"
@@ -43,6 +49,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 중간 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -50,6 +57,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 마지막 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -58,8 +66,8 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     </span>
                 </Line>
                 <Line>
-                    <Label>이메일</Label>
-                    <Input type="email" width="334px" />
+                    <Label htmlFor="email">이메일</Label>
+                    <Input id="email" type="email" width="334px" />
                 </Line>
             </fieldset>
             <fieldset>
@@ -67,8 +75,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <legend>배송지 정보</legend>
                 </Legend>
                 <Line>
-                    <Label>수령인</Label>
+                    <Label htmlFor="receiver">수령인</Label>
                     <Input
+                        id="receiver"
                         type="text"
                         width="334px"
                         {...register('name', {
@@ -89,6 +98,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
+                            title="휴대폰번호 첫 세 자리"
                             type="text"
                             inputMode="tel"
                             width="80px"
@@ -107,6 +117,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 중간 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -125,6 +136,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
+                            title="휴대폰번호 마지막 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -161,7 +173,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                 </Line>
                 <Line>
                     <Label>배송주소</Label>
-                    <Input type="text" width="170px" />
+                    <Input title="우편번호" type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
                     {(errors.address1 && (
                         <CautionText aria-live="assertive">
@@ -181,6 +193,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <br />
                     <Label></Label>
                     <AddressInput
+                        title="기본 주소"
                         type="text"
                         width="600px"
                         {...register('address1', {
@@ -192,8 +205,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         })}
                     />
                     <br />
-                    <Label></Label>
+                    <Label />
                     <Input
+                        title="상세 주소"
                         type="text"
                         width="600px"
                         {...register('address2', {
@@ -202,8 +216,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     />
                 </Line>
                 <Line>
-                    <Label>배송 메시지</Label>
+                    <Label htmlFor="delivery_message">배송 메시지</Label>
                     <Input
+                        id="delivery_message"
                         type="text"
                         width="600px"
                         {...register('deliveryMessage', {

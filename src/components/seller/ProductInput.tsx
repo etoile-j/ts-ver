@@ -113,14 +113,14 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         accept="image/*"
                         onChange={uploadImg}
                     />
-                    <ImgPreview src={preImg} />
+                    <ImgPreview src={preImg} alt="" />
                 </ImgWrap>
                 <InputContainer>
                     <Field>
-                        <Label htmlFor="name">상품명</Label>
+                        <Label htmlFor="product_name">상품명</Label>
                         <NameInputWrap>
                             <NameInput
-                                id="name"
+                                id="product_name"
                                 type="text"
                                 width="95%"
                                 maxLength={20}
@@ -154,11 +154,12 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                                 },
                             })}
                         />
-                        <Unit>원</Unit>
+                        <Unit title="원">원</Unit>
                     </Field>
                     <Field>
-                        <Label htmlFor="">배송 방법</Label>
+                        <Label>배송 방법</Label>
                         <RadioLabel
+                            htmlFor="parcel"
                             onClick={() => {
                                 setParcel(true);
                                 setDelivery(false);
@@ -168,6 +169,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             border={parcel ? '1px solid #6997f7' : '1px solid #c4c4c4'}
                         >
                             <RadioInput
+                                id="parcel"
                                 value="PARCEL"
                                 checked={parcel}
                                 {...register('shipping_method', {
@@ -177,6 +179,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             택배, 소포, 등기
                         </RadioLabel>
                         <RadioLabel
+                            htmlFor="delivery"
                             onClick={() => {
                                 setDelivery(true);
                                 setParcel(false);
@@ -186,6 +189,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             border={delivery ? '1px solid #6997f7' : '1px solid #c4c4c4'}
                         >
                             <RadioInput
+                                id="delivery"
                                 value="DELIVERY"
                                 checked={delivery}
                                 {...register('shipping_method', {
