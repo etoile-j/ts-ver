@@ -81,7 +81,9 @@ const BuyerTap2 = styled(BuyerTap)`
     z-index: 2;
 `;
 
-const BuyerBtn = styled.button`
+const BuyerBtn = styled.button.attrs({
+    type: 'button',
+})`
     font-weight: 500;
     font-size: 18px;
     line-height: 22px;

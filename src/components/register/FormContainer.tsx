@@ -35,32 +35,28 @@ const FormContainer = (props: IFormContainer) => {
                 <Ul role="tablist">
                     {props.typeBuyer ? (
                         <>
-                            <BuyerTap>
-                                <BuyerBtn role="tab" aria-selected="true">
-                                    {props.buyer}
-                                </BuyerBtn>
+                            <BuyerTap role="tab" aria-selected="true">
+                                <BuyerBtn>{props.buyer}</BuyerBtn>
                             </BuyerTap>
                             <SellerTap
+                                role="tab"
+                                aria-selected="false"
                                 onClick={() => props.setTypeBuyer!(false)}
                             >
-                                <SellerBtn role="tab" aria-selected="false">
-                                    {props.seller}
-                                </SellerBtn>
+                                <SellerBtn>{props.seller}</SellerBtn>
                             </SellerTap>
                         </>
                     ) : (
                         <>
                             <BuyerTap2
+                                role="tab"
+                                aria-selected="false"
                                 onClick={() => props.setTypeBuyer!(true)}
                             >
-                                <BuyerBtn role="tab" aria-selected="false">
-                                    {props.buyer}
-                                </BuyerBtn>
+                                <BuyerBtn>{props.buyer}</BuyerBtn>
                             </BuyerTap2>
-                            <SellerTap2>
-                                <SellerBtn role="tab" aria-selected="true">
-                                    {props.seller}
-                                </SellerBtn>
+                            <SellerTap2 role="tab" aria-selected="true">
+                                <SellerBtn>{props.seller}</SellerBtn>
                             </SellerTap2>
                         </>
                     )}
