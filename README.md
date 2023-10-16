@@ -1,6 +1,6 @@
 # ✨ OUR SHOP
 
-<img width="850" alt="OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/4a1d8725-e377-4354-a953-798de2bbfd98">
+<img width="784" alt="스OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/42c4b203-0c1d-4a2a-8c64-eeb984aec12b">
 
 ### 📍 https://etoile-ourshop.netlify.app
 
@@ -13,15 +13,15 @@
 
 -   구매회원
 
-|   **id**   | **password** |
-| :------: | :--------: |
-| `customer` |  `ourshop1`  |
+    |   **id**   | **password** |
+    | :--------: | :----------: |
+    | `customer` |  `ourshop1`  |
 
 -   판매회원
 
-|  **id**   | **password** |
-| :-----: | :--------: |
-| `oursell` |  `ourshop1`  |
+    |  **id**   | **password** |
+    | :-------: | :----------: |
+    | `oursell` |  `ourshop1`  |
 
 <br><br>
 
