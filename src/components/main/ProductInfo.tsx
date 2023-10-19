@@ -2,6 +2,7 @@ import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { IProduct } from 'GlobalType';
 import ProductList from 'components/common/ProductList';
+import Skeleton from './Skeleton';
 import { Products } from './ProductInfoStyle';
 
 const ProductInfo = () => {
@@ -30,20 +31,18 @@ const ProductInfo = () => {
             loadMore={(pageParam: any) => fetchNextPage(pageParam)}
             hasMore={hasNextPage}
         >
-            {data?.pages ? (
-                data?.pages.map((pageData) => {
-                    return pageData.results.map((products: IProduct) => {
-                        return (
-                            <ProductList
-                                key={products.product_id}
-                                products={products}
-                            />
-                        );
-                    });
-                })
-            ) : (
-                <></>
-            )}
+            {data?.pages
+                ? data?.pages.map((pageData) => {
+                      return pageData.results.map((products: IProduct) => {
+                          return (
+                              <ProductList
+                                  key={products.product_id}
+                                  products={products}
+                              />
+                          );
+                      });
+                  })
+                : new Array(15).fill(0).map((_, i) => <Skeleton key={i} />)}
         </Products>
     );
 };
