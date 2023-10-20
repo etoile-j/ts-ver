@@ -23,11 +23,11 @@ const Carousel = () => {
     return (
         <Container>
             <Slider {...settings}>
-                <Banner2 onClick={() => (window.location.href = '/detail/298')}>
+                <Banner2 onClick={() => (window.location.href = '/detail/156')}>
                     <MainText>샐러드 무료 배송</MainText>
                     <SubText>~ 재고 소진 시까지</SubText>
                 </Banner2>
-                <Banner onClick={() => (window.location.href = '/detail/323')}>
+                <Banner onClick={() => (window.location.href = '/detail/157')}>
                     <MainText>어디서나 최상의 원두와</MainText>
                     <SubText>OUR SHOP 단독 판매</SubText>
                 </Banner>
