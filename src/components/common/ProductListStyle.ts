@@ -22,6 +22,7 @@ const ImgContainer = styled.div`
 `;
 
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
+    background-color: #f1f3f4;
     position: absolute;
     top: 0;
     bottom: 0;
