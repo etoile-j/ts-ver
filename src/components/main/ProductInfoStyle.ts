@@ -1,7 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 
-const Products = styled(InfiniteScroll)`
+const Products = styled(InfiniteScroll).attrs({ role: 'list' })`
     display: grid;
     grid-template: auto / repeat(3, 1fr);
     gap: 58px;
