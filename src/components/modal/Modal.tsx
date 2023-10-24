@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ReactElement } from 'react';
 import {
     Div,
@@ -22,6 +22,8 @@ interface IModal {
 }
 
 const Modal = (modal: IModal) => {
+    const modalRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const body = document.querySelector('body') as HTMLElement;
         body.style.overflow = 'hidden';
@@ -30,12 +32,18 @@ const Modal = (modal: IModal) => {
         };
     }, []);
 
+    useEffect(() => {
+        const modalDiv = modalRef.current!;
+        modalDiv.tabIndex = 0;
+        modalDiv.focus();
+    }, []);
+
     return (
         <Div>
             <Container>
-                <Wrap>
+                <Wrap role="dialog">
                     <CloseBtn onClick={modal.close} />
-                    <Content>
+                    <Content ref={modalRef}>
                         {modal.component}
                         <div>
                             <p>{modal.text}</p>
