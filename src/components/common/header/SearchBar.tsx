@@ -33,7 +33,7 @@ const SearchBar = ({ searchKeyword }: ISearch) => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setKeyword(e.target.value)
                 }
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSearch();
                 }}
             />
