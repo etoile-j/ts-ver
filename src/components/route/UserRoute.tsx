@@ -1,12 +1,13 @@
 import React from 'react';
 import NotFound from 'pages/notification/NotFound';
+import { getLocalStorage } from 'utills/storage';
 
 interface Iprops {
     component: React.ReactNode;
 }
 
 const UserRoute = ({ component }: Iprops) => {
-    const token = localStorage.getItem('token');
+    const token = getLocalStorage('token');
 
     return <>{token ? <NotFound /> : component}</>;
 };

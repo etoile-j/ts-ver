@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { axiosApi } from 'apis/axiosInstance';
+import { setLocalStorage } from 'utills/storage';
 import { ILoginType } from 'GlobalType';
-import { Form, Input, SubmitButton, Div, CautionText } from './LoginContentStyle';
+import {
+    Form,
+    Input,
+    SubmitButton,
+    Div,
+    CautionText,
+} from './LoginContentStyle';
 
 const LoginContent = ({ typeBuyers }: ILoginType) => {
     const idRef = useRef<HTMLInputElement>(null);
@@ -22,8 +29,8 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
                 password: passwordRef.current?.value,
                 login_type: typeBuyers ? 'BUYER' : 'SELLER',
             });
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('login_type', response.data.user_type);
+            setLocalStorage('token', response.data.token);
+            setLocalStorage('login_type', response.data.user_type);
             window.location.replace('/');
         } catch (err) {
             console.error(err);

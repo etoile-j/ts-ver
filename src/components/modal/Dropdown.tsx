@@ -1,3 +1,4 @@
+import { clearLocalStorage } from 'utills/storage';
 import { Container, Button } from './DropdownStyle';
 
 interface IDropdown {
@@ -18,7 +19,7 @@ const Dropdown = (dropdown: IDropdown) => {
                 <li>
                     <Button
                         onClick={() => {
-                            localStorage.clear();
+                            clearLocalStorage();
                             window.location.replace('/');
                         }}
                     >

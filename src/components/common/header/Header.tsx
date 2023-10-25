@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getLocalStorage } from 'utills/storage';
 import { ISearch } from 'GlobalType';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
@@ -25,7 +26,8 @@ import {
 } from './HeaderStyle';
 
 const Header = ({ searchKeyword }: ISearch) => {
-    const token = localStorage.getItem('token');
+    const token = getLocalStorage('token');
+    const loginType = getLocalStorage('login_type');
     const [openModal, setOpenModal] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -47,12 +49,12 @@ const Header = ({ searchKeyword }: ISearch) => {
                 </Wrap>
                 <Ul>
                     <li>
-                        {token === null ? (
+                        {!token ? (
                             <ShoppingCartBtn onClick={handleModal}>
                                 <ShoppingCartImg src={ShoppingCartIcon} />
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
-                        ) : localStorage.getItem('login_type') === 'BUYER' ? (
+                        ) : loginType === 'BUYER' ? (
                             <ShoppingCartBtn
                                 onClick={() => (window.location.href = '/cart')}
                             >
@@ -71,7 +73,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                         )}
                     </li>
                     <li>
-                        {token !== null ? (
+                        {token ? (
                             <MyPage
                                 onMouseOver={() => setOpenDropdown(true)}
                                 onMouseOut={() => setOpenDropdown(false)}

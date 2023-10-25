@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import NotFound from 'pages/notification/NotFound';
+import { getLocalStorage } from 'utills/storage';
 
 interface Iprops {
     component: React.ReactNode;
@@ -8,8 +9,8 @@ interface Iprops {
 }
 
 const TypeRoute = ({ component, type }: Iprops) => {
-    const token = localStorage.getItem('token');
-    const userType = localStorage.getItem('login_type');
+    const token = getLocalStorage('token');
+    const userType = getLocalStorage('login_type');
 
     return (
         <>

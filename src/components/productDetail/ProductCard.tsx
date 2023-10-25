@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
+import { getLocalStorage } from 'utills/storage';
 import { IProduct, ICartData } from 'GlobalType';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
@@ -47,8 +48,8 @@ const ProductCard = () => {
     const [addedModal, setAddedModal] = useState(false);
     const [addMoreModal, setAddMoreModal] = useState(false);
     const [stockModal, setStockModal] = useState(false);
-    const loginType = localStorage.getItem('login_type');
-    const token = localStorage.getItem('token');
+    const loginType = getLocalStorage('login_type');
+    const token = getLocalStorage('token');
 
     const handleLoginModal = () => {
         setLoginModal(!loginModal);
