@@ -15,7 +15,7 @@ const SellerCenterHeader = () => {
         <HeaderEl>
             <Nav>
                 <Wrap>
-                    <Link to="/">
+                    <Link to="/" aria-label="OUR-SHOP 메인 페이지">
                         <Logos>
                             <LogoImg />
                             <LogoText />

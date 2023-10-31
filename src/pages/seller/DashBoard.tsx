@@ -11,7 +11,7 @@ import {
     HeadingWrap,
     ProductUpload,
     IconUpload,
-    Nav,
+    Ol,
     ListBtn,
     OnListBtn,
     TableWrap,
@@ -49,20 +49,22 @@ const DashBoard = () => {
                         상품 업로드
                     </ProductUpload>
                 </HeadingWrap>
-                <Nav>
-                    <li>
-                        <OnListBtn>판매중인 상품({count})</OnListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>주문/배송</ListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>통계</ListBtn>
-                    </li>
-                    <li>
-                        <ListBtn>스토어 설정</ListBtn>
-                    </li>
-                </Nav>
+                <nav>
+                    <Ol>
+                        <li>
+                            <OnListBtn>판매중인 상품({count})</OnListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>주문/배송</ListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>통계</ListBtn>
+                        </li>
+                        <li>
+                            <ListBtn>스토어 설정</ListBtn>
+                        </li>
+                    </Ol>
+                </nav>
                 <TableWrap>
                     <Table>
                         <Title>
@@ -93,6 +95,7 @@ const DashBoard = () => {
                                         ? `url(${PreOffIcon})`
                                         : `url(${PreIcon})`,
                             }}
+                            aria-label="이전 페이지로 이동"
                         />
                         {pages.map((page) => {
                             return (
@@ -123,6 +126,7 @@ const DashBoard = () => {
                                         ? `url(${NextOffIcon})`
                                         : `url(${NextIcon})`,
                             }}
+                            aria-label="다음 페이지로 이동"
                         />
                     </PageNum>
                 </TableWrap>

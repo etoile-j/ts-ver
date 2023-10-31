@@ -34,14 +34,14 @@ const ProductUpload = styled.button`
     font-size: 18px;
     line-height: 23px;
 `;
-const IconUpload = styled.img`
+const IconUpload = styled.img.attrs({ alt: '' })`
     display: inline;
     width: 32px;
     height: 32px;
     margin-right: 7px;
 `;
 
-const Nav = styled.nav`
+const Ol = styled.ol`
     float: left;
     width: 250px;
     margin-right: 30px;
@@ -147,7 +147,7 @@ export {
     HeadingWrap,
     ProductUpload,
     IconUpload,
-    Nav,
+    Ol,
     ListBtn,
     OnListBtn,
     TableWrap,
