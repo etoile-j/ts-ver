@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getLocalStorage } from 'utills/storage';
+import { getLocalStorage } from 'utils/storage';
 import { ISearch } from 'GlobalType';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
@@ -62,11 +62,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
                         ) : (
-                            <SellerBtn
-                                onClick={() =>
-                                    (window.location.href = '/seller')
-                                }
-                            >
+                            <SellerBtn onClick={() => (window.location.href = '/seller')}>
                                 <IconUpload src={BagIcon} />
                                 판매자 센터
                             </SellerBtn>

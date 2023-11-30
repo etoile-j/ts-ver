@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import NotFound from 'pages/notification/NotFound';
-import { getLocalStorage } from 'utills/storage';
+import { getLocalStorage } from 'utils/storage';
 
 interface Iprops {
     component: React.ReactNode;

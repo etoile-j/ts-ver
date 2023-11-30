@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
-import { getLocalStorage } from 'utills/storage';
+import { getLocalStorage } from 'utils/storage';
 import { IProduct, ICartData } from 'GlobalType';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
@@ -142,21 +142,13 @@ const ProductCard = () => {
                 </div>
                 <div>
                     <DeliveryText>
-                        {shipping_method === 'PARCEL'
-                            ? '택배 배송'
-                            : '직접 배송'}{' '}
-                        /{' '}
+                        {shipping_method === 'PARCEL' ? '택배 배송' : '직접 배송'} /{' '}
                         {shipping_fee === 0
                             ? '무료 배송'
-                            : shipping_fee &&
-                              `${shipping_fee.toLocaleString('ko-KR')}원`}
+                            : shipping_fee && `${shipping_fee.toLocaleString('ko-KR')}원`}
                     </DeliveryText>
                     <CountContainer>
-                        <CountButton
-                            stocks={stock}
-                            count={count}
-                            setCount={setCount}
-                        />
+                        <CountButton stocks={stock} count={count} setCount={setCount} />
                     </CountContainer>
                     <TotalWrap>
                         <TotalTitle>총 상품 금액</TotalTitle>

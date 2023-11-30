@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getLocalStorage } from 'utills/storage';
+import { getLocalStorage } from 'utils/storage';
 
 const BASE_URL = 'https://openmarket.weniv.co.kr' as const;
 

@@ -1,4 +1,4 @@
-import { clearLocalStorage } from 'utills/storage';
+import { clearLocalStorage } from 'utils/storage';
 import { Container, Button } from './DropdownStyle';
 
 interface IDropdown {
@@ -8,10 +8,7 @@ interface IDropdown {
 
 const Dropdown = (dropdown: IDropdown) => {
     return (
-        <Container
-            onMouseOver={dropdown.mouseOver}
-            onMouseOut={dropdown.mouseOut}
-        >
+        <Container onMouseOver={dropdown.mouseOver} onMouseOut={dropdown.mouseOut}>
             <ul>
                 <li>
                     <Button>마이페이지</Button>

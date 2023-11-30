@@ -1,14 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { axiosApi } from 'apis/axiosInstance';
-import { setLocalStorage } from 'utills/storage';
+import { setLocalStorage } from 'utils/storage';
 import { ILoginType } from 'GlobalType';
-import {
-    Form,
-    Input,
-    SubmitButton,
-    Div,
-    CautionText,
-} from './LoginContentStyle';
+import { Form, Input, SubmitButton, Div, CautionText } from './LoginContentStyle';
 
 const LoginContent = ({ typeBuyers }: ILoginType) => {
     const idRef = useRef<HTMLInputElement>(null);
