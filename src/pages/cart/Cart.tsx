@@ -4,26 +4,12 @@ import { useQuery } from 'react-query';
 import { axiosApi } from 'apis/axiosInstance';
 import { ICartData } from 'GlobalType';
 import CartContent from 'components/cart/CartContent';
+import CartTitle from 'components/cart/CartTitle/CartTitle';
+import CartResult from 'components/cart/CartResult/CartResult';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/header/Header';
 import NoneCartContent from 'components/cart/NoneCartContent';
-import {
-    Main,
-    TitleLi,
-    Content,
-    Container,
-    OrderBtnBig,
-    CartResult,
-    List,
-    CartResultTitle,
-    CartResultTitleAmount,
-    Price,
-    Minus,
-    Plus,
-    Result,
-    ResultPrice,
-    Won,
-} from './style';
+import { Main, Container, OrderBtnBig } from './style';
 
 const Cart = () => {
     const [cartCount, setCartCount] = useState();
@@ -37,6 +23,7 @@ const Cart = () => {
     const handleGetCart = async () => {
         try {
             const response = await axiosApi.get('/cart/');
+            console.log('여기서 뭐가 나오지', response);
             setCartCount(response.data.count);
             return response.data.results;
         } catch (err) {
@@ -92,25 +79,8 @@ const Cart = () => {
             <Header />
             <Main>
                 <h2>장바구니</h2>
-                <TitleLi>
-                    <Content width="90px">
-                        <input
-                            id="All"
-                            type="checkbox"
-                            name="All"
-                            onChange={(e) => handleAllCheck(e.target.checked)}
-                            checked={
-                                checkItems.length === cartData?.length
-                                    ? true
-                                    : false
-                            }
-                        />
-                    </Content>
-                    <Content width="611px">상품정보</Content>
-                    <Content width="248px">수량</Content>
-                    <Content width="329px">상품금액</Content>
-                </TitleLi>
-                {cartCount === 0 ? (
+                <CartTitle />
+                {!cartCount ? (
                     <NoneCartContent />
                 ) : (
                     <>
@@ -129,62 +99,24 @@ const Cart = () => {
                                             setTotalShipping={setTotalShipping}
                                             handleAllCheck={handleAllCheck}
                                             allSwitch={allSwitch}
-                                            setCheckedproduct={
-                                                setCheckedproduct
-                                            }
+                                            setCheckedproduct={setCheckedproduct}
                                             putInfo={putInfo}
                                         />
                                     </Container>
                                 );
                             })}
                         </>
-                        <CartResult>
-                            <List>
-                                <CartResultTitle>총 상품금액</CartResultTitle>
-                                <Price>
-                                    {totalPrice.toLocaleString('ko-KR')}
-                                </Price>
-                                원
-                                <Minus />
-                            </List>
-                            <List>
-                                <CartResultTitle>상품 할인</CartResultTitle>
-                                <Price>0</Price>원
-                                <Plus />
-                            </List>
-                            <List>
-                                <CartResultTitle>배송비</CartResultTitle>
-                                <Price>
-                                    {totalShipping.toLocaleString('ko-KR')}
-                                </Price>
-                                원
-                            </List>
-                            <Result>
-                                <CartResultTitleAmount>
-                                    결제 예정 금액
-                                </CartResultTitleAmount>
-                                <ResultPrice>
-                                    {(
-                                        totalPrice + totalShipping
-                                    ).toLocaleString('ko-KR')}
-                                </ResultPrice>
-                                <Won>원</Won>
-                            </Result>
-                        </CartResult>
+                        <CartResult />
                         <OrderBtnBig
                             onClick={() => {
                                 setChangeActive(true);
                                 handlePutInfo();
                             }}
                             style={{
-                                backgroundColor:
-                                    checkItems.length === 0
-                                        ? '#c4c4c4'
-                                        : '#6997f7',
-                                cursor:
-                                    checkItems.length === 0
-                                        ? 'default'
-                                        : 'pointer',
+                                backgroundColor: checkItems.length
+                                    ? '#c4c4c4'
+                                    : '#6997f7',
+                                cursor: checkItems.length ? 'default' : 'pointer',
                             }}
                             disabled={checkItems.length === 0 && true}
                         >
