@@ -9,7 +9,7 @@ import {
     Result,
     ResultPrice,
     Won,
-} from './style';
+} from './CartResultStyle';
 
 const CartResult = () => {
     return (

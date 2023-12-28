@@ -1,4 +1,4 @@
-import { TitleLi, Content } from './style';
+import { TitleLi, Content } from './CartTitleStyle';
 const CartTitle = () => {
     return (
         <TitleLi>
