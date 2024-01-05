@@ -5,7 +5,6 @@ import { IProduct, ICheckedItems } from 'GlobalType';
 import CartTitle from './title/CartTitle';
 import CartItems from './CartItems';
 import CartResult from './result/CartResult';
-import { OrderBtnBig } from './style';
 
 const CartContent = () => {
     const [cartCount, setCartCount] = useState(null);
@@ -40,22 +39,10 @@ const CartContent = () => {
                 checkedItems={checkedItems}
                 setCheckedItems={setCheckedItems}
             />
-            <CartResult checkedItems={checkedItems} />
-            {!!cartCount && (
-                <OrderBtnBig
-                // onClick={() => {
-                //     setChangeActive(true);
-                //     handlePutInfo();
-                // }}
-                // style={{
-                //     backgroundColor: checkItems.length ? '#c4c4c4' : '#6997f7',
-                //     cursor: checkItems.length ? 'default' : 'pointer',
-                // }}
-                // disabled={checkItems.length === 0 && true}
-                >
-                    주문하기
-                </OrderBtnBig>
-            )}
+            <CartResult
+                checkedItems={checkedItems}
+                cartProductDetails={cartProductDetails}
+            />
         </>
     );
 };

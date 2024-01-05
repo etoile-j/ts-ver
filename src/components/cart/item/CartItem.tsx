@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
-import { getProductDetail } from 'apis/products';
 import { IProduct, ICheckedItems } from 'GlobalType';
 import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
@@ -27,9 +26,6 @@ interface ICartItemProps {
     detail: IProduct;
     checkedItems: ICheckedItems[];
     setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
-
-    // changeActive: boolean;
-    // putInfo: boolean;
 }
 
 const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => {
@@ -45,11 +41,11 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
         stock,
         quantity,
     } = detail;
-
     const [countModal, setCountModal] = useState(false);
     const [count, setCount] = useState(quantity);
     const [deleteModal, setDeleteModal] = useState(false);
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const handleDeleteModal = () => {
         setDeleteModal(!deleteModal);
@@ -59,43 +55,27 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
         setCountModal(!countModal);
     };
 
-    const queryClient = useQueryClient();
-    // const { mutate } = useMutation(
-    //     (bool) =>
-    //         putCartItemQuantity(true, cartData.cart_item_id, count, cartData.product_id),
-    //     {
-    //         onSuccess: () => {
-    //             if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
-    //                 cartData.setTotalPrice(
-    //                     (pre) =>
-    //                         pre -
-    //                         detail?.price! * cartData.quantity +
-    //                         detail?.price! * count,
-    //                 );
-    //             }
-    //             queryClient.invalidateQueries(['cartData']);
-    //             handleCountModal();
-    //         },
-    //         onError: (err) => {
-    //             console.error(err);
-    //         },
-    //     },
-    // );
+    const { mutate } = useMutation(
+        (bool) => putCartItemQuantity(true, cart_item_id, count, product_id),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(['cartData']);
+                handleCountModal();
+            },
+            onError: (err) => {
+                console.error(err);
+            },
+        },
+    );
 
-    // const { mutate: mutateDel } = useMutation(
-    //     () => deleteCartItem(cartData.cart_item_id),
-    //     {
-    //         onSuccess: () => {
-    //             if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
-    //                 handleSingleCheck(false, cartData.cart_item_id);
-    //             }
-    //             queryClient.invalidateQueries(['cartData']);
-    //         },
-    //         onError: (err) => {
-    //             console.error(err);
-    //         },
-    //     },
-    // );
+    const { mutate: mutateDel } = useMutation(() => deleteCartItem(cart_item_id), {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['cartData']);
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
 
     const handleSingleCheck = (checked: boolean) => {
         if (checked) {
@@ -109,19 +89,6 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
             );
         }
     };
-
-    // if (
-    //     cartData.changeActive &&
-    //     cartData.checkItems.includes(cartData.cart_item_id) === false
-    // ) {
-    //     putCartItemQuantity(false);
-    // }
-
-    // useEffect(() => {
-    //     if (cartData.checkItems.includes(cartData.cart_item_id) === true) {
-    //         cartData.setCheckedproduct((pre: any) => [...pre, detail]);
-    //     }
-    // }, [cartData.putInfo]);
 
     return (
         <>
@@ -192,7 +159,7 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                 <ModalContainer>
                     <Modal
                         close={handleDeleteModal}
-                        // ok={mutateDel}
+                        ok={mutateDel}
                         leftBtn="취소"
                         rightBtn="확인"
                         text="상품을 삭제 하시겠습니까?"
@@ -203,7 +170,7 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                 <ModalContainer>
                     <Modal
                         close={handleCountModal}
-                        // ok={mutate}
+                        ok={mutate}
                         leftBtn="취소"
                         rightBtn="수정"
                         component={
