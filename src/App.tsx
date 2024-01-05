@@ -4,6 +4,7 @@ import queryClient from 'queries/queryClient';
 import ScrollToTop from 'components/common/ScrollToTop';
 import UserRoute from 'components/route/UserRoute';
 import TypeRoute from 'components/route/TypeRoute';
+import { GlobalStyle } from './styles/global';
 
 import Join from 'pages/join/Join';
 import Login from 'pages/login/Login';
@@ -18,7 +19,6 @@ import EditProduct from 'pages/seller/EditProduct';
 import CompletePayment from 'pages/notification/CompletePayment';
 import CompleteJoin from 'pages/notification/CompleteJoin';
 import NotFound from 'pages/notification/NotFound';
-import { GlobalStyle } from './styles/global';
 
 function App() {
     return (

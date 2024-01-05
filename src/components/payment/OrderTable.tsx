@@ -10,54 +10,43 @@ import {
     Price,
 } from './OrderTableStyle';
 
-const OrderTable = ({ info }: { info: [] }) => {
+const OrderTable = ({ productsInfo }: { productsInfo: IProduct[] }) => {
     return (
-        <>
-            <ul>
-                <TitleLi>
-                    <Title width="589px">상품정보</Title>
-                    <Title width="232px">할인</Title>
-                    <Title width="228px">배송비</Title>
-                    <Title width="231px">주문금액</Title>
-                </TitleLi>
-                {info.map((info: IProduct) => {
-                    return (
-                        <OrderLi key={info.product_id}>
-                            <Title width="589px">
-                                <Wrap>
-                                    <ProductImg src={info.image}></ProductImg>
-                                    <div>
-                                        <GrayFont>{info.store_name}</GrayFont>
-                                        <ProductName>
-                                            {info.product_name}{' '}
-                                        </ProductName>
-                                        <GrayFont>
-                                            수량: {info.quantity}개
-                                        </GrayFont>
-                                    </div>
-                                </Wrap>
-                            </Title>
-                            <Title width="232px">-</Title>
-                            <Title width="228px">
-                                {info.shipping_fee === 0
-                                    ? '무료배송'
-                                    : `${info.shipping_fee.toLocaleString(
-                                          'ko-KR',
-                                      )}원`}
-                            </Title>
-                            <Title width="231px">
-                                <Price>
-                                    {(
-                                        info.price * info.quantity
-                                    ).toLocaleString('ko-KR')}
-                                    원
-                                </Price>
-                            </Title>
-                        </OrderLi>
-                    );
-                })}
-            </ul>
-        </>
+        <ul>
+            <TitleLi>
+                <Title width="589px">상품정보</Title>
+                <Title width="232px">할인</Title>
+                <Title width="228px">배송비</Title>
+                <Title width="231px">주문금액</Title>
+            </TitleLi>
+            {productsInfo.map((info: IProduct) => {
+                const { image, store_name, product_name, quantity, price, shipping_fee } =
+                    info;
+                return (
+                    <OrderLi key={info.product_id}>
+                        <Title width="589px">
+                            <Wrap>
+                                <ProductImg src={image}></ProductImg>
+                                <div>
+                                    <GrayFont>{store_name}</GrayFont>
+                                    <ProductName>{product_name}</ProductName>
+                                    <GrayFont>수량: {quantity}개</GrayFont>
+                                </div>
+                            </Wrap>
+                        </Title>
+                        <Title width="232px">-</Title>
+                        <Title width="228px">
+                            {shipping_fee
+                                ? `${shipping_fee.toLocaleString('ko-KR')}원`
+                                : '무료배송'}
+                        </Title>
+                        <Title width="231px">
+                            <Price>{(price * quantity).toLocaleString('ko-KR')}원</Price>
+                        </Title>
+                    </OrderLi>
+                );
+            })}
+        </ul>
     );
 };
 export default OrderTable;

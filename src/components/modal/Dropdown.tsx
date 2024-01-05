@@ -1,14 +1,9 @@
 import { clearLocalStorage } from 'utils/storage';
 import { Container, Button } from './DropdownStyle';
 
-interface IDropdown {
-    mouseOver: React.MouseEventHandler<HTMLDivElement>;
-    mouseOut: React.MouseEventHandler<HTMLDivElement>;
-}
-
-const Dropdown = (dropdown: IDropdown) => {
+const Dropdown = () => {
     return (
-        <Container onMouseOver={dropdown.mouseOver} onMouseOut={dropdown.mouseOut}>
+        <Container>
             <ul>
                 <li>
                     <Button>마이페이지</Button>

@@ -62,28 +62,18 @@ const Header = ({ searchKeyword }: ISearch) => {
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
                         ) : (
-                            <SellerBtn onClick={() => (window.location.href = '/seller')}>
+                            <SellerBtn
+                                onClick={() =>
+                                    (window.location.href = '/seller')
+                                }
+                            >
                                 <IconUpload src={BagIcon} />
                                 판매자 센터
                             </SellerBtn>
                         )}
                     </li>
                     <li>
-                        {token ? (
-                            <MyPage
-                                onMouseOver={() => setOpenDropdown(true)}
-                                onMouseOut={() => setOpenDropdown(false)}
-                            >
-                                <LiButtonImg src={UserIcon} />
-                                <span>마이페이지</span>
-                                {openDropdown && (
-                                    <Dropdown
-                                        mouseOver={() => setOpenDropdown(true)}
-                                        mouseOut={() => setOpenDropdown(false)}
-                                    />
-                                )}
-                            </MyPage>
-                        ) : (
+                        {!token ? (
                             <MyPage
                                 onClick={() => {
                                     window.location.href = '/login';
@@ -91,6 +81,14 @@ const Header = ({ searchKeyword }: ISearch) => {
                             >
                                 <LiButtonImg src={UserIcon} />
                                 <span>로그인</span>
+                            </MyPage>
+                        ) : (
+                            <MyPage
+                                onClick={() => setOpenDropdown(!openDropdown)}
+                            >
+                                <LiButtonImg src={UserIcon} />
+                                <span>마이페이지</span>
+                                {openDropdown && <Dropdown />}
                             </MyPage>
                         )}
                     </li>
