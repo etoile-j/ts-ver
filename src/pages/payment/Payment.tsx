@@ -27,19 +27,14 @@ interface IPaymentInputs {
     address1: string;
     address2: string;
     deliveryMessage: string;
-    paymentMethod:
-        | 'CARD'
-        | 'DEPOSIT'
-        | 'PHONE_PAYMENT'
-        | 'NAVERPAY'
-        | 'KAKAOPAY';
+    paymentMethod: 'CARD' | 'DEPOSIT' | 'PHONE_PAYMENT' | 'NAVERPAY' | 'KAKAOPAY';
     agreement: HTMLInputElement;
 }
 
 const Payment = ({ defaultValues }: any) => {
     const navigate = useNavigate();
     const info: IDirectOrderInfo = useLocation().state;
-    const order = useLocation().state.order_product;
+    const orderProductsInfo = useLocation().state.order_product;
     const {
         register,
         handleSubmit,
@@ -53,7 +48,7 @@ const Payment = ({ defaultValues }: any) => {
     const handleOrder = async (data: IPaymentInputs) => {
         const requestData = {
             product_id: info.product_id,
-            quantity: order[0].quantity,
+            quantity: orderProductsInfo[0].quantity,
             order_kind: info.order_kind,
             total_price:
                 info.order_kind === 'cart_order'
@@ -83,14 +78,14 @@ const Payment = ({ defaultValues }: any) => {
                 <h2>주문/결제하기</h2>
                 <section>
                     {/* <Heading>주문 목록</Heading> */}
-                    <OrderTable info={order} />
+                    <OrderTable productsInfo={orderProductsInfo} />
                     <Total>
                         총 주문금액
                         <strong>
                             {info.order_kind === 'cart_order'
-                                ? (
-                                      info.total_price + info.total_shipping
-                                  ).toLocaleString('ko-KR')
+                                ? (info.total_price + info.total_shipping).toLocaleString(
+                                      'ko-KR',
+                                  )
                                 : info.total.toLocaleString('ko-KR')}
                             <span>원</span>
                         </strong>
@@ -155,7 +150,7 @@ const Payment = ({ defaultValues }: any) => {
                         <Section>
                             <Heading>최종결제 정보</Heading>
                             <FinalPaymentInfo
-                                info={order}
+                                info={orderProductsInfo}
                                 type={info.order_kind}
                                 price={info.total_price}
                                 shipping={info.total_shipping}
