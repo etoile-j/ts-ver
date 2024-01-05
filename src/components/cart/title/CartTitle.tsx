@@ -1,14 +1,45 @@
+import { IProduct, ICheckedItems } from 'GlobalType';
 import { TitleLi, Content } from './CartTitleStyle';
-const CartTitle = () => {
+
+interface ICartTitleProps {
+    cartCount: number | null;
+    cartProductDetails: IProduct[];
+    checkedItems: ICheckedItems[];
+    setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
+}
+
+const CartTitle = ({
+    cartCount,
+    cartProductDetails,
+    checkedItems,
+    setCheckedItems,
+}: ICartTitleProps) => {
+    const makeAllCheck = async (productDetails: ICheckedItems[]) => {
+        const allItems = productDetails.map(
+            ({ product_id, quantity, price, shipping_fee }) => {
+                return { product_id, quantity, price, shipping_fee };
+            },
+        );
+        setCheckedItems(allItems);
+    };
+
+    const handleAllCheck = (checked: boolean) => {
+        if (checked) {
+            makeAllCheck(cartProductDetails);
+        } else {
+            setCheckedItems([]);
+        }
+    };
+
     return (
         <TitleLi>
             <Content width="90px">
+                <label htmlFor="toggleAll" />
                 <input
-                    id="checkAll"
+                    id="toggleAll"
                     type="checkbox"
-                    name="checkAll"
-                    // onChange={(e) => handleAllCheck(e.target.checked)}
-                    // checked={checkItems.length === cartData?.length ? true : false}
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    checked={!!cartCount && checkedItems.length === cartCount}
                 />
             </Content>
             <Content width="611px">상품정보</Content>

@@ -1,6 +1,7 @@
 module 'GlobalType' {
     interface IProduct {
-        product_id: string;
+        cart_item_id: number;
+        product_id: number;
         image: string;
         store_name: string;
         product_name: string;
@@ -23,6 +24,13 @@ module 'GlobalType' {
         cart_item_id: number;
         product_id: number;
         quantity: number;
+    }
+
+    interface ICheckedItems {
+        product_id: number;
+        quantity: number;
+        price: number;
+        shipping_fee: number;
     }
 
     interface ISearch {
