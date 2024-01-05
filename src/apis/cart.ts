@@ -3,7 +3,6 @@ import { axiosApi } from './axiosInstance';
 export const getCartItem = async () => {
     try {
         const response = await axiosApi.get('/cart/');
-        console.log(response);
         return response.data.results;
     } catch (err) {
         console.error(err);
@@ -13,7 +12,6 @@ export const getCartItem = async () => {
 export const postCartItem = async (requestData: {}) => {
     try {
         const response = await axiosApi.post('/cart/', requestData);
-        console.log(response);
         return response.status;
     } catch (err) {
         console.error(err);
@@ -32,7 +30,6 @@ export const putCartItemQuantity = async (
             quantity: count,
             is_active: bool,
         });
-        console.log(response);
     } catch (err) {
         console.error(err);
     }
@@ -40,8 +37,7 @@ export const putCartItemQuantity = async (
 
 export const deleteCartItem = async (cartItemId: number) => {
     try {
-        const response = await axiosApi.delete(`/cart/${cartItemId}/`);
-        console.log(response);
+        await axiosApi.delete(`/cart/${cartItemId}/`);
     } catch (err) {
         console.error(err);
     }
