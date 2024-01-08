@@ -32,9 +32,9 @@ module 'GlobalType' {
         quantity: number;
         price: number;
         shipping_fee: number;
-        image: string;
-        store_name: string;
-        product_name: string;
+        image?: string;
+        store_name?: string;
+        product_name?: string;
     }
 
     interface ISearch {

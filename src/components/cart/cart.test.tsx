@@ -8,16 +8,33 @@ import { MemoryRouter } from 'react-router-dom';
 import queryClient from 'queries/queryClient';
 
 describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 없는 경우', () => {
-    //     test('NoneCartItem 컴포넌트가 렌더링된다.', () => {
-    //         render(<CartItems cartCount={0} />);
-    //         const textEl = screen.getByText('장바구니에 담긴 상품이 없습니다.');
-    //         expect(textEl).toBeInTheDocument();
-    //     });
-    //     test('최상단 체크박스가 체크 해제되어 있다.', () => {
-    //         render(<CartTitle cartCount={0} />);
-    //         const toggleAll = screen.getByRole('checkbox', { checked: false });
-    //         expect(toggleAll).toBeInTheDocument();
-    //     });
+    test('NoneCartItem 컴포넌트가 렌더링된다.', () => {
+        render(
+            <CartItems
+                cartCount={0}
+                cartData={[]}
+                cartProductDetails={[]}
+                setCartProductDetails={() => {}}
+                checkedItems={[]}
+                setCheckedItems={() => {}}
+            />,
+        );
+        const textEl = screen.getByText('장바구니에 담긴 상품이 없습니다.');
+        expect(textEl).toBeInTheDocument();
+    });
+
+    test('최상단 체크박스가 체크 해제되어 있다.', () => {
+        render(
+            <CartTitle
+                cartCount={0}
+                cartProductDetails={[]}
+                checkedItems={[]}
+                setCheckedItems={() => {}}
+            />,
+        );
+        const toggleAll = screen.getByRole('checkbox', { checked: false });
+        expect(toggleAll).toBeInTheDocument();
+    });
 });
 
 describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 있는 경우', () => {
@@ -27,15 +44,31 @@ describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 있�
         { product_id: 3, quantity: 2, price: 10000, shipping_fee: 5000 },
     ];
 
-    // test('NoneCartItem 컴포넌트가 렌더링되지 않는다.', () => {
-    //     render(<CartItems cartCount={3} />);
-    //     const textEl = screen.queryByText('장바구니에 담긴 상품이 없습니다.');
-    //     expect(textEl).toBeNull();
-    // });
+    test('NoneCartItem 컴포넌트가 렌더링되지 않는다.', () => {
+        render(
+            <CartItems
+                cartCount={3}
+                cartData={[]}
+                cartProductDetails={[]}
+                setCartProductDetails={() => {}}
+                checkedItems={checkedItems}
+                setCheckedItems={() => {}}
+            />,
+        );
+        const textEl = screen.queryByText('장바구니에 담긴 상품이 없습니다.');
+        expect(textEl).toBeNull();
+    });
 
-    // test('최상단 체크박스가 체크되어 있다.', () => {
-    //     render(<CartTitle cartCount={3} checkedItems={checkedItems} />);
-    //     const toggleAllCheckbox = screen.getByRole('checkbox', { checked: true });
-    //     expect(toggleAllCheckbox).toBeInTheDocument();
-    // });
+    test('최상단 체크박스가 체크되어 있다.', () => {
+        render(
+            <CartTitle
+                cartCount={3}
+                cartProductDetails={[]}
+                checkedItems={checkedItems}
+                setCheckedItems={() => {}}
+            />,
+        );
+        const toggleAllCheckbox = screen.getByRole('checkbox', { checked: true });
+        expect(toggleAllCheckbox).toBeInTheDocument();
+    });
 });
