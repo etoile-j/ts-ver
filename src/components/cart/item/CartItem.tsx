@@ -56,15 +56,13 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
     };
 
     const { mutate } = useMutation(
-        (bool) => putCartItemQuantity(true, cart_item_id, count, product_id),
+        () => putCartItemQuantity({ quantity: count, cart_item_id, product_id }),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['cartData']);
                 handleCountModal();
             },
-            onError: (err) => {
-                console.error(err);
-            },
+            onError: (err) => console.error(err),
         },
     );
 
@@ -72,21 +70,17 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
         onSuccess: () => {
             queryClient.invalidateQueries(['cartData']);
         },
-        onError: (err) => {
-            console.error(err);
-        },
+        onError: (err) => console.error(err),
     });
 
     const handleSingleCheck = (checked: boolean) => {
         if (checked) {
             setCheckedItems([
                 ...checkedItems,
-                { product_id, quantity, price, shipping_fee },
+                { product_id, quantity, price, shipping_fee, image, store_name, product_name },
             ]);
         } else {
-            setCheckedItems(
-                checkedItems.filter((item) => item.product_id !== product_id),
-            );
+            setCheckedItems(checkedItems.filter((item) => item.product_id !== product_id));
         }
     };
 
@@ -174,11 +168,7 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                         leftBtn="취소"
                         rightBtn="수정"
                         component={
-                            <CountButton
-                                count={count}
-                                setCount={setCount}
-                                stocks={stock}
-                            />
+                            <CountButton count={count} setCount={setCount} stocks={stock} />
                         }
                     />
                 </ModalContainer>

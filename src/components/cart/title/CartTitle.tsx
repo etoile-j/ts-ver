@@ -1,4 +1,5 @@
 import { IProduct, ICheckedItems } from 'GlobalType';
+import { filterAllItems } from 'utils';
 import { TitleLi, Content } from './CartTitleStyle';
 
 interface ICartTitleProps {
@@ -8,24 +9,13 @@ interface ICartTitleProps {
     setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
 }
 
-const CartTitle = ({
-    cartCount,
-    cartProductDetails,
-    checkedItems,
-    setCheckedItems,
-}: ICartTitleProps) => {
-    const makeAllCheck = async (productDetails: ICheckedItems[]) => {
-        const allItems = productDetails.map(
-            ({ product_id, quantity, price, shipping_fee }) => {
-                return { product_id, quantity, price, shipping_fee };
-            },
-        );
-        setCheckedItems(allItems);
-    };
+const CartTitle = (cartTitleProps: ICartTitleProps) => {
+    const { cartCount, cartProductDetails, checkedItems, setCheckedItems } = cartTitleProps;
 
     const handleAllCheck = (checked: boolean) => {
         if (checked) {
-            makeAllCheck(cartProductDetails);
+            const allItems = filterAllItems(cartProductDetails);
+            setCheckedItems(allItems);
         } else {
             setCheckedItems([]);
         }

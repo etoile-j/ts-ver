@@ -1,16 +1,10 @@
 import { useEffect } from 'react';
 import { getProductDetail } from 'apis/products';
-import { IProduct, ICheckedItems } from 'GlobalType';
+import { IProduct, ICheckedItems, ICartData } from 'GlobalType';
+import { filterAllItems } from 'utils';
 import CartItem from './item/CartItem';
 import NoneCartItem from './item/NoneCartItem';
 import { Container } from './style';
-
-type ICartData = {
-    cart_item_id: number;
-    is_active: boolean;
-    product_id: number;
-    quantity: number;
-};
 
 interface ICartItemsProps {
     cartData: ICartData[];
@@ -21,48 +15,44 @@ interface ICartItemsProps {
     setCartProductDetails: React.Dispatch<React.SetStateAction<IProduct[]>>;
 }
 
-const CartItems = ({
-    cartCount,
-    cartData,
-    cartProductDetails,
-    setCartProductDetails,
-    checkedItems,
-    setCheckedItems,
-}: ICartItemsProps) => {
+const CartItems = (CartItemsProps: ICartItemsProps) => {
+    const {
+        cartCount,
+        cartData,
+        cartProductDetails,
+        setCartProductDetails,
+        checkedItems,
+        setCheckedItems,
+    } = CartItemsProps;
+
     useEffect(() => {
-        const getProductsDetail = async () => {
-            try {
-                const productsDetail = cartData?.map((item) =>
-                    getProductDetail(item.product_id.toString()),
-                );
+        const updateProductDetails = async () => {
+            const result = (await getProductsDetail()) as IProduct[];
 
-                const result = await Promise.all(
-                    productsDetail?.map(async (productDetail, idx) => {
-                        const resolvedProductDetail = await productDetail;
-                        return {
-                            ...resolvedProductDetail,
-                            quantity: cartData[idx].quantity,
-                            cart_item_id: cartData[idx].cart_item_id,
-                        };
-                    }),
-                );
-
-                setCartProductDetails(result);
-                makeAllCheck(result);
-            } catch (error) {
-                console.error(error);
-            }
+            setCartProductDetails(result);
+            const allItems = filterAllItems(result);
+            setCheckedItems(allItems);
         };
-        cartCount && getProductsDetail();
+
+        if (cartCount) updateProductDetails();
     }, [cartData]);
 
-    const makeAllCheck = async (productDetails: ICheckedItems[]) => {
-        const allItems = productDetails.map(
-            ({ product_id, quantity, price, shipping_fee }) => {
-                return { product_id, quantity, price, shipping_fee };
-            },
-        );
-        setCheckedItems(allItems);
+    const getProductsDetail = async () => {
+        try {
+            const productsDetail = cartData?.map((item) =>
+                getProductDetail(item.product_id.toString()),
+            );
+
+            const resolvedProductsDetail = await Promise.all(productsDetail);
+
+            return resolvedProductsDetail.map((productDetail, idx) => ({
+                ...productDetail,
+                quantity: cartData[idx].quantity,
+                cart_item_id: cartData[idx].cart_item_id,
+            }));
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return cartCount === 0 ? (
@@ -80,24 +70,6 @@ const CartItems = ({
                     </Container>
                 );
             })}
-            {/* {cartData?.map((cartData: ICartData) => {
-                return (
-                    <Container key={cartData.cart_item_id}>
-                        <CartItem
-                            product_id={cartData.product_id}
-                            quantity={cartData.quantity}
-                            cart_item_id={cartData.cart_item_id}
-                            checkedItems={checkedItems}
-                            setCheckedItems={setCheckedItems}
-                            // changeActive={changeActive}
-                            // handleAllCheck={handleAllCheck}
-                            // allSwitch={allSwitch}
-                            // setCheckedproduct={setCheckedproduct}
-                            // putInfo={putInfo}
-                        />
-                    </Container>
-                );
-            })} */}
         </>
     );
 };

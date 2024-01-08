@@ -24,6 +24,7 @@ module 'GlobalType' {
         cart_item_id: number;
         product_id: number;
         quantity: number;
+        is_active?: boolean;
     }
 
     interface ICheckedItems {
@@ -31,6 +32,9 @@ module 'GlobalType' {
         quantity: number;
         price: number;
         shipping_fee: number;
+        image: string;
+        store_name: string;
+        product_name: string;
     }
 
     interface ISearch {

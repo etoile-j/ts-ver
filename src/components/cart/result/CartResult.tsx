@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ICheckedItems, IProduct } from 'GlobalType';
+import { putCartItemQuantity } from 'apis/cart';
 import {
     Container,
     List,
@@ -22,46 +23,49 @@ const CartResult = ({
     checkedItems: ICheckedItems[];
     cartProductDetails: IProduct[];
 }) => {
+    console.log('checkedItems', checkedItems);
+    console.log('cartProductDetails', cartProductDetails);
     const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalShipping, setTotalShipping] = useState(0);
 
     useEffect(() => {
-        setTotalPrice(
-            checkedItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
-        );
+        setTotalPrice(checkedItems.reduce((acc, item) => acc + item.price * item.quantity, 0));
         setTotalShipping(checkedItems.reduce((acc, item) => acc + item.shipping_fee, 0));
     }, [checkedItems]);
 
-    const handleSubmit = () => {
-        if (checkedItems) {
-            navigate('/payment', {
-                state: {
-                    order_kind: 'cart_order',
-                    total_price: totalPrice,
-                    total_shipping: totalShipping,
-                    order_product: cartProductDetails.map(
-                        ({
-                            quantity,
-                            image,
-                            store_name,
-                            product_name,
-                            shipping_fee,
-                            price,
-                        }: IProduct) => {
-                            return {
-                                quantity,
-                                image,
-                                store_name,
-                                product_name,
-                                shipping_fee,
-                                price,
-                            };
-                        },
-                    ),
-                },
-            });
+    const nonexistentProducts = () => {
+        const productIdSet = new Set(checkedItems.map(({ product_id }) => product_id));
+        const nonexistentProductId = cartProductDetails.filter(
+            ({ product_id }) => !productIdSet.has(product_id),
+        );
+
+        return nonexistentProductId.map(({ quantity, product_id, cart_item_id }) => ({
+            is_active: false,
+            product_id,
+            cart_item_id,
+            quantity,
+        }));
+    };
+
+    const updateInactiveItems = async () => {
+        const inactiveItems = nonexistentProducts();
+        await Promise.all(inactiveItems.map(async (item) => await putCartItemQuantity(item)));
+    };
+
+    const handleSubmit = async () => {
+        if (checkedItems.length < cartProductDetails.length) {
+            await updateInactiveItems();
         }
+        // 여기서 체크 안 한 상품들을 is_active를 false로 만들어줘야
+        navigate('/payment', {
+            state: {
+                order_kind: 'cart_order',
+                total_price: totalPrice,
+                total_shipping: totalShipping,
+                order_product: checkedItems,
+            },
+        });
     };
 
     return (

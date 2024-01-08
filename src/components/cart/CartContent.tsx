@@ -39,10 +39,7 @@ const CartContent = () => {
                 checkedItems={checkedItems}
                 setCheckedItems={setCheckedItems}
             />
-            <CartResult
-                checkedItems={checkedItems}
-                cartProductDetails={cartProductDetails}
-            />
+            <CartResult checkedItems={checkedItems} cartProductDetails={cartProductDetails} />
         </>
     );
 };
