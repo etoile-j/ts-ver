@@ -23,8 +23,6 @@ const CartResult = ({
     checkedItems: ICheckedItems[];
     cartProductDetails: IProduct[];
 }) => {
-    console.log('checkedItems', checkedItems);
-    console.log('cartProductDetails', cartProductDetails);
     const navigate = useNavigate();
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalShipping, setTotalShipping] = useState(0);
