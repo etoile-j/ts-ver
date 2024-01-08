@@ -1,4 +1,4 @@
-import DeleteIcon from '../../assets/icon-delete.svg';
+import DeleteIcon from '../../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
 interface styledCompo {

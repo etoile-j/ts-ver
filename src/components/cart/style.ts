@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-const Main = styled.main`
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-`;
-
 const Container = styled.li`
     display: flex;
     align-items: center;
@@ -36,4 +30,4 @@ const OrderBtnBig = styled(OrderBtn)`
     line-height: 30px;
 `;
 
-export { Main, Container, OrderBtn, OrderBtnBig };
+export { Container, OrderBtnBig };

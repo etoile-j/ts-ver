@@ -1,4 +1,5 @@
 import { axiosApi } from './axiosInstance';
+import { ICartData } from 'GlobalType';
 
 export const getCartItem = async () => {
     try {
@@ -18,17 +19,17 @@ export const postCartItem = async (requestData: {}) => {
     }
 };
 
-export const putCartItemQuantity = async (
-    bool: boolean,
-    cartItemId?: number,
-    count?: number,
-    productId?: number,
-) => {
+export const putCartItemQuantity = async ({
+    quantity,
+    product_id,
+    cart_item_id,
+    is_active = true,
+}: ICartData) => {
     try {
-        const response = await axiosApi.put(`/cart/${cartItemId}/`, {
-            product_id: productId,
-            quantity: count,
-            is_active: bool,
+        await axiosApi.put(`/cart/${cart_item_id}/`, {
+            product_id,
+            quantity,
+            is_active,
         });
     } catch (err) {
         console.error(err);
