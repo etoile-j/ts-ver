@@ -10,7 +10,7 @@ import {
     Price,
 } from './OrderTableStyle';
 
-const OrderTable = ({ productsInfo }: { productsInfo: IProduct[] }) => {
+const OrderTable = ({ orderProductsDetail }: { orderProductsDetail: IProduct[] }) => {
     return (
         <ul>
             <TitleLi>
@@ -19,11 +19,11 @@ const OrderTable = ({ productsInfo }: { productsInfo: IProduct[] }) => {
                 <Title width="228px">배송비</Title>
                 <Title width="231px">주문금액</Title>
             </TitleLi>
-            {productsInfo.map((info: IProduct) => {
+            {orderProductsDetail.map((product: IProduct) => {
                 const { image, store_name, product_name, quantity, price, shipping_fee } =
-                    info;
+                    product;
                 return (
-                    <OrderLi key={info.product_id}>
+                    <OrderLi key={product.product_id}>
                         <Title width="589px">
                             <Wrap>
                                 <ProductImg src={image}></ProductImg>
