@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
 import { IProduct, ICheckedItems } from 'GlobalType';
+import { ORDER_KIND } from 'constants/index';
 import CountButton from 'components/common/CountButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -129,7 +130,7 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                         navigate('/payment', {
                             state: {
                                 product_id,
-                                order_kind: 'cart_one_order',
+                                order_kind: ORDER_KIND.CART_ONE_ORDER,
                                 total: quantity * price + shipping_fee,
                                 order_product: [
                                     {

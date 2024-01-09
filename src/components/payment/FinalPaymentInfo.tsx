@@ -1,4 +1,5 @@
 import { IProduct } from 'GlobalType';
+import { ORDER_KIND } from 'constants/index';
 import {
     Container,
     WhiteWrap,
@@ -26,11 +27,9 @@ const FinalPaymentInfo = ({
                     <Div>
                         <H4>- 상품금액</H4>
                         <Price>
-                            {type === 'cart_order'
+                            {type === ORDER_KIND.CART_ORDER
                                 ? price.toLocaleString('ko-KR')
-                                : (
-                                      info[0].price * info[0].quantity
-                                  ).toLocaleString('ko-KR')}
+                                : (info[0].price * info[0].quantity).toLocaleString('ko-KR')}
                             <span>원</span>
                         </Price>
                     </Div>
@@ -43,7 +42,7 @@ const FinalPaymentInfo = ({
                     <Div>
                         <H4>- 배송비</H4>
                         <Price>
-                            {type === 'cart_order'
+                            {type === ORDER_KIND.CART_ORDER
                                 ? shipping.toLocaleString('ko-KR')
                                 : info[0].shipping_fee.toLocaleString('ko-KR')}
                             <span>원</span>
@@ -52,7 +51,7 @@ const FinalPaymentInfo = ({
                     <PaymentDiv>
                         <H4>- 결제금액</H4>
                         <PaymentPrice>
-                            {type === 'cart_order'
+                            {type === ORDER_KIND.CART_ORDER
                                 ? (price + shipping).toLocaleString('ko-KR')
                                 : (
                                       info[0].price * info[0].quantity +

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ICheckedItems, IProduct } from 'GlobalType';
 import { putCartItemQuantity } from 'apis/cart';
+import { ORDER_KIND } from 'constants/index';
 import {
     Container,
     List,
@@ -58,7 +59,7 @@ const CartResult = ({
         // 여기서 체크 안 한 상품들을 is_active를 false로 만들어줘야
         navigate('/payment', {
             state: {
-                order_kind: 'cart_order',
+                order_kind: ORDER_KIND.CART_ORDER,
                 total_price: totalPrice,
                 total_shipping: totalShipping,
                 order_product: checkedItems,
