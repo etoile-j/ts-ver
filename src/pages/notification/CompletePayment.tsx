@@ -4,8 +4,7 @@ import Notification from 'components/common/Notification';
 import { Main } from './style';
 
 const CompletePayment = () => {
-    const info: { created_at: string; order_number: number } =
-        useLocation().state;
+    const info: { created_at: string; order_number: number } = useLocation().state;
 
     return (
         <>
@@ -17,9 +16,7 @@ const CompletePayment = () => {
                     ${info.created_at.slice(0, 10).replaceAll('-', '')} - 0000${
                         info.order_number
                     }`}
-                    subText2={`주문일자 : ${info.created_at
-                        .slice(0, 19)
-                        .replace('T', ' ')}`}
+                    subText2={`주문일자 : ${info.created_at.slice(0, 19).replace('T', ' ')}`}
                     rightText="메인으로"
                     rightBtn={() => (window.location.href = '/')}
                     leftNone="none"

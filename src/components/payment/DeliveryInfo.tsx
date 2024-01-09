@@ -22,6 +22,10 @@ type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
 >;
 
 const DeliveryInfo = ({ register, errors }: IForm) => {
+    const showCautionText = (error: FieldErrors<FieldValues>) => {
+        return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
+    };
+
     return (
         <>
             <fieldset>
@@ -83,16 +87,12 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         {...register('name', {
                             required: '필수 정보입니다.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                value: /^[ㄱ-ㅎ가-힣a-zA-Z]+$/,
                                 message: '한글, 영문만 입력 가능합니다.',
                             },
                         })}
                     />
-                    {errors.name && (
-                        <CautionText aria-live="assertive">
-                            {errors.name.message}
-                        </CautionText>
-                    )}
+                    {showCautionText(errors.name)}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
@@ -105,10 +105,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             maxLength={3}
                             {...register('phone1', {
                                 required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 2,
-                                    message: '모두 입력해 주세요.',
-                                },
+                                minLength: { value: 2, message: '모두 입력해 주세요.' },
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: '숫자만 입력 가능합니다.',
@@ -124,10 +121,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             maxLength={4}
                             {...register('phone2', {
                                 required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 4,
-                                    message: '모두 입력해 주세요.',
-                                },
+                                minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: '숫자만 입력 가능합니다.',
@@ -143,53 +137,25 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             maxLength={4}
                             {...register('phone3', {
                                 required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 4,
-                                    message: '모두 입력해 주세요.',
-                                },
+                                minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
                         />
-
-                        {(errors.phone1 && (
-                            <CautionText aria-live="assertive">
-                                {errors.phone1.message}
-                            </CautionText>
-                        )) ||
-                            (errors.phone2 && (
-                                <CautionText aria-live="assertive">
-                                    {errors.phone2.message}
-                                </CautionText>
-                            )) ||
-                            (errors.phone3 && (
-                                <CautionText aria-live="assertive">
-                                    {errors.phone3.message}
-                                </CautionText>
-                            ))}
+                        {showCautionText(errors.phone1) ||
+                            showCautionText(errors.phone2) ||
+                            showCautionText(errors.phone3)}
                     </span>
                 </Line>
                 <Line>
                     <Label>배송주소</Label>
                     <Input title="우편번호" type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
-                    {(errors.address1 && (
-                        <CautionText aria-live="assertive">
-                            {errors.address1.message}
-                        </CautionText>
-                    )) ||
-                        (errors.address2 && (
-                            <CautionText aria-live="assertive">
-                                {errors.address2.message}
-                            </CautionText>
-                        )) ||
-                        (errors.deliveryMessage && (
-                            <CautionText aria-live="assertive">
-                                {errors.deliveryMessage.message}
-                            </CautionText>
-                        ))}
+                    {showCautionText(errors.address1) ||
+                        showCautionText(errors.address2) ||
+                        showCautionText(errors.deliveryMessage)}
                     <br />
                     <Label></Label>
                     <AddressInput
@@ -199,8 +165,8 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
-                                message: '한글, 영문만 입력 가능합니다.',
+                                value: /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/,
+                                message: '한글, 영문만 입력 가능합니다.(주소)',
                             },
                         })}
                     />
@@ -210,9 +176,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         title="상세 주소"
                         type="text"
                         width="600px"
-                        {...register('address2', {
-                            required: '나머지 주소를 입력해 주세요.',
-                        })}
+                        {...register('address2', { required: '나머지 주소를 입력해 주세요.' })}
                     />
                 </Line>
                 <Line>
@@ -224,8 +188,8 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
-                                message: '한글, 영문만 입력 가능합니다.',
+                                value: /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/u,
+                                message: '특수문자는 입력 불가능합니다.(메시지)',
                             },
                         })}
                     />
