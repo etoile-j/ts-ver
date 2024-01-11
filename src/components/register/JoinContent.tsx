@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { axiosApi } from '../../apis/axiosInstance';
 import { AxiosError } from 'axios';
 import { ILoginType } from 'GlobalType';
+import { REGEX } from 'constants/index';
 import Check_off from '../../assets/icon-check-off.svg';
 import Check_on from '../../assets/icon-check-on.svg';
 import {
@@ -39,13 +40,14 @@ interface IJoinInputs {
     agreement: boolean;
 }
 
+const ID_REGEX = /^[A-za-z0-9]{1,19}$/g;
+const PW_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
+
 const JoinContent = ({ typeBuyers }: ILoginType) => {
     const [isPassId, setIsPassId] = useState(false);
     const [passIdText, setPassIdText] = useState<string>('');
     const [isPassCompany, setIsPassCompany] = useState(false);
     const [passCompanyText, setPassCompanyText] = useState<string>('');
-    const idRegex = /^[A-za-z0-9]{1,19}$/g;
-    const PwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
 
     const {
         register,
@@ -107,7 +109,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
     };
 
     const idValidCheck = async () => {
-        if (!idRegex.test(getValues('id'))) return;
+        if (!ID_REGEX.test(getValues('id'))) return;
 
         try {
             const response = await axiosApi.post('/accounts/signup/valid/username/', {
@@ -159,7 +161,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         {...register('id', {
                             required: '필수 정보입니다.',
                             pattern: {
-                                value: idRegex,
+                                value: ID_REGEX,
                                 message:
                                     '20자 이내의 영문(소문자, 대문자), 숫자만 사용 가능합니다.',
                             },
@@ -191,7 +193,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             {...register('password', {
                                 required: '필수 정보입니다.',
                                 pattern: {
-                                    value: PwRegex,
+                                    value: PW_REGEX,
                                     message:
                                         '8자 이상, 최소 하나의 문자 및 하나의 문자를 사용해야 합니다.',
                                 },
@@ -199,7 +201,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                         <PwCheck
                             style={{
-                                backgroundImage: !PwRegex.test(getValues('password'))
+                                backgroundImage: !PW_REGEX.test(getValues('password'))
                                     ? `url(${Check_off})`
                                     : `url(${Check_on})`,
                             }}
@@ -207,9 +209,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PasswordInput>
                 </Div>
                 {errors.password && (
-                    <CautionText aria-live="assertive">
-                        {errors.password.message}
-                    </CautionText>
+                    <CautionText aria-live="assertive">{errors.password.message}</CautionText>
                 )}
                 <Div>
                     <Label htmlFor="passwordCheck">비밀번호 재확인</Label>
@@ -258,7 +258,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         {...register('name', {
                             required: '필수 정보입니다.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
+                                value: REGEX.ONLY_LETTER,
                                 message: '한글, 영문만 입력 가능합니다.',
                             },
                         })}
@@ -299,7 +299,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                     message: '모두 입력해 주세요.',
                                 },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -317,7 +317,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                     message: '모두 입력해 주세요.',
                                 },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -325,9 +325,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     </PhoneNumber>
                 </Div>
                 {(errors.phone1 && (
-                    <CautionText aria-live="assertive">
-                        {errors.phone1.message}
-                    </CautionText>
+                    <CautionText aria-live="assertive">{errors.phone1.message}</CautionText>
                 )) ||
                     (errors.phone2 && (
                         <CautionText aria-live="assertive">
@@ -368,9 +366,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     />
                 </Div>
                 {(errors.emailId && (
-                    <CautionText aria-live="assertive">
-                        {errors.emailId?.message}
-                    </CautionText>
+                    <CautionText aria-live="assertive">{errors.emailId?.message}</CautionText>
                 )) ||
                     (errors.emailDomain && (
                         <CautionText aria-live="assertive">
@@ -417,9 +413,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 id="storeName"
                                 type="text"
                                 width="100%"
-                                {...register('storeName', {
-                                    required: '필수정보 입니다.',
-                                })}
+                                {...register('storeName', { required: '필수정보 입니다.' })}
                             />
                         </Div>
                         {errors.storeName && (
@@ -433,9 +427,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     <label>
                         <Agree
                             type="checkbox"
-                            {...register('agreement', {
-                                required: true,
-                            })}
+                            {...register('agreement', { required: true })}
                         />
                         OUR SHOP의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고
                         동의합니다.

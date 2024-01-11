@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
 import { IProductSeller } from 'GlobalType';
+import { REGEX } from 'constants/index';
 import {
     Wrap,
     InputContainer,
@@ -107,12 +108,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
             <Wrap>
                 <ImgWrap>
                     <ImgLabel htmlFor="image">상품 이미지</ImgLabel>
-                    <ImgInput
-                        type="file"
-                        id="image"
-                        accept="image/*"
-                        onChange={uploadImg}
-                    />
+                    <ImgInput type="file" id="image" accept="image/*" onChange={uploadImg} />
                     <ImgPreview src={preImg} alt="" />
                 </ImgWrap>
                 <InputContainer>
@@ -149,7 +145,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             {...register('price', {
                                 required: '필수정보 입니다.',
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -216,7 +212,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             {...register('shipping_fee', {
                                 required: '필수정보 입니다.',
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -244,7 +240,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                                     message: '재고는 1개 이상 입력해야 합니다.',
                                 },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -254,10 +250,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                 </InputContainer>
             </Wrap>
             <BtnContainer>
-                <WhiteBtn
-                    type="button"
-                    onClick={() => (window.location.href = '/seller')}
-                >
+                <WhiteBtn type="button" onClick={() => (window.location.href = '/seller')}>
                     취소
                 </WhiteBtn>
                 <ColorBtn type="submit">저장하기</ColorBtn>

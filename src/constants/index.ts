@@ -3,3 +3,8 @@ export const ORDER_KIND = {
     CART_ONE_ORDER: 'car_one_order',
     DIRECT_ORDER: 'direct_order',
 } as const;
+
+export const REGEX = {
+    ONLY_NUMBER: /^[0-9]+$/,
+    ONLY_LETTER: /^[ㄱ-ㅎ가-힣a-zA-Z]+$/,
+} as const;

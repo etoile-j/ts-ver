@@ -1,4 +1,5 @@
 import { UseFormRegister, FieldValues, FieldError, DeepMap } from 'react-hook-form';
+import { REGEX } from 'constants/index';
 import {
     Legend,
     Line,
@@ -87,7 +88,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         {...register('name', {
                             required: '필수 정보입니다.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ가-힣a-zA-Z]+$/,
+                                value: REGEX.ONLY_LETTER,
                                 message: '한글, 영문만 입력 가능합니다.',
                             },
                         })}
@@ -107,7 +108,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 2, message: '모두 입력해 주세요.' },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -123,7 +124,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -139,7 +140,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
-                                    value: /^[0-9]+$/,
+                                    value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
                                 },
                             })}
@@ -165,8 +166,8 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
                             pattern: {
-                                value: /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/,
-                                message: '한글, 영문만 입력 가능합니다.(주소)',
+                                value: REGEX.NO_SPECIAL_CHARS,
+                                message: '특수문자는 입력 불가능합니다.(주소)',
                             },
                         })}
                     />
@@ -187,10 +188,6 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
-                            pattern: {
-                                value: /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/u,
-                                message: '특수문자는 입력 불가능합니다.(메시지)',
-                            },
                         })}
                     />
                 </Line>
