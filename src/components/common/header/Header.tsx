@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getLocalStorage } from 'utils/storage';
 import { ISearch } from 'GlobalType';
+import { LOGIN_TYPE } from 'constants/index';
 import Dropdown from 'components/modal/Dropdown';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
@@ -54,19 +55,13 @@ const Header = ({ searchKeyword }: ISearch) => {
                                 <ShoppingCartImg src={ShoppingCartIcon} />
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
-                        ) : loginType === 'BUYER' ? (
-                            <ShoppingCartBtn
-                                onClick={() => (window.location.href = '/cart')}
-                            >
+                        ) : loginType === LOGIN_TYPE.BUYER ? (
+                            <ShoppingCartBtn onClick={() => (window.location.href = '/cart')}>
                                 <ShoppingCartImg src={ShoppingCartIcon} />
                                 <span>장바구니</span>
                             </ShoppingCartBtn>
                         ) : (
-                            <SellerBtn
-                                onClick={() =>
-                                    (window.location.href = '/seller')
-                                }
-                            >
+                            <SellerBtn onClick={() => (window.location.href = '/seller')}>
                                 <IconUpload src={BagIcon} />
                                 판매자 센터
                             </SellerBtn>
@@ -74,18 +69,12 @@ const Header = ({ searchKeyword }: ISearch) => {
                     </li>
                     <li>
                         {!token ? (
-                            <MyPage
-                                onClick={() => {
-                                    window.location.href = '/login';
-                                }}
-                            >
+                            <MyPage onClick={() => (window.location.href = '/login')}>
                                 <LiButtonImg src={UserIcon} />
                                 <span>로그인</span>
                             </MyPage>
                         ) : (
-                            <MyPage
-                                onClick={() => setOpenDropdown(!openDropdown)}
-                            >
+                            <MyPage onClick={() => setOpenDropdown(!openDropdown)}>
                                 <LiButtonImg src={UserIcon} />
                                 <span>마이페이지</span>
                                 {openDropdown && <Dropdown />}

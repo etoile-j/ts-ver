@@ -4,6 +4,7 @@ import queryClient from 'queries/queryClient';
 import ScrollToTop from 'components/common/ScrollToTop';
 import UserRoute from 'components/route/UserRoute';
 import TypeRoute from 'components/route/TypeRoute';
+import { LOGIN_TYPE } from 'constants/index';
 import { GlobalStyle } from './styles/global';
 
 import Join from 'pages/join/Join';
@@ -35,26 +36,33 @@ function App() {
                     <Route path="/detail/:product_id" element={<ProductDetails />} />
                     <Route
                         path="/cart"
-                        element={<TypeRoute component={<Cart />} type="BUYER" />}
+                        element={<TypeRoute component={<Cart />} type={LOGIN_TYPE.BUYER} />}
                     />
                     <Route
                         path="/payment"
-                        element={<TypeRoute component={<Payment />} type="BUYER" />}
+                        element={<TypeRoute component={<Payment />} type={LOGIN_TYPE.BUYER} />}
                     />
                     <Route path="/complete_payment" element={<CompletePayment />} />
                     <Route
                         path="/seller"
-                        element={<TypeRoute component={<DashBoard />} type="SELLER" />}
+                        element={
+                            <TypeRoute component={<DashBoard />} type={LOGIN_TYPE.SELLER} />
+                        }
                     />
                     <Route
                         path="/seller/upload"
                         element={
-                            <TypeRoute component={<UploadProduct />} type="SELLER" />
+                            <TypeRoute
+                                component={<UploadProduct />}
+                                type={LOGIN_TYPE.SELLER}
+                            />
                         }
                     />
                     <Route
                         path="/seller/edit"
-                        element={<TypeRoute component={<EditProduct />} type="SELLER" />}
+                        element={
+                            <TypeRoute component={<EditProduct />} type={LOGIN_TYPE.SELLER} />
+                        }
                     />
                     <Route path="/*" element={<NotFound />} />
                 </Routes>
