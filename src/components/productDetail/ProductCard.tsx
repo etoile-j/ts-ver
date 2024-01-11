@@ -60,10 +60,8 @@ const ProductCard = () => {
 
     useEffect(() => {
         (async () => {
-            if (typeof product_id === 'string') {
-                const productDetail = await getProductDetail(product_id);
-                setProduct(productDetail);
-            }
+            const productDetail = await getProductDetail(product_id!);
+            setProduct(productDetail);
         })();
     }, []);
 

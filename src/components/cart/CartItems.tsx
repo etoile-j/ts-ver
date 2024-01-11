@@ -39,10 +39,7 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
 
     const getProductsDetail = async () => {
         try {
-            const productsDetail = cartData?.map((item) =>
-                getProductDetail(item.product_id.toString()),
-            );
-
+            const productsDetail = cartData?.map((item) => getProductDetail(item.product_id));
             const resolvedProductsDetail = await Promise.all(productsDetail);
 
             return resolvedProductsDetail.map((productDetail, idx) => ({
