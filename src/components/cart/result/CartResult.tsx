@@ -92,18 +92,16 @@ const CartResult = ({
                     <Won>원</Won>
                 </Result>
             </Container>
-            {checkedItems && (
-                <OrderBtnBig
-                    onClick={handleSubmit}
-                    style={{
-                        backgroundColor: checkedItems.length ? '#6997f7' : '#c4c4c4',
-                        cursor: checkedItems.length ? 'pointer' : 'default',
-                    }}
-                    disabled={!checkedItems.length}
-                >
-                    주문하기
-                </OrderBtnBig>
-            )}
+            <OrderBtnBig
+                onClick={handleSubmit}
+                style={{
+                    backgroundColor: checkedItems.length ? '#6997f7' : '#c4c4c4',
+                    cursor: checkedItems.length ? 'pointer' : 'default',
+                }}
+                disabled={!checkedItems.length}
+            >
+                주문하기
+            </OrderBtnBig>
         </>
     );
 };
