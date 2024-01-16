@@ -1,45 +1,33 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { axiosApi } from 'apis/axiosInstance';
+import { getCartItem } from 'apis/cart';
 import { IProduct, ICheckedItems } from 'GlobalType';
 import CartTitle from './title/CartTitle';
 import CartItems from './CartItems';
 import CartResult from './result/CartResult';
 
 const CartContent = () => {
-    const [cartCount, setCartCount] = useState(null);
     const [cartProductDetails, setCartProductDetails] = useState<IProduct[]>([]);
     const [checkedItems, setCheckedItems] = useState<ICheckedItems[]>([]);
 
-    const handleGetCart = async () => {
-        try {
-            const response = await axiosApi.get('/cart/');
-            setCartCount(response.data.count);
-            return response.data.results;
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const { data: cartData } = useQuery(['cartData'], handleGetCart);
+    const { data: cartData, isLoading } = useQuery(['cartData'], getCartItem);
 
     return (
         <>
             <CartTitle
-                cartCount={cartCount}
                 cartProductDetails={cartProductDetails}
                 checkedItems={checkedItems}
                 setCheckedItems={setCheckedItems}
             />
             <CartItems
-                cartCount={cartCount}
+                isLoading={isLoading}
                 cartData={cartData}
                 cartProductDetails={cartProductDetails}
                 setCartProductDetails={setCartProductDetails}
                 checkedItems={checkedItems}
                 setCheckedItems={setCheckedItems}
             />
-            {!!cartCount && (
+            {cartData && cartData.length > 0 && (
                 <CartResult
                     checkedItems={checkedItems}
                     cartProductDetails={cartProductDetails}

@@ -3,14 +3,13 @@ import { filterAllItems } from 'utils';
 import { TitleLi, Content } from './CartTitleStyle';
 
 interface ICartTitleProps {
-    cartCount: number | null;
     cartProductDetails: IProduct[];
     checkedItems: ICheckedItems[];
     setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
 }
 
 const CartTitle = (cartTitleProps: ICartTitleProps) => {
-    const { cartCount, cartProductDetails, checkedItems, setCheckedItems } = cartTitleProps;
+    const { cartProductDetails, checkedItems, setCheckedItems } = cartTitleProps;
 
     const handleAllCheck = (checked: boolean) => {
         if (checked) {
@@ -29,7 +28,10 @@ const CartTitle = (cartTitleProps: ICartTitleProps) => {
                     id="toggleAll"
                     type="checkbox"
                     onChange={(e) => handleAllCheck(e.target.checked)}
-                    checked={!!cartCount && checkedItems.length === cartCount}
+                    checked={
+                        cartProductDetails.length > 0 &&
+                        checkedItems.length === cartProductDetails.length
+                    }
                 />
             </Content>
             <Content width="611px">상품정보</Content>

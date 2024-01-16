@@ -56,7 +56,7 @@ const CartResult = ({
         if (checkedItems.length < cartProductDetails.length) {
             await updateInactiveItems();
         }
-        // 여기서 체크 안 한 상품들을 is_active를 false로 만들어줘야
+
         navigate('/payment', {
             state: {
                 order_kind: ORDER_KIND.CART_ORDER,

@@ -7,8 +7,8 @@ import NoneCartItem from './item/NoneCartItem';
 import { Container } from './style';
 
 interface ICartItemsProps {
+    isLoading: boolean;
     cartData: ICartData[];
-    cartCount: number | null;
     checkedItems: ICheckedItems[];
     setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
     cartProductDetails: IProduct[];
@@ -17,7 +17,7 @@ interface ICartItemsProps {
 
 const CartItems = (CartItemsProps: ICartItemsProps) => {
     const {
-        cartCount,
+        isLoading,
         cartData,
         cartProductDetails,
         setCartProductDetails,
@@ -34,7 +34,7 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
             setCheckedItems(allItems);
         };
 
-        if (cartCount) updateProductDetails();
+        if (cartData && cartData.length > 0) updateProductDetails();
     }, [cartData]);
 
     const getProductsDetail = async () => {
@@ -52,7 +52,7 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
         }
     };
 
-    return cartCount === 0 ? (
+    return isLoading ? null : !cartData.length ? (
         <NoneCartItem />
     ) : (
         <>

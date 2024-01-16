@@ -38,7 +38,6 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
         product_name,
         price,
         shipping_fee,
-        shipping_method,
         stock,
         quantity,
     } = detail;
@@ -132,23 +131,14 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                                 product_id,
                                 order_kind: ORDER_KIND.CART_ONE_ORDER,
                                 total: quantity * price + shipping_fee,
-                                order_product: [
-                                    {
-                                        quantity,
-                                        image,
-                                        store_name,
-                                        product_name,
-                                        shipping_fee,
-                                        price,
-                                    },
-                                ],
+                                order_product: [detail],
                             },
                         })
                     }
                 >
                     주문하기
                 </OrderBtn>
-                <DeleteBtn onClick={handleDeleteModal} />
+                <DeleteBtn aria-label="삭제" onClick={handleDeleteModal} />
             </Content>
             {deleteModal && (
                 <ModalContainer>
