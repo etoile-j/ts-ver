@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { IProduct } from 'GlobalType';
 import {
     TitleLi,
@@ -20,16 +21,20 @@ const OrderTable = ({ orderProductsDetail }: { orderProductsDetail: IProduct[] }
                 <Title width="231px">주문금액</Title>
             </TitleLi>
             {orderProductsDetail.map((product: IProduct) => {
-                const { image, store_name, product_name, quantity, price, shipping_fee } =
+                const { product_id, image, product_name, quantity, price, shipping_fee } =
                     product;
                 return (
-                    <OrderLi key={product.product_id}>
+                    <OrderLi key={product_id}>
                         <Title width="589px">
                             <Wrap>
-                                <ProductImg src={image}></ProductImg>
+                                <Link to={`/detail/${product_id}`}>
+                                    <ProductImg src={image}></ProductImg>
+                                </Link>
                                 <div>
-                                    <GrayFont>{store_name}</GrayFont>
-                                    <ProductName>{product_name}</ProductName>
+                                    <GrayFont>{product.store_name}</GrayFont>
+                                    <Link to={`/detail/${product_id}`}>
+                                        <ProductName>{product_name}</ProductName>
+                                    </Link>
                                     <GrayFont>수량: {quantity}개</GrayFont>
                                 </div>
                             </Wrap>
