@@ -77,7 +77,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
                     <Total>
                         총 주문금액
                         <strong>
-                            {order_kind === 'cart_order'
+                            {order_kind === ORDER_KIND.CART_ORDER
                                 ? (total_price + total_shipping).toLocaleString('ko-KR')
                                 : total.toLocaleString('ko-KR')}
                             <span>원</span>
