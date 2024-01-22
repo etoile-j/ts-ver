@@ -4,6 +4,7 @@ import { IProduct, ICheckedItems, ICartData } from 'GlobalType';
 import { filterAllItems } from 'utils';
 import CartItem from './item/CartItem';
 import NoneCartItem from './item/NoneCartItem';
+import Skeleton from './item/Skeleton';
 import { Container } from './style';
 
 interface ICartItemsProps {
@@ -30,15 +31,18 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
             const result = (await getProductsDetail()) as IProduct[];
 
             setCartProductDetails(result);
-            const allItems = filterAllItems(result);
-            setCheckedItems(allItems);
+            setCheckedItems(filterAllItems(result));
         };
 
-        if (cartData && cartData.length > 0) updateProductDetails();
-    }, [cartData]);
+        !isLoading && updateProductDetails();
+    }, [cartData, isLoading]);
 
     const getProductsDetail = async () => {
         try {
+            if (cartData.length === 0) {
+                return [];
+            }
+
             const productsDetail = cartData?.map((item) => getProductDetail(item.product_id));
             const resolvedProductsDetail = await Promise.all(productsDetail);
 
@@ -52,21 +56,27 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
         }
     };
 
-    return isLoading ? null : !cartData.length ? (
+    return !isLoading && cartProductDetails.length > 0 ? (
+        <>
+            {cartProductDetails?.map((item) => (
+                <Container key={item.cart_item_id}>
+                    <CartItem
+                        detail={item}
+                        checkedItems={checkedItems}
+                        setCheckedItems={setCheckedItems}
+                    />
+                </Container>
+            ))}
+        </>
+    ) : !isLoading && cartData.length === 0 ? (
         <NoneCartItem />
     ) : (
         <>
-            {cartProductDetails?.map((item) => {
-                return (
-                    <Container key={item.cart_item_id}>
-                        <CartItem
-                            detail={item}
-                            checkedItems={checkedItems}
-                            setCheckedItems={setCheckedItems}
-                        />
-                    </Container>
-                );
-            })}
+            {new Array(4).fill(0).map((_, i) => (
+                <Container key={i}>
+                    <Skeleton />
+                </Container>
+            ))}
         </>
     );
 };
