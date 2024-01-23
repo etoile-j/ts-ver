@@ -8,11 +8,11 @@ import FinalPayment from 'components/payment/FinalPayment';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/header/Header';
 import OrderTable from 'components/payment/OrderTable';
-import { Main, Total, Section, Container, Heading } from './style';
 import PaymentMethod from 'components/payment/PaymentMethod';
+import { Main, Total, Section, Container, Heading } from './style';
 
 interface IPaymentInputs {
-    name: string;
+    receiver: string;
     phone1: number;
     phone2: number;
     phone3: number;
@@ -44,7 +44,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
                     order_kind === ORDER_KIND.CART_ORDER
                         ? total_price + total_shipping
                         : total,
-                receiver: data.name,
+                receiver: data.receiver,
                 receiver_phone_number: data.phone1 + data.phone2 + data.phone3,
                 address: `${data.address1} ${data.address2}`,
                 address_message: data.deliveryMessage,
