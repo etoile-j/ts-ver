@@ -27,6 +27,10 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
         return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
     };
 
+    const isWhitespaceOnly = (value: string, field: string) => {
+        return value.trim() !== '' || `${field}를 입력해 주세요.`;
+    };
+
     return (
         <>
             <fieldset>
@@ -85,7 +89,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         id="receiver"
                         type="text"
                         width="334px"
-                        {...register('name', {
+                        {...register('receiver', {
                             required: '필수 정보입니다.',
                             pattern: {
                                 value: REGEX.ONLY_LETTER,
@@ -93,7 +97,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             },
                         })}
                     />
-                    {showCautionText(errors.name)}
+                    {showCautionText(errors.receiver)}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
@@ -165,19 +169,20 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
-                            pattern: {
-                                value: REGEX.NO_SPECIAL_CHARS,
-                                message: '특수문자는 입력 불가능합니다.(주소)',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '주소'),
                         })}
                     />
                     <br />
                     <Label />
                     <Input
                         title="상세 주소"
+                        placeholder="나머지 주소"
                         type="text"
                         width="600px"
-                        {...register('address2', { required: '나머지 주소를 입력해 주세요.' })}
+                        {...register('address2', {
+                            required: '나머지 주소를 입력해 주세요.',
+                            validate: (value) => isWhitespaceOnly(value, '나머지 주소'),
+                        })}
                     />
                 </Line>
                 <Line>
@@ -188,6 +193,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
+                            validate: (value) => isWhitespaceOnly(value, '배송 메세지'),
                         })}
                     />
                 </Line>
