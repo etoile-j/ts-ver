@@ -28,7 +28,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
     };
 
     const isWhitespaceOnly = (value: string, field: string) => {
-        return value.trim() !== '' || `${field}를 입력해 주세요.`;
+        return value.trim() !== '' || `${field} 입력해 주세요.`;
     };
 
     return (
@@ -91,7 +91,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="334px"
                         {...register('receiver', {
                             required: '필수 정보입니다.',
-                            validate: (value) => isWhitespaceOnly(value, '수령인'),
+                            validate: (value) => isWhitespaceOnly(value, '수령인을'),
                         })}
                     />
                     {showCautionText(errors.receiver)}
@@ -166,7 +166,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
-                            validate: (value) => isWhitespaceOnly(value, '주소'),
+                            validate: (value) => isWhitespaceOnly(value, '주소를'),
                         })}
                     />
                     <br />
@@ -178,7 +178,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('address2', {
                             required: '나머지 주소를 입력해 주세요.',
-                            validate: (value) => isWhitespaceOnly(value, '나머지 주소'),
+                            validate: (value) => isWhitespaceOnly(value, '나머지 주소를'),
                         })}
                     />
                 </Line>
@@ -190,7 +190,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
-                            validate: (value) => isWhitespaceOnly(value, '배송 메세지'),
+                            validate: (value) => isWhitespaceOnly(value, '배송 메세지를'),
                         })}
                     />
                 </Line>
