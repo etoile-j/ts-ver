@@ -13,9 +13,7 @@ import { Main, Total, Section, Container, Heading } from './style';
 
 interface IPaymentInputs {
     receiver: string;
-    phone1: number;
-    phone2: number;
-    phone3: number;
+    phone: { first: number; second: number; third: number };
     address1: string;
     address2: string;
     deliveryMessage: string;
@@ -45,7 +43,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
                         ? total_price + total_shipping
                         : total,
                 receiver: data.receiver,
-                receiver_phone_number: data.phone1 + data.phone2 + data.phone3,
+                receiver_phone_number: Object.values(data.phone).join(''),
                 address: `${data.address1} ${data.address2}`,
                 address_message: data.deliveryMessage,
                 payment_method: data.paymentMethod,
@@ -79,7 +77,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
                         <strong>
                             {order_kind === ORDER_KIND.CART_ORDER
                                 ? (total_price + total_shipping).toLocaleString('ko-KR')
-                                : total.toLocaleString('ko-KR')}
+                                : total && total.toLocaleString('ko-KR')}
                             <span>원</span>
                         </strong>
                     </Total>

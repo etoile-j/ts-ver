@@ -20,15 +20,15 @@ const OrderTable = ({ orderProductsDetail }: { orderProductsDetail: IProduct[] }
                 <Title width="228px">배송비</Title>
                 <Title width="231px">주문금액</Title>
             </TitleLi>
-            {orderProductsDetail.map((product: IProduct) => {
-                const { product_id, image, product_name, quantity, price, shipping_fee } =
-                    product;
+            {orderProductsDetail?.map((product: IProduct) => {
+                const { product_id, product_name, quantity, price, shipping_fee } = product;
+
                 return (
                     <OrderLi key={product_id}>
                         <Title width="589px">
                             <Wrap>
                                 <Link to={`/detail/${product_id}`}>
-                                    <ProductImg src={image}></ProductImg>
+                                    <ProductImg src={product.image}></ProductImg>
                                 </Link>
                                 <div>
                                     <GrayFont>{product.store_name}</GrayFont>
