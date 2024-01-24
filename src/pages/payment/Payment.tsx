@@ -24,8 +24,8 @@ interface IPaymentInputs {
 const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
     const navigate = useNavigate();
     const orderDetail: IDirectOrderInfo = useLocation().state;
-    const { product_id, order_kind, total_price, total_shipping, total } = orderDetail;
-    const orderProductsDetail = useLocation().state.order_product;
+    const { product_id, order_kind, total_price, total_shipping, total } = orderDetail || {};
+    const orderProductsDetail = useLocation()?.state?.order_product;
     const {
         register,
         handleSubmit,
@@ -36,7 +36,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
         try {
             const requestData = {
                 product_id,
-                quantity: orderProductsDetail[0].quantity,
+                quantity: orderProductsDetail?.[0]?.quantity,
                 order_kind,
                 total_price:
                     order_kind === ORDER_KIND.CART_ORDER

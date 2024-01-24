@@ -25,7 +25,7 @@ interface IFinalPaymentProps {
 const FinalPaymentInfo = (finalPaymentprops: IFinalPaymentProps) => {
     const { singleOrderDetail, order_kind, total_price, total_shipping, register, isValid } =
         finalPaymentprops;
-    const { price, quantity, shipping_fee } = singleOrderDetail[0];
+    const { price, quantity, shipping_fee } = singleOrderDetail?.[0] || {};
 
     return (
         <Container>
@@ -50,7 +50,7 @@ const FinalPaymentInfo = (finalPaymentprops: IFinalPaymentProps) => {
                     <Price>
                         {order_kind === ORDER_KIND.CART_ORDER
                             ? total_shipping.toLocaleString('ko-KR')
-                            : shipping_fee.toLocaleString('ko-KR')}
+                            : shipping_fee?.toLocaleString('ko-KR')}
                         <span>원</span>
                     </Price>
                 </Div>
@@ -71,7 +71,7 @@ const FinalPaymentInfo = (finalPaymentprops: IFinalPaymentProps) => {
                 </label>
                 <GrayBtn
                     type="submit"
-                    disabled={isValid ? false : true}
+                    disabled={!isValid}
                     color={isValid ? '#6997f7' : '#c4c4c4'}
                 >
                     결제하기

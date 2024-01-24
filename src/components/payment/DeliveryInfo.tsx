@@ -50,7 +50,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
-                            title="휴대폰번호 첫 세 자리"
+                            title="휴대폰 첫 세 자리"
                             type="text"
                             inputMode="tel"
                             width="80px"
@@ -58,7 +58,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
-                            title="휴대폰번호 중간 네 자리"
+                            title="휴대폰 중간 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -66,7 +66,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
-                            title="휴대폰번호 마지막 네 자리"
+                            title="휴대폰 마지막 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -91,10 +91,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="334px"
                         {...register('receiver', {
                             required: '필수 정보입니다.',
-                            pattern: {
-                                value: REGEX.ONLY_LETTER,
-                                message: '한글, 영문만 입력 가능합니다.',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '수령인'),
                         })}
                     />
                     {showCautionText(errors.receiver)}
@@ -108,7 +105,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="80px"
                             maxLength={3}
-                            {...register('phone1', {
+                            {...register('phone.first', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 2, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -124,7 +121,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone2', {
+                            {...register('phone.second', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -140,7 +137,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone3', {
+                            {...register('phone.third', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -162,7 +159,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         showCautionText(errors.address2) ||
                         showCautionText(errors.deliveryMessage)}
                     <br />
-                    <Label></Label>
+                    <Label />
                     <AddressInput
                         title="기본 주소"
                         type="text"
