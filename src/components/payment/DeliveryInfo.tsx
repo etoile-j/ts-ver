@@ -27,6 +27,10 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
         return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
     };
 
+    const isWhitespaceOnly = (value: string, field: string) => {
+        return value.trim() !== '' || `${field} 입력해 주세요.`;
+    };
+
     return (
         <>
             <fieldset>
@@ -46,7 +50,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
-                            title="휴대폰번호 첫 세 자리"
+                            title="휴대폰 첫 세 자리"
                             type="text"
                             inputMode="tel"
                             width="80px"
@@ -54,7 +58,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
-                            title="휴대폰번호 중간 네 자리"
+                            title="휴대폰 중간 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -62,7 +66,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
-                            title="휴대폰번호 마지막 네 자리"
+                            title="휴대폰 마지막 네 자리"
                             type="text"
                             inputMode="tel"
                             width="100px"
@@ -85,15 +89,12 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         id="receiver"
                         type="text"
                         width="334px"
-                        {...register('name', {
+                        {...register('receiver', {
                             required: '필수 정보입니다.',
-                            pattern: {
-                                value: REGEX.ONLY_LETTER,
-                                message: '한글, 영문만 입력 가능합니다.',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '수령인을'),
                         })}
                     />
-                    {showCautionText(errors.name)}
+                    {showCautionText(errors.receiver)}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
@@ -104,7 +105,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="80px"
                             maxLength={3}
-                            {...register('phone1', {
+                            {...register('phone.first', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 2, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -120,7 +121,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone2', {
+                            {...register('phone.second', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -136,7 +137,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                             inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone3', {
+                            {...register('phone.third', {
                                 required: '필수 정보입니다.',
                                 minLength: { value: 4, message: '모두 입력해 주세요.' },
                                 pattern: {
@@ -158,26 +159,27 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         showCautionText(errors.address2) ||
                         showCautionText(errors.deliveryMessage)}
                     <br />
-                    <Label></Label>
+                    <Label />
                     <AddressInput
                         title="기본 주소"
                         type="text"
                         width="600px"
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
-                            pattern: {
-                                value: REGEX.NO_SPECIAL_CHARS,
-                                message: '특수문자는 입력 불가능합니다.(주소)',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '주소를'),
                         })}
                     />
                     <br />
                     <Label />
                     <Input
                         title="상세 주소"
+                        placeholder="나머지 주소"
                         type="text"
                         width="600px"
-                        {...register('address2', { required: '나머지 주소를 입력해 주세요.' })}
+                        {...register('address2', {
+                            required: '나머지 주소를 입력해 주세요.',
+                            validate: (value) => isWhitespaceOnly(value, '나머지 주소를'),
+                        })}
                     />
                 </Line>
                 <Line>
@@ -188,6 +190,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
+                            validate: (value) => isWhitespaceOnly(value, '배송 메세지를'),
                         })}
                     />
                 </Line>

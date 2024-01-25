@@ -36,7 +36,7 @@ const Wrap = styled.div`
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     width: 104px;
     height: 104px;
-    margin-right: 36px;
+    margin: 0 36px 0 7px;
     border-radius: 10px;
     object-fit: cover;
 `;
@@ -61,13 +61,4 @@ const Price = styled.strong`
     line-height: 23px;
 `;
 
-export {
-    TitleLi,
-    Title,
-    OrderLi,
-    Wrap,
-    ProductImg,
-    GrayFont,
-    ProductName,
-    Price,
-};
+export { TitleLi, Title, OrderLi, Wrap, ProductImg, GrayFont, ProductName, Price };
