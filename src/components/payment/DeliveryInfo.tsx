@@ -146,9 +146,9 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                                 },
                             })}
                         />
-                        {showCautionText(errors.phone.first) ||
-                            showCautionText(errors.phone.second) ||
-                            showCautionText(errors.phone.third)}
+                        {showCautionText(errors.phone?.first) ||
+                            showCautionText(errors.phone?.second) ||
+                            showCautionText(errors.phone?.third)}
                     </span>
                 </Line>
                 <Line>

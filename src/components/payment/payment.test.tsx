@@ -1,7 +1,5 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom'; // 이거 밖으로 빼야지~
-import Payment from 'pages/payment/Payment';
-import { MemoryRouter } from 'react-router-dom';
+import '@testing-library/jest-dom';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { paymentRender } from 'utils/test';
 
 describe('payment 페이지 테스트', () => {
@@ -13,7 +11,43 @@ describe('payment 페이지 테스트', () => {
         fireEvent.change(receiverInput, { target: { value: '  ' } });
 
         await waitFor(() => {
-            expect(screen.getByText('수령인를 입력해 주세요.')).toBeInTheDocument();
+            expect(screen.getByText('수령인을 입력해 주세요.')).toBeInTheDocument();
+        });
+    });
+
+    test('휴대폰에 숫자가 아닌 문자를 입력하면 에러 메시지가 표시된다.', async () => {
+        paymentRender();
+
+        const phone1Input = screen.getByTitle('휴대폰번호 첫 세 자리');
+
+        fireEvent.change(phone1Input, { target: { value: 'kk' } });
+
+        await waitFor(() => {
+            expect(screen.getByText('숫자만 입력 가능합니다.')).toBeInTheDocument();
+        });
+    });
+
+    test('휴대폰에 입력해야 하는 길이를 채우지 못하면 에러 메시지가 표시된다.', async () => {
+        paymentRender();
+
+        const phone2Input = screen.getByTitle('휴대폰번호 중간 네 자리');
+
+        fireEvent.change(phone2Input, { target: { value: '71' } });
+
+        await waitFor(() => {
+            expect(screen.getByText('모두 입력해 주세요.')).toBeInTheDocument();
+        });
+    });
+
+    test('배송메시지에 공백을 입력하면 에러 메시지가 표시된다.', async () => {
+        paymentRender();
+
+        const deliveryMessageInput = screen.getByLabelText('배송 메시지');
+
+        fireEvent.change(deliveryMessageInput, { target: { value: ' ' } });
+
+        await waitFor(() => {
+            expect(screen.getByText('배송 메세지를 입력해 주세요.')).toBeInTheDocument();
         });
     });
 
