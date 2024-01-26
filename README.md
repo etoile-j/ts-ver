@@ -1,13 +1,8 @@
 # ✨ OUR SHOP
 
-<img width="784" alt="스OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/42c4b203-0c1d-4a2a-8c64-eeb984aec12b">
+<img width="784" alt="OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/42c4b203-0c1d-4a2a-8c64-eeb984aec12b">
 
 ### 📍 https://etoile-ourshop.netlify.app
-
-```
-🖥 크롬 브라우저에 최적화되어 있습니다.
-🔊 웹 위주의 프로젝트로 일반적인 태블릿 크기의 해상도(768px)까지만 지원합니다.
-```
 
 ### 테스트용 계정
 
@@ -39,26 +34,25 @@
 
 ### Front-End
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white"> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
 
--   React.js 18.2
--   TypeScript 4.8
--   styled-components 5.3
--   react-router-dom 6.4
--   React-hook-form 7
--   react-query 3.3
--   axios
--   react-slick
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"> <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
+
+<img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=Jest&logoColor=white"> <img src="https://img.shields.io/badge/React Testing Library-E33332?style=for-the-badge&logo=TestingLibrary&logoColor=white"> <img src="https://img.shields.io/badge/MSW-FF6A33?style=for-the-badge&logo=MockServiceWorker&logoColor=white">
 
 ### Back-End
 
--   제공된 API 사용
+제공된 API 사용
 
 <br><br>
 
 ## 📋 기능
 
 ```
+🎾 공통
+- 반응형 레이아웃
+- 모달
+
 🔐 인증
 - 권한별 접근 제한
 - 구매자/판매자 로그인 및 로그아웃
@@ -92,43 +86,6 @@
 - 판매 상품 등록/수정/삭제
 - 판매 상품 목록 페이지네이션
 - 상품 상세 페이지 버튼 비활성화
-
-🎾 공통
-- 반응형 레이아웃
-- 모달
 ```
 
 <br><br>
-
-## 📋 폴더 구조
-
-```
-📦 public
- ┣ 📃 index.html
-📦 src
- ┣ 📂 assets
- ┣ 📂 components
- ┃ ┣ 📂 cart
- ┃ ┣ 📂 common
- ┃ ┣ 📂 main
- ┃ ┣ 📂 modal
- ┃ ┣ 📂 payment
- ┃ ┣ 📂 productDetail
- ┃ ┣ 📂 register
- ┃ ┣ 📂 route
- ┃ ┣ 📂 search
- ┃ ┣ 📂 seller
- ┣ 📂 pages
- ┃ ┣ 📂 cart
- ┃ ┣ 📂 join
- ┃ ┣ 📂 login
- ┃ ┣ 📂 main
- ┃ ┣ 📂 notification
- ┃ ┣ 📂 payment
- ┃ ┣ 📂 productDetails
- ┃ ┣ 📂 search
- ┃ ┣ 📂 seller
- ┣ 📂 styles
- ┣ 📃 App.tsx
- ┗ 📃 index.tsx
-```
