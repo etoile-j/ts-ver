@@ -1,5 +1,3 @@
-import PreIcon from '../../assets/icon-previous.svg';
-import NextIcon from '../../assets/icon-next.svg';
 import styled from 'styled-components';
 
 interface styledCompo {
@@ -25,7 +23,7 @@ const ProductUpload = styled.button`
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 168px;
     height: 54px;
     border-radius: 5px;
@@ -70,7 +68,7 @@ const ListBtn = styled.button.attrs({ type: 'button' })`
     }
 `;
 const OnListBtn = styled(ListBtn)`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     color: #ffffff;
 `;
 
@@ -121,25 +119,22 @@ const PageNum = styled.div`
     text-align: center;
 `;
 
-const Page = styled.button`
+const Page = styled.button.attrs({ type: 'button' })`
     padding: 0 12px;
     font-weight: 400;
     font-size: 16px;
     line-height: 23px;
 `;
 
-const PreviousPage = styled.button`
+const PageButton = styled.button.attrs({ type: 'button' })`
     width: 13px;
     height: 17px;
     padding: 0 20px;
-    background-image: url(${PreIcon});
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     vertical-align: -2px;
-`;
-const NextPage = styled(PreviousPage)`
-    background-image: url(${NextIcon});
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
 
 export {
@@ -157,6 +152,5 @@ export {
     Content,
     PageNum,
     Page,
-    PreviousPage,
-    NextPage,
+    PageButton,
 };

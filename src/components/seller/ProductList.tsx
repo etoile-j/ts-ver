@@ -2,38 +2,33 @@ import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { getProductListOfId } from 'apis/seller';
 import { IProductSeller } from 'GlobalType';
+import { ITEMS_PER_PAGE } from 'constants/index';
 import ProductOnSale from './ProductOnSale';
 
 interface IproductList {
-    count: number | undefined;
-    setCount: React.Dispatch<React.SetStateAction<undefined>>;
+    totalCount: number;
+    setTotalCount: React.Dispatch<React.SetStateAction<number>>;
     currentPage: number;
 }
 
-const ProductList = ({ count, setCount, currentPage }: IproductList) => {
+const ProductList = ({ totalCount, setTotalCount, currentPage }: IproductList) => {
+    const queryClient = useQueryClient();
+    const totalPage = Math.ceil(totalCount! / ITEMS_PER_PAGE);
+
     const getProductList = async (pageNum: number) => {
         const result = await getProductListOfId(pageNum);
-        setCount(result.count);
+        setTotalCount(result.count);
         return result.results;
     };
 
     useEffect(() => {
-        getProductList(currentPage);
-    }, []);
-
-    const queryClient = useQueryClient();
-    const totalPage = Math.ceil(count! / 15);
-
-    useEffect(() => {
         if (currentPage < totalPage!) {
             const nextPage = currentPage + 1;
-            queryClient.prefetchQuery(['product', nextPage], () =>
-                getProductList(nextPage),
-            );
+            queryClient.prefetchQuery(['product', nextPage], () => getProductList(nextPage));
         }
     }, [currentPage, queryClient]);
 
-    const { data } = useQuery(
+    const { data: productList } = useQuery(
         ['product', currentPage],
         () => getProductList(currentPage),
         { keepPreviousData: true },
@@ -41,15 +36,15 @@ const ProductList = ({ count, setCount, currentPage }: IproductList) => {
 
     return (
         <>
-            {data?.map((data: IProductSeller) => {
+            {productList?.map((product: IProductSeller) => {
                 return (
                     <ProductOnSale
-                        key={data.product_id}
-                        product_id={data.product_id}
-                        image={data.image}
-                        product_name={data.product_name}
-                        stock={data.stock}
-                        price={data.price}
+                        key={product.product_id}
+                        product_id={product.product_id}
+                        image={product.image}
+                        product_name={product.product_name}
+                        stock={product.stock}
+                        price={product.price}
                     />
                 );
             })}

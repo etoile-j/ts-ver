@@ -17,22 +17,19 @@ import {
     DeleteBtn,
 } from './ProductOnSaleStyle';
 
-const ProductOnSale = (data: IProductSeller) => {
+const ProductOnSale = (product: IProductSeller) => {
+    const { product_id, image, product_name, stock, price } = product;
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [closeModal, setCloseModal] = useState(false);
 
     const handleModal = () => {
         setCloseModal(!closeModal);
     };
 
-    const queryClient = useQueryClient();
-    const { mutate } = useMutation(() => deleteProduct(`${data.product_id!}`), {
-        onSuccess: () => {
-            queryClient.invalidateQueries('product');
-        },
-        onError: (err) => {
-            console.error(err);
-        },
+    const { mutate } = useMutation(() => deleteProduct(`${product_id!}`), {
+        onSuccess: () => queryClient.invalidateQueries('product'),
+        onError: (err) => console.error(err),
     });
 
     return (
@@ -40,27 +37,23 @@ const ProductOnSale = (data: IProductSeller) => {
             <Product>
                 <Content width="939px">
                     <ProductWrap
-                        onClick={() =>
-                            (window.location.href = `detail/${data.product_id}`)
-                        }
+                        onClick={() => (window.location.href = `detail/${product_id}`)}
                     >
-                        <Img src={data.image} />
+                        <Img src={image} />
                         <TextWrap>
-                            <p>{data.product_name}</p>
-                            <Stock>재고 : {data.stock}개</Stock>
+                            <p>{product_name}</p>
+                            <Stock>재고 : {stock}개</Stock>
                         </TextWrap>
                     </ProductWrap>
                 </Content>
                 <Content width="451px">
-                    <Price>{data.price?.toLocaleString('ko-KR')}원</Price>
+                    <Price>{price?.toLocaleString('ko-KR')}원</Price>
                 </Content>
                 <Content width="205px">
                     <EditBtn
                         onClick={() => {
                             navigate('/seller/edit', {
-                                state: {
-                                    product_id: data.product_id,
-                                },
+                                state: { product_id },
                             });
                         }}
                     >
@@ -71,7 +64,7 @@ const ProductOnSale = (data: IProductSeller) => {
                     <DeleteBtn onClick={handleModal}>삭제</DeleteBtn>
                 </Content>
             </Product>
-            {closeModal ? (
+            {closeModal && (
                 <ModalContainer>
                     <Modal
                         close={handleModal}
@@ -81,7 +74,7 @@ const ProductOnSale = (data: IProductSeller) => {
                         text="상품을 삭제 하시겠습니까?"
                     />
                 </ModalContainer>
-            ) : null}
+            )}
         </>
     );
 };
