@@ -39,7 +39,7 @@ const Price = styled.strong`
     line-height: 23px;
     & > span {
         margin-left: 4px;
-        color: #767676;
+        color: var(--dark-gray);
         font-weight: 400;
         font-size: 14px;
         line-height: 18px;

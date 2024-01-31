@@ -29,7 +29,7 @@ const Button = styled.button.attrs({
     width: 95px;
     padding: 9px;
     margin-bottom: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;

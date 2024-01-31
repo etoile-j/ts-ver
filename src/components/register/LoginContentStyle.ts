@@ -20,7 +20,7 @@ const Input = styled.input`
     font-size: 16px;
     line-height: 20px;
     ::placeholder {
-        color: #767676;
+        color: var(--dark-gray);
         font-weight: 400;
     }
 `;

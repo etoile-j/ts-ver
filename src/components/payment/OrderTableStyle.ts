@@ -24,7 +24,7 @@ const OrderLi = styled.li`
     align-items: center;
     height: 138px;
     margin-top: 7px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Wrap = styled.div`
@@ -42,7 +42,7 @@ const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
 `;
 
 const GrayFont = styled.p`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;

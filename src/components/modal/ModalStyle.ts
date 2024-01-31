@@ -72,7 +72,7 @@ const BtnLeft = styled.button.attrs({
     margin-right: 10px;
     border: 1px solid var(--base-gray);
     border-radius: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

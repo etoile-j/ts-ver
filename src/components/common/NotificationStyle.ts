@@ -29,7 +29,7 @@ const SubTextWrap = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
-    color: #767676;
+    color: var(--dark-gray);
 `;
 
 const BtnWrap = styled.div`
@@ -45,7 +45,7 @@ const BackBtn = styled.button`
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
-    color: #767676;
+    color: var(--dark-gray);
 `;
 const MainBtn = styled(BackBtn)`
     background: var(--point-color);

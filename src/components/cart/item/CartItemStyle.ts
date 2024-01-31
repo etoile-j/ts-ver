@@ -27,7 +27,7 @@ const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
 
 const SellerName = styled.p`
     margin-top: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -50,7 +50,7 @@ const Price = styled.span`
 const DeliveryText = styled.p`
     position: absolute;
     bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;

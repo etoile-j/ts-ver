@@ -49,7 +49,7 @@ const ProductName = styled.p`
 
 const SellerName = styled.p`
     margin-top: 7px;
-    color: #767676;
+    color: var(--dark-gray);
     font-family: 'SpoqaHanSansNeo-Regular';
     font-weight: 400;
     font-size: 16px;

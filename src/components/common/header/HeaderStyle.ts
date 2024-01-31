@@ -61,7 +61,7 @@ const ShoppingCartBtn = styled.button`
     width: 66px;
     height: 46px;
     margin-right: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;

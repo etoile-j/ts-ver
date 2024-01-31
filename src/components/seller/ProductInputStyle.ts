@@ -32,7 +32,7 @@ const Field = styled.div`
 const Label = styled.label`
     display: block;
     margin-bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -183,7 +183,7 @@ const WhiteBtn = styled(ColorBtn)`
     padding: 18px 0;
     margin-right: 14px;
     border: 1px solid var(--base-gray);
-    color: #767676;
+    color: var(--dark-gray);
 `;
 
 export {

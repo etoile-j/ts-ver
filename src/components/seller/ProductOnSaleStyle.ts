@@ -45,7 +45,7 @@ const TextWrap = styled.div`
 
 const Stock = styled.p`
     margin-top: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -78,10 +78,10 @@ const EditBtn = styled.button.attrs({
 const DeleteBtn = styled(EditBtn)`
     background-color: var(--white);
     border: 1px solid var(--base-gray);
-    color: #767676;
+    color: var(--dark-gray);
     :hover {
         background-color: var(--white);
-        border: 1px solid #767676;
+        border: 1px solid var(--dark-gray);
         color: #000000;
     }
 `;

@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     :root {
         --point-color: #6997f7;
         --base-gray: #c4c4c4;
+        --dark-gray: #767676
         --white: #ffffff;
     }
 

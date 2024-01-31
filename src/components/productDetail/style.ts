@@ -64,7 +64,7 @@ const ProductName = styled.p`
 `;
 
 const SellerName = styled.p`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
@@ -88,7 +88,7 @@ const Won = styled.span`
 
 const DeliveryText = styled.p`
     margin-bottom: 20px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -123,7 +123,7 @@ const TotalTitle = styled.span`
 `;
 
 const TotalAmount = styled.span`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;

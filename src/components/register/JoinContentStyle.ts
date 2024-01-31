@@ -25,7 +25,7 @@ const Div = styled.div`
 const Label = styled.label`
     display: block;
     margin-bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -87,7 +87,7 @@ const Fieldset = styled.fieldset`
 
 const At = styled.span`
     margin: 0 11px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 700;
     font-size: 16px;
     line-height: 20px;
@@ -104,7 +104,7 @@ const PhoneInput = styled(Input)`
 
 const Div2 = styled.div`
     margin-top: 40px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
