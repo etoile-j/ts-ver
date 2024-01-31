@@ -87,7 +87,7 @@ const Table = styled.div`
 
 const Container = styled.div`
     overflow: scroll;
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     height: 823px;
 `;
 

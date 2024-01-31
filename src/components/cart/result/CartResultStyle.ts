@@ -4,7 +4,7 @@ import PlusIcon from '../../../assets/icon-plus-line.svg';
 
 const Container = styled.ul`
     display: flex;
-    background: #f2f2f2;
+    background: var(--light-gray);
     align-items: center;
     height: 150px;
     margin: 80px 0 40px;

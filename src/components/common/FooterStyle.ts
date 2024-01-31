@@ -2,7 +2,7 @@ import GithubIcon from '../../assets/githubIcon.svg';
 import styled from 'styled-components';
 
 const FooterEl = styled.footer`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     bottom: 0;
     left: 0;
     width: 100%;
@@ -12,7 +12,7 @@ const FooterEl = styled.footer`
 `;
 
 const Div = styled.div`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     max-width: 1280px;
     min-width: 750px;
     margin: 0 auto;

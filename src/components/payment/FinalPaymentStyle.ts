@@ -64,7 +64,7 @@ const PaymentPrice = styled(Price)`
 `;
 
 const GrayWrap = styled.div`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     padding: 30px 30px 34px;
     border-radius: 10px;
     text-align: center;

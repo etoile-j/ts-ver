@@ -32,7 +32,7 @@ const Ul = styled.ul`
 `;
 
 const SellerTap = styled.li`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     width: 100%;
     padding: 19px 0 37px;
     border: 1px solid var(--base-gray);
@@ -77,7 +77,7 @@ const BuyerTap = styled(SellerTap)`
     }
 `;
 const BuyerTap2 = styled(BuyerTap)`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     z-index: 2;
 `;
 

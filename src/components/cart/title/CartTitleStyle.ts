@@ -6,7 +6,7 @@ interface styledCompo {
 
 const TitleLi = styled.li`
     display: flex;
-    background: #f2f2f2;
+    background: var(--light-gray);
     padding: 19px 0 18px;
     margin-bottom: 35px;
     border-radius: 10px;
