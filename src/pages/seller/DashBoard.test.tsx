@@ -1,32 +1,10 @@
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
-import { setupServer } from 'msw/lib/node';
-import { IProductSeller } from 'GlobalType';
-import { PRODUCT_MOCK_2, PRODUCT_MOCK_17 } from 'mocks/data';
+import { PRODUCT_MOCK_17 } from 'mocks/data';
 import { dashBoardRender } from 'utils/test';
-
-// jest.mock('react-router-dom', () => {
-//     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-//     return {
-//         ...jest.requireActual('react-router-dom'),
-//         useParams: () => ({ page: '1' }),
-//     };
-// });
-
-// const options = queryClient.getDefaultOptions();
-// options.queries = { ...options.queries, retry: false };
-
-const server = setupServer(
-    rest.get<IProductSeller>('https://openmarket.weniv.co.kr/seller/', (req, res, ctx) => {
-        // console.log('MSW intercepted the request:', req);
-        const page = req.url.searchParams.get('page');
-
-        if (page === '1') {
-            return res(ctx.status(200), ctx.json(PRODUCT_MOCK_2));
-        }
-    }),
-);
+import { BASE_URL } from 'apis/axiosInstance';
+import server from 'mocks/server';
 
 beforeAll(() => server.listen());
 
@@ -76,12 +54,10 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 });
 
-describe('dashboard page: 상품이 17개인 경우', () => {
+describe('DashBoard page: 상품이 17개인 경우', () => {
     beforeEach(() => {
         server.use(
-            rest.get('https://openmarket.weniv.co.kr/seller/', (_, res, ctx) =>
-                res(ctx.json(PRODUCT_MOCK_17)),
-            ),
+            rest.get(BASE_URL + '/seller/', (_, res, ctx) => res(ctx.json(PRODUCT_MOCK_17))),
         );
     });
 
