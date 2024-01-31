@@ -44,12 +44,12 @@ const SellerTap = styled.li`
 `;
 const SellerTap2 = styled(SellerTap)`
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     z-index: 3;
     ::after {
         content: '';
         position: absolute;
-        background-color: #ffffff;
+        background-color: var(--white);
         top: 59px;
         left: -5px;
         width: 7px;
@@ -59,7 +59,7 @@ const SellerTap2 = styled(SellerTap)`
 
 const BuyerTap = styled(SellerTap)`
     z-index: 3;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 550px;
     position: relative;
     padding: 0;
@@ -69,7 +69,7 @@ const BuyerTap = styled(SellerTap)`
     ::after {
         content: '';
         position: absolute;
-        background-color: #ffffff;
+        background-color: var(--white);
         top: 59px;
         right: -20px;
         width: 90px;

@@ -57,7 +57,7 @@ const PostCodeBtn = styled.button`
     padding: 10px 0;
     margin-left: 10px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

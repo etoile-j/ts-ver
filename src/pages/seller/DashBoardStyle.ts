@@ -27,7 +27,7 @@ const ProductUpload = styled.button`
     width: 168px;
     height: 54px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;
@@ -69,7 +69,7 @@ const ListBtn = styled.button.attrs({ type: 'button' })`
 `;
 const OnListBtn = styled(ListBtn)`
     background-color: var(--point-color);
-    color: #ffffff;
+    color: var(--white);
 `;
 
 const TableWrap = styled.div`
@@ -94,7 +94,7 @@ const Container = styled.div`
 const Title = styled.div`
     display: flex;
     align-items: center;
-    background-color: #ffffff;
+    background-color: var(--white);
     height: 60px;
     padding: 0 10px;
     font-weight: 400;

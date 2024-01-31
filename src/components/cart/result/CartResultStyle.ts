@@ -43,7 +43,7 @@ const Minus = styled.div`
     position: absolute;
     right: -15px;
     top: 15px;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 30px;
     height: 30px;
     background-image: url(${MinusIcon});
@@ -87,7 +87,7 @@ const OrderBtn = styled.button`
     width: 130px;
     padding: 10px 0;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

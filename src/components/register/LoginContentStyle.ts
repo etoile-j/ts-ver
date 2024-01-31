@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Form = styled.form`
     width: 100%;
     z-index: 2;
-    background-color: #ffffff;
+    background-color: var(--white);
     position: relative;
     top: -20px;
     padding: 35px;
@@ -31,7 +31,7 @@ const SubmitButton = styled.button`
     padding: 19px;
     margin-top: 26px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;

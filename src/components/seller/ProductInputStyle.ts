@@ -111,7 +111,7 @@ const Unit = styled.span`
     height: 54px;
     padding: 16px 6px 17px 6px;
     border-radius: 0 5px 5px 0;
-    color: #ffffff;
+    color: var(--white);
     text-align: center;
     font-weight: 400;
     font-size: 16px;
@@ -169,7 +169,7 @@ const ColorBtn = styled.button`
     background-color: var(--point-color);
     width: 200px;
     padding: 19px 0;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
@@ -179,7 +179,7 @@ const ColorBtn = styled.button`
     }
 `;
 const WhiteBtn = styled(ColorBtn)`
-    background-color: #ffffff;
+    background-color: var(--white);
     padding: 18px 0;
     margin-right: 14px;
     border: 1px solid var(--base-gray);

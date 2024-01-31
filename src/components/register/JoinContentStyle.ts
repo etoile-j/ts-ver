@@ -9,7 +9,7 @@ interface styledCompo {
 const Form = styled.form`
     width: 100%;
     z-index: 2;
-    background-color: #ffffff;
+    background-color: var(--white);
     position: relative;
     top: -20px;
     padding: 35px;
@@ -47,7 +47,7 @@ const VaildCheckBtn = styled.button`
     padding: 17px 0px;
     margin-left: 12px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
@@ -121,7 +121,7 @@ const JoinBtn = styled.button`
     padding: 19px 0;
     margin-top: 34px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;

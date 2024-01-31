@@ -7,7 +7,7 @@ const HeaderEl = styled.header`
     display: block;
     position: fixed;
     top: 0;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 100%;
     height: 90px;
     border-bottom: 1px solid var(--base-gray);

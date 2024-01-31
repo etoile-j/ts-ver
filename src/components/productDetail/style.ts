@@ -163,7 +163,7 @@ const DirectBuyBtn = styled.button.attrs({
         disabled ? 'var(--base-gray)' : 'var(--point-color)'};
     width: 100%;
     padding: 19px 0;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;

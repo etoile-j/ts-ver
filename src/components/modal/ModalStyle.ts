@@ -32,7 +32,7 @@ const Container = styled.div`
 
 const Wrap = styled.div`
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 360px;
     height: 200px;
     padding: 45px 0 40px;
@@ -83,7 +83,7 @@ const BtnRight = styled(BtnLeft)`
     padding: 10px 0;
     margin-right: 0px;
     border: none;
-    color: #ffffff;
+    color: var(--white);
 `;
 
 export { Div, Container, Wrap, CloseBtn, Content, BtnLeft, BtnRight };

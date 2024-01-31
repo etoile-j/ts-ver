@@ -37,7 +37,7 @@ const BtnWrap = styled.div`
 `;
 
 const BackBtn = styled.button`
-    background: #ffffff;
+    background: var(--white);
     width: 200px;
     padding: 18px 0;
     border: 1px solid var(--base-gray);
@@ -50,7 +50,7 @@ const BackBtn = styled.button`
 const MainBtn = styled(BackBtn)`
     background: var(--point-color);
     margin-right: 14px;
-    color: #ffffff;
+    color: var(--white);
 `;
 
 export { Container, Img, MainText, ErrorText, SubTextWrap, BtnWrap, BackBtn, MainBtn };

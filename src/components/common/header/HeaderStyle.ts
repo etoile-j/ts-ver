@@ -7,11 +7,11 @@ const HeaderEl = styled.header`
     display: block;
     position: fixed;
     top: 0;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 100%;
     height: 90px;
     padding: 0 15px 0;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Nav = styled.nav`
@@ -83,7 +83,7 @@ const SellerBtn = styled.button`
     height: 54px;
     margin-right: 20px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;

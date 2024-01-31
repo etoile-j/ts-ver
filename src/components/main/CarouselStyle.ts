@@ -31,7 +31,7 @@ const Banner3 = styled(Banner2)`
 `;
 
 const MainText = styled.p`
-    color: #ffffff;
+    color: var(--white);
     font-family: 'SpoqaHanSansNeo-Medium', sans-serif;
     font-size: 50px;
     font-weight: 500;
@@ -39,7 +39,7 @@ const MainText = styled.p`
 
 const SubText = styled.p`
     padding-top: 25px;
-    color: #ffffff;
+    color: var(--white);
     font-size: 20px;
     font-weight: 600;
 `;

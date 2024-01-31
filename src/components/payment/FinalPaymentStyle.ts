@@ -76,7 +76,7 @@ const GrayBtn = styled.button`
     padding: 19px 0;
     margin-top: 30px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
