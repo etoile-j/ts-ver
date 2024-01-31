@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
 export const GlobalStyle = createGlobalStyle`
+    :root {
+        --point-color: #6997f7;
+    }
+
     @font-face {
         font-family: 'SpoqaHanSansNeo-Medium';
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Medium.woff')

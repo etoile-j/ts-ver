@@ -13,3 +13,5 @@ export const REGEX = {
     ONLY_NUMBER: /^[0-9]+$/,
     ONLY_LETTER: /^[ㄱ-ㅎ가-힣a-zA-Z]+$/,
 } as const;
+
+export const ITEMS_PER_PAGE = 15 as const;
