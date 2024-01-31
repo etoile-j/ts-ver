@@ -77,7 +77,7 @@ const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     padding: 16px 25px 16px 15px;
     margin: 0;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px 0 0 5px;
     font-weight: 400;
     font-size: 16px;
@@ -87,7 +87,7 @@ const Input = styled.input`
 const NameInputWrap = styled.div`
     position: relative;
     width: 100%;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
 `;
 const NameInput = styled(Input)`
@@ -101,11 +101,11 @@ const NameLength = styled.span`
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: #c4c4c4;
+    color: var(--base-gray);
 `;
 
 const Unit = styled.span`
-    background-color: #c4c4c4;
+    background-color: var(--base-gray);
     display: inline-block;
     width: 54px;
     height: 54px;
@@ -182,7 +182,7 @@ const WhiteBtn = styled(ColorBtn)`
     background-color: #ffffff;
     padding: 18px 0;
     margin-right: 14px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     color: #767676;
 `;
 

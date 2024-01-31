@@ -19,7 +19,7 @@ const ProductImg = styled.div`
     right: 0;
     width: 100%;
     margin-bottom: 13px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 10px;
 `;
 

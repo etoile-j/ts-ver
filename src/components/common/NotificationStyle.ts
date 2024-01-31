@@ -40,7 +40,7 @@ const BackBtn = styled.button`
     background: #ffffff;
     width: 200px;
     padding: 18px 0;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
     font-weight: 700;
     font-size: 18px;

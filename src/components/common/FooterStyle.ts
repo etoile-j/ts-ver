@@ -21,7 +21,7 @@ const Div = styled.div`
 const Ul = styled.ul`
     padding: 54px 0 50px 0;
     margin: 0 auto;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Li = styled.li`

@@ -55,7 +55,7 @@ const PaymentPrice = styled(Price)`
         content: '';
         display: inline-block;
         position: absolute;
-        background: #c4c4c4;
+        background: var(--base-gray);
         width: 100%;
         height: 1px;
         top: -29px;

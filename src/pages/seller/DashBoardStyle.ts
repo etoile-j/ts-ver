@@ -81,7 +81,7 @@ const Table = styled.div`
     overflow: hidden;
     max-width: 1440px;
     height: 884px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
 `;
 
@@ -100,7 +100,7 @@ const Title = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
     border-radius: 5px 5px 0 0;
 `;
 

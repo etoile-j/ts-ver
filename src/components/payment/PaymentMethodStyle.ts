@@ -4,8 +4,8 @@ const Wrap = styled.div`
     display: flex;
     flex-wrap: wrap;
     padding: 15px 0;
-    border-top: 2px solid #c4c4c4;
-    border-bottom: 2px solid #c4c4c4;
+    border-top: 2px solid var(--base-gray);
+    border-bottom: 2px solid var(--base-gray);
     line-height: 30px;
 `;
 

@@ -13,7 +13,7 @@ const Form = styled.form`
     position: relative;
     top: -20px;
     padding: 35px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 10px;
 `;
 
@@ -34,7 +34,7 @@ const Label = styled.label`
 const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     padding: 16px 15px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
     font-weight: 400;
     font-size: 16px;

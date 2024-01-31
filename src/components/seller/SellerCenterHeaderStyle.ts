@@ -10,7 +10,7 @@ const HeaderEl = styled.header`
     background-color: #ffffff;
     width: 100%;
     height: 90px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Nav = styled.nav`

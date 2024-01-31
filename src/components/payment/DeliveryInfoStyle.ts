@@ -6,8 +6,8 @@ interface styledCompo {
 
 const Legend = styled.div`
     padding: 40px 0 8px;
-    border-top: 2px solid #c4c4c4;
-    border-bottom: 2px solid #c4c4c4;
+    border-top: 2px solid var(--base-gray);
+    border-bottom: 2px solid var(--base-gray);
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;
@@ -15,7 +15,7 @@ const Legend = styled.div`
 
 const Line = styled.div`
     padding: 8px 0;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Label = styled.label`
@@ -33,7 +33,7 @@ const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     height: 40px;
     padding-left: 15px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     font-size: 17px;
 `;
 const PhoneInput = styled(Input)`

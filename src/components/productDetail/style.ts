@@ -100,8 +100,8 @@ const DeliveryText = styled.p`
 const CountContainer = styled.div`
     height: 110px;
     padding-top: 27px;
-    border-top: 2px solid #c4c4c4;
-    border-bottom: 2px solid #c4c4c4;
+    border-top: 2px solid var(--base-gray);
+    border-bottom: 2px solid var(--base-gray);
 `;
 
 const TotalWrap = styled.div`
@@ -159,7 +159,8 @@ const BtnContainer = styled.div`
 const DirectBuyBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: ${({ disabled }) => (disabled ? '#c4c4c4' : 'var(--point-color)')};
+    background-color: ${({ disabled }) =>
+        disabled ? 'var(--base-gray)' : 'var(--point-color)'};
     width: 100%;
     padding: 19px 0;
     color: #ffffff;

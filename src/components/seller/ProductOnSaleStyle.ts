@@ -13,7 +13,7 @@ const Product = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
     &:last-child {
         border-radius: 0 0 5px 5px;
     }
@@ -77,7 +77,7 @@ const EditBtn = styled.button.attrs({
 `;
 const DeleteBtn = styled(EditBtn)`
     background-color: #ffffff;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     color: #767676;
     :hover {
         background-color: #ffffff;

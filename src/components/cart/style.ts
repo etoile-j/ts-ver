@@ -5,7 +5,7 @@ const Container = styled.li`
     align-items: center;
     height: 200px;
     margin-bottom: 10px;
-    border: 2px solid #c4c4c4;
+    border: 2px solid var(--base-gray);
     border-radius: 10px;
 `;
 

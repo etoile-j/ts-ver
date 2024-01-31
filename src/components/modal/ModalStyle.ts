@@ -37,7 +37,7 @@ const Wrap = styled.div`
     height: 200px;
     padding: 45px 0 40px;
     text-align: center;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 8px;
     animation: ${fadeIn} 0.15s ease-in-out;
     box-shadow: rgb(0 0 0 / 20%) 0px 1px 5px -1px, rgb(0 0 0 / 10%) 0px -1px 2px -1px;
@@ -70,7 +70,7 @@ const BtnLeft = styled.button.attrs({
     width: 100px;
     padding: 9px 0;
     margin-right: 10px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
     color: #767676;
     font-weight: 500;

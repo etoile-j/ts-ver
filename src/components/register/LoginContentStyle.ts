@@ -7,7 +7,7 @@ const Form = styled.form`
     position: relative;
     top: -20px;
     padding: 35px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 10px;
 `;
 
@@ -15,7 +15,7 @@ const Input = styled.input`
     width: 100%;
     padding: 19px 0;
     margin-bottom: 6px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

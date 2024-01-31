@@ -35,7 +35,7 @@ const SellerTap = styled.li`
     background-color: #f2f2f2;
     width: 100%;
     padding: 19px 0 37px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-bottom: 0;
     border-radius: 10px 10px 0 0;
     line-height: 22px;
