@@ -42,7 +42,7 @@ const Input = styled.input`
 `;
 
 const VaildCheckBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 120px;
     padding: 17px 0px;
     margin-left: 12px;

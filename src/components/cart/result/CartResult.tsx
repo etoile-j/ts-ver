@@ -95,7 +95,7 @@ const CartResult = ({
             <OrderBtnBig
                 onClick={handleSubmit}
                 style={{
-                    backgroundColor: checkedItems.length ? '#6997f7' : '#c4c4c4',
+                    backgroundColor: checkedItems.length ? 'var(--point-color)' : '#c4c4c4',
                     cursor: checkedItems.length ? 'pointer' : 'default',
                 }}
                 disabled={!checkedItems.length}

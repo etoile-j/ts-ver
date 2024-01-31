@@ -166,7 +166,7 @@ const BtnContainer = styled.div`
 `;
 
 const ColorBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 200px;
     padding: 19px 0;
     color: #ffffff;

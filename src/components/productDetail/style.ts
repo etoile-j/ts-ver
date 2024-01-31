@@ -129,13 +129,13 @@ const TotalAmount = styled.span`
     line-height: 23px;
 `;
 const Number = styled.strong`
-    color: #6997f7;
+    color: var(--point-color);
     font-weight: 700;
 `;
 
 const TotalPrice = styled.strong`
     margin-left: 28px;
-    color: #6997f7;
+    color: var(--point-color);
     font-weight: 700;
     font-size: 36px;
     line-height: 45px;
@@ -159,7 +159,7 @@ const BtnContainer = styled.div`
 const DirectBuyBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: ${({ disabled }) => (disabled ? '#c4c4c4' : '#6997f7')};
+    background-color: ${({ disabled }) => (disabled ? '#c4c4c4' : 'var(--point-color)')};
     width: 100%;
     padding: 19px 0;
     color: #ffffff;

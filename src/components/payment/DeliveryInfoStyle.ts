@@ -52,7 +52,7 @@ const Hyphen = styled.span`
 `;
 
 const PostCodeBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 154px;
     padding: 10px 0;
     margin-left: 10px;

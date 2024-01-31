@@ -6,7 +6,7 @@ interface styledCompo {
 
 const Container = styled.div`
     width: 480px;
-    border: 2px solid #6997f7;
+    border: 2px solid var(--point-color);
     border-radius: 10px;
     @media screen and (max-width: 820px) {
         width: 425px;
@@ -82,14 +82,4 @@ const GrayBtn = styled.button`
     line-height: 30px;
 `;
 
-export {
-    Container,
-    WhiteWrap,
-    Div,
-    PaymentDiv,
-    H4,
-    Price,
-    PaymentPrice,
-    GrayWrap,
-    GrayBtn,
-};
+export { Container, WhiteWrap, Div, PaymentDiv, H4, Price, PaymentPrice, GrayWrap, GrayBtn };

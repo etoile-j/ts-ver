@@ -78,7 +78,7 @@ const SellerBtn = styled.button`
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 168px;
     height: 54px;
     margin-right: 20px;

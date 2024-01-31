@@ -25,7 +25,7 @@ const Banner2 = styled(Banner)`
 const Banner3 = styled(Banner2)`
     padding-top: 120px;
     border-right: 60px solid #000000;
-    background-color: #6997f7;
+    background-color: var(--point-color);
     background-image: none;
     cursor: default;
 `;

@@ -48,18 +48,9 @@ const BackBtn = styled.button`
     color: #767676;
 `;
 const MainBtn = styled(BackBtn)`
-    background: #6997f7;
+    background: var(--point-color);
     margin-right: 14px;
     color: #ffffff;
 `;
 
-export {
-    Container,
-    Img,
-    MainText,
-    ErrorText,
-    SubTextWrap,
-    BtnWrap,
-    BackBtn,
-    MainBtn,
-};
+export { Container, Img, MainText, ErrorText, SubTextWrap, BtnWrap, BackBtn, MainBtn };

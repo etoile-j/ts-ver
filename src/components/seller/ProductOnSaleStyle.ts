@@ -60,7 +60,7 @@ const Price = styled.strong`
 const EditBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 80px;
     height: 40px;
     color: #ffffff;
@@ -86,14 +86,4 @@ const DeleteBtn = styled(EditBtn)`
     }
 `;
 
-export {
-    Product,
-    Content,
-    ProductWrap,
-    Img,
-    TextWrap,
-    Stock,
-    Price,
-    EditBtn,
-    DeleteBtn,
-};
+export { Product, Content, ProductWrap, Img, TextWrap, Stock, Price, EditBtn, DeleteBtn };

@@ -83,7 +83,7 @@ const Won = styled.span`
 `;
 
 const OrderBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 130px;
     padding: 10px 0;
     border-radius: 5px;
