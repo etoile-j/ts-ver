@@ -82,7 +82,7 @@ const DeleteBtn = styled(EditBtn)`
     :hover {
         background-color: var(--white);
         border: 1px solid var(--dark-gray);
-        color: #000000;
+        color: var(--black);
     }
 `;
 
