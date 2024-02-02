@@ -5,7 +5,7 @@ interface styledCompo {
     width?: string;
     font?: string;
     color?: string;
-    border?: string;
+    borderColor?: string;
 }
 
 const Wrap = styled.div`
@@ -131,7 +131,8 @@ const RadioLabel = styled.label`
     width: 220px;
     padding: 16px 45px 16px 25px;
     margin-right: 10px;
-    border: ${(props: styledCompo) => props.border};
+    border: 1px solid;
+    border-color: ${({ borderColor }) => borderColor};
     border-radius: 5px;
     color: ${(props: styledCompo) => props.font};
     font-weight: 500;

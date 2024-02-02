@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FieldValues, FieldError, DeepMap } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
 import { IProductSeller } from 'GlobalType';
 import { REGEX } from 'constants/index';
@@ -26,81 +26,68 @@ import {
     WhiteBtn,
 } from './ProductInputStyle';
 
-const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
+type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
+    TFieldValues,
+    FieldError
+>;
+
+const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller }) => {
     const [preImg, setPreImg] = useState<string>();
     const [img, setImg] = useState<{}>();
-    const [name, setName] = useState<string>();
     const [parcel, setParcel] = useState(true);
-    const [delivery, setDelivery] = useState(false);
-
-    const uploadImg = (e: React.ChangeEvent) => {
-        const target = e.target as HTMLInputElement;
-        const file = target.files![0];
-        setPreImg(URL.createObjectURL(file) ?? '');
-        const formData = new FormData();
-        formData.append('image', file);
-        setImg(file);
-    };
 
     const {
         register,
         handleSubmit,
         setValue,
+        watch,
         formState: { errors },
     } = useForm<IProductSeller>({ mode: 'onChange' });
-
-    const onSubmit = (data: IProductSeller) => {
-        if (detail === undefined) {
-            handlePostProduct(data);
-        } else {
-            handleEditProduct(data);
-        }
-    };
+    const productName = watch('product_name');
 
     useEffect(() => {
-        if (detail !== undefined) {
-            setValue('price', detail.price);
-            setValue('stock', detail.stock);
-            setValue('shipping_fee', detail.shipping_fee);
+        if (existingDetails) {
+            setValue('product_name', existingDetails.product_name);
+            setValue('price', existingDetails.price);
+            setValue('stock', existingDetails.stock);
+            setValue('shipping_fee', existingDetails.shipping_fee);
+            setPreImg(existingDetails.image);
         }
-        setName(detail?.product_name);
-        setPreImg(detail?.image);
-        if (detail?.shipping_method === 'DELIVERY') {
+        if (existingDetails?.shipping_method === 'DELIVERY') {
             setParcel(false);
-            setDelivery(true);
         }
-    }, [detail]);
+    }, [existingDetails]);
 
-    const reqData = {
-        product_name: name,
-        image: img,
-        product_info: '상품 정보',
+    const onSubmit = async (data: IProductSeller) => {
+        const requestData = { image: img, product_info: data.product_name, ...data };
+
+        if (existingDetails) {
+            await patchProductInfo(existingDetails?.product_id!, requestData);
+            window.location.replace(`/detail/${existingDetails?.product_id}`);
+        } else {
+            const productId = await postProduct(requestData);
+            window.location.replace(`/detail/${productId}`);
+        }
+
+        removePreImg();
     };
+
+    const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files![0];
+        setPreImg(URL.createObjectURL(file) ?? '');
+
+        const formData = new FormData();
+        formData.append('image', file);
+        setImg(file);
+    };
+
     const removePreImg = () => {
         URL.revokeObjectURL(preImg!);
         setPreImg('');
     };
 
-    const handlePostProduct = async (data: IProductSeller) => {
-        const requestData = {
-            ...reqData,
-            ...data,
-        };
-        const productId = await postProduct(requestData);
-        window.location.replace(`/detail/${productId}`);
-        removePreImg();
-    };
-
-    const handleEditProduct = async (data: IProductSeller) => {
-        const requestData = {
-            ...reqData,
-            ...data,
-        };
-        if (typeof detail?.product_id === 'number') {
-            await patchProductInfo(detail.product_id, requestData);
-            window.location.replace(`/detail/${detail.product_id}`);
-            removePreImg();
-        }
+    const showCautionText = (error: FieldErrors<FieldValues>) => {
+        return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
     };
 
     return (
@@ -119,23 +106,21 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                                 id="product_name"
                                 type="text"
                                 width="95%"
-                                maxLength={20}
-                                value={name || ''}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setName(e.target.value);
-                                }}
+                                {...register('product_name', {
+                                    required: '필수 정보입니다.',
+                                    maxLength: {
+                                        value: 20,
+                                        message: '최대 20자까지 입력 가능합니다.',
+                                    },
+                                })}
                             />
-                            <NameLength>{name?.length}/20</NameLength>
+                            <NameLength>{productName?.length ?? 0}/20</NameLength>
                         </NameInputWrap>
                     </Field>
                     <Field>
                         <LabelWrap>
                             <Label htmlFor="price">판매가</Label>
-                            {errors.price && (
-                                <CautionText aria-live="assertive">
-                                    {errors.price.message}
-                                </CautionText>
-                            )}
+                            {showCautionText(errors.price!)}
                         </LabelWrap>
                         <Input
                             id="price"
@@ -143,7 +128,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             inputMode="numeric"
                             width="166px"
                             {...register('price', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
@@ -156,41 +141,31 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                         <Label>배송 방법</Label>
                         <RadioLabel
                             htmlFor="parcel"
-                            onClick={() => {
-                                setParcel(true);
-                                setDelivery(false);
-                            }}
-                            color={parcel ? '#6997f7' : '#ffffff'}
-                            font={parcel ? '#ffffff' : '#767676'}
-                            border={parcel ? '1px solid #6997f7' : '1px solid #c4c4c4'}
+                            onClick={() => setParcel(true)}
+                            color={parcel ? 'var(--point-color)' : 'var(--white)'}
+                            font={parcel ? 'var(--white)' : 'var(--dark-gray)'}
+                            border-color={parcel ? 'var(--point-color)' : 'var(--base-gray)'}
                         >
                             <RadioInput
                                 id="parcel"
                                 value="PARCEL"
                                 checked={parcel}
-                                {...register('shipping_method', {
-                                    required: true,
-                                })}
+                                {...register('shipping_method', { required: true })}
                             />
                             택배, 소포, 등기
                         </RadioLabel>
                         <RadioLabel
                             htmlFor="delivery"
-                            onClick={() => {
-                                setDelivery(true);
-                                setParcel(false);
-                            }}
-                            color={delivery ? '#6997f7' : '#ffffff'}
-                            font={delivery ? '#ffffff' : '#767676'}
-                            border={delivery ? '1px solid #6997f7' : '1px solid #c4c4c4'}
+                            onClick={() => setParcel(false)}
+                            color={!parcel ? 'var(--point-color)' : 'var(--white)'}
+                            font={!parcel ? 'var(--white)' : 'var(--dark-gray)'}
+                            border-color={parcel ? 'var(--point-color)' : 'var(--base-gray)'}
                         >
                             <RadioInput
                                 id="delivery"
                                 value="DELIVERY"
-                                checked={delivery}
-                                {...register('shipping_method', {
-                                    required: true,
-                                })}
+                                checked={!parcel}
+                                {...register('shipping_method', { required: true })}
                             />
                             직접 배송(화물)
                         </RadioLabel>
@@ -198,11 +173,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                     <Field>
                         <LabelWrap>
                             <Label htmlFor="shipping_fee">기본 배송비</Label>
-                            {errors.shipping_fee && (
-                                <CautionText aria-live="assertive">
-                                    {errors.shipping_fee.message}
-                                </CautionText>
-                            )}
+                            {showCautionText(errors.shipping_fee!)}
                         </LabelWrap>
                         <Input
                             id="shipping_fee"
@@ -210,7 +181,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             inputMode="numeric"
                             width="166px"
                             {...register('shipping_fee', {
-                                required: '필수정보 입니다.',
+                                required: '필수 정보입니다.',
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
@@ -222,11 +193,7 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                     <div>
                         <LabelWrap>
                             <Label htmlFor="stock">재고</Label>
-                            {errors.stock && (
-                                <CautionText aria-live="assertive">
-                                    {errors.stock.message}
-                                </CautionText>
-                            )}
+                            {showCautionText(errors.stock!)}
                         </LabelWrap>
                         <Input
                             id="stock"
@@ -234,11 +201,8 @@ const ProductInput = ({ detail }: { detail?: IProductSeller }) => {
                             inputMode="numeric"
                             width="166px"
                             {...register('stock', {
-                                required: '필수정보 입니다.',
-                                min: {
-                                    value: 1,
-                                    message: '재고는 1개 이상 입력해야 합니다.',
-                                },
+                                required: '필수 정보입니다.',
+                                min: { value: 1, message: '재고는 1개 이상 입력해야 합니다.' },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
                                     message: '숫자만 입력 가능합니다.',
