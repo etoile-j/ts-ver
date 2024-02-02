@@ -100,7 +100,9 @@ const DashBoard = () => {
                                         onClick={() => setCurrentPage(page)}
                                         style={{
                                             color:
-                                                currentPage === page ? '#000000' : '#c4c4c4',
+                                                currentPage === page
+                                                    ? 'var(--black)'
+                                                    : 'var(--base-gray)',
                                         }}
                                     >
                                         {page}

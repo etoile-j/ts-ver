@@ -32,10 +32,10 @@ const Ul = styled.ul`
 `;
 
 const SellerTap = styled.li`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     width: 100%;
     padding: 19px 0 37px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-bottom: 0;
     border-radius: 10px 10px 0 0;
     line-height: 22px;
@@ -44,12 +44,12 @@ const SellerTap = styled.li`
 `;
 const SellerTap2 = styled(SellerTap)`
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     z-index: 3;
     ::after {
         content: '';
         position: absolute;
-        background-color: #ffffff;
+        background-color: var(--white);
         top: 59px;
         left: -5px;
         width: 7px;
@@ -59,7 +59,7 @@ const SellerTap2 = styled(SellerTap)`
 
 const BuyerTap = styled(SellerTap)`
     z-index: 3;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 550px;
     position: relative;
     padding: 0;
@@ -69,7 +69,7 @@ const BuyerTap = styled(SellerTap)`
     ::after {
         content: '';
         position: absolute;
-        background-color: #ffffff;
+        background-color: var(--white);
         top: 59px;
         right: -20px;
         width: 90px;
@@ -77,7 +77,7 @@ const BuyerTap = styled(SellerTap)`
     }
 `;
 const BuyerTap2 = styled(BuyerTap)`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     z-index: 2;
 `;
 

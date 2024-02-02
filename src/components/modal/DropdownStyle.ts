@@ -13,7 +13,7 @@ const Container = styled.div`
     position: relative;
     z-index: 10;
     right: 40px;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 113px;
     height: 104px;
     padding: 10px;
@@ -29,15 +29,15 @@ const Button = styled.button.attrs({
     width: 95px;
     padding: 9px;
     margin-bottom: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--white);
     border-radius: 5px;
     :hover {
         background-color: #7fb5ff;
-        color: #ffffff;
+        color: var(--white);
     }
 `;
 

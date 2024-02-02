@@ -4,6 +4,11 @@ import reset from 'styled-reset';
 export const GlobalStyle = createGlobalStyle`
     :root {
         --point-color: #6997f7;
+        --base-gray: #c4c4c4;
+        --dark-gray: #767676;
+        --light-gray: #f2f2f2;
+        --white: #ffffff;
+        --black: #000000;
     }
 
     @font-face {

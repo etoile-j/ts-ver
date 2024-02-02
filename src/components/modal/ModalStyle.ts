@@ -32,16 +32,15 @@ const Container = styled.div`
 
 const Wrap = styled.div`
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 360px;
     height: 200px;
     padding: 45px 0 40px;
     text-align: center;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 8px;
     animation: ${fadeIn} 0.15s ease-in-out;
-    box-shadow: rgb(0 0 0 / 20%) 0px 1px 5px -1px,
-        rgb(0 0 0 / 10%) 0px -1px 2px -1px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 1px 5px -1px, rgb(0 0 0 / 10%) 0px -1px 2px -1px;
 `;
 
 const CloseBtn = styled.button`
@@ -71,20 +70,20 @@ const BtnLeft = styled.button.attrs({
     width: 100px;
     padding: 9px 0;
     margin-right: 10px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
     box-sizing: border-box;
 `;
 const BtnRight = styled(BtnLeft)`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     padding: 10px 0;
     margin-right: 0px;
     border: none;
-    color: #ffffff;
+    color: var(--white);
 `;
 
 export { Div, Container, Wrap, CloseBtn, Content, BtnLeft, BtnRight };

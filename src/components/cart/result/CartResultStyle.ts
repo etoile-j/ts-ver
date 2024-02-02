@@ -4,7 +4,7 @@ import PlusIcon from '../../../assets/icon-plus-line.svg';
 
 const Container = styled.ul`
     display: flex;
-    background: #f2f2f2;
+    background: var(--light-gray);
     align-items: center;
     height: 150px;
     margin: 80px 0 40px;
@@ -43,7 +43,7 @@ const Minus = styled.div`
     position: absolute;
     right: -15px;
     top: 15px;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 30px;
     height: 30px;
     background-image: url(${MinusIcon});
@@ -83,11 +83,11 @@ const Won = styled.span`
 `;
 
 const OrderBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 130px;
     padding: 10px 0;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

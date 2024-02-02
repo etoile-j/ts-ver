@@ -13,7 +13,7 @@ const Text = styled.strong`
 
 const P = styled.p`
     margin-top: 17px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;

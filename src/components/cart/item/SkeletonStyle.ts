@@ -67,11 +67,11 @@ const InPrice = styled.div`
 `;
 
 const OrderBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 130px;
     padding: 10px 0;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

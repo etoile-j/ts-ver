@@ -9,11 +9,11 @@ interface styledCompo {
 const Form = styled.form`
     width: 100%;
     z-index: 2;
-    background-color: #ffffff;
+    background-color: var(--white);
     position: relative;
     top: -20px;
     padding: 35px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 10px;
 `;
 
@@ -25,7 +25,7 @@ const Div = styled.div`
 const Label = styled.label`
     display: block;
     margin-bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -34,7 +34,7 @@ const Label = styled.label`
 const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     padding: 16px 15px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
     font-weight: 400;
     font-size: 16px;
@@ -42,12 +42,12 @@ const Input = styled.input`
 `;
 
 const VaildCheckBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 120px;
     padding: 17px 0px;
     margin-left: 12px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
@@ -87,7 +87,7 @@ const Fieldset = styled.fieldset`
 
 const At = styled.span`
     margin: 0 11px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 700;
     font-size: 16px;
     line-height: 20px;
@@ -104,7 +104,7 @@ const PhoneInput = styled(Input)`
 
 const Div2 = styled.div`
     margin-top: 40px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -121,7 +121,7 @@ const JoinBtn = styled.button`
     padding: 19px 0;
     margin-top: 34px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;

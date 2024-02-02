@@ -9,7 +9,7 @@ const Main = styled.main`
 const Ul = styled.ul`
     display: flex;
     margin-top: 140px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 700;
     font-size: 18px;
     line-height: 23px;

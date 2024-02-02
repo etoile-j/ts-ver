@@ -27,7 +27,7 @@ const ProductUpload = styled.button`
     width: 168px;
     height: 54px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;
@@ -69,7 +69,7 @@ const ListBtn = styled.button.attrs({ type: 'button' })`
 `;
 const OnListBtn = styled(ListBtn)`
     background-color: var(--point-color);
-    color: #ffffff;
+    color: var(--white);
 `;
 
 const TableWrap = styled.div`
@@ -81,26 +81,26 @@ const Table = styled.div`
     overflow: hidden;
     max-width: 1440px;
     height: 884px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
 `;
 
 const Container = styled.div`
     overflow: scroll;
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     height: 823px;
 `;
 
 const Title = styled.div`
     display: flex;
     align-items: center;
-    background-color: #ffffff;
+    background-color: var(--white);
     height: 60px;
     padding: 0 10px;
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
     border-radius: 5px 5px 0 0;
 `;
 

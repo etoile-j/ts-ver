@@ -2,7 +2,7 @@ import GithubIcon from '../../assets/githubIcon.svg';
 import styled from 'styled-components';
 
 const FooterEl = styled.footer`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     bottom: 0;
     left: 0;
     width: 100%;
@@ -12,7 +12,7 @@ const FooterEl = styled.footer`
 `;
 
 const Div = styled.div`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     max-width: 1280px;
     min-width: 750px;
     margin: 0 auto;
@@ -21,7 +21,7 @@ const Div = styled.div`
 const Ul = styled.ul`
     padding: 54px 0 50px 0;
     margin: 0 auto;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Li = styled.li`
