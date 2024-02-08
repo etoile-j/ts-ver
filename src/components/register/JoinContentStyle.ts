@@ -1,9 +1,9 @@
-import Check_off from '../../assets/icon-check-off.svg';
 import styled from 'styled-components';
 
 interface styledCompo {
     width?: string;
     color?: string;
+    backgroundImage?: string;
 }
 
 const Form = styled.form`
@@ -41,7 +41,7 @@ const Input = styled.input`
     line-height: 20px;
 `;
 
-const VaildCheckBtn = styled.button`
+const VaildCheckBtn = styled.button.attrs({ type: 'button' })`
     background-color: var(--point-color);
     width: 120px;
     padding: 17px 0px;
@@ -77,7 +77,6 @@ const PwCheck = styled.div`
     right: 16px;
     width: 28px;
     height: 28px;
-    background-image: url(${Check_off});
     background-repeat: no-repeat;
 `;
 
@@ -98,7 +97,7 @@ const PhoneNumber = styled.div`
     justify-content: space-between;
 `;
 
-const PhoneInput = styled(Input)`
+const PhoneInput = styled(Input).attrs({ type: 'text', inputMode: 'tel' })`
     text-align: center;
 `;
 
@@ -115,7 +114,7 @@ const Agree = styled.input`
     margin: 12px 10px 15px 0;
 `;
 
-const JoinBtn = styled.button`
+const JoinBtn = styled.button.attrs({ type: 'submit' })`
     background: ${(props: styledCompo) => props.color};
     width: 100%;
     padding: 19px 0;
