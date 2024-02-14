@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm, FieldValues, FieldError, DeepMap } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
 import { IProductSeller } from 'GlobalType';
-import { REGEX } from 'constants/index';
+import { FORM_MSG, REGEX } from 'constants/index';
 import {
     Wrap,
     InputContainer,
@@ -107,7 +107,7 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                                 type="text"
                                 width="95%"
                                 {...register('product_name', {
-                                    required: '필수 정보입니다.',
+                                    required: FORM_MSG.REQUIRED,
                                     maxLength: {
                                         value: 20,
                                         message: '최대 20자까지 입력 가능합니다.',
@@ -128,10 +128,10 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                             inputMode="numeric"
                             width="166px"
                             {...register('price', {
-                                required: '필수 정보입니다.',
+                                required: FORM_MSG.REQUIRED,
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
@@ -181,10 +181,10 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                             inputMode="numeric"
                             width="166px"
                             {...register('shipping_fee', {
-                                required: '필수 정보입니다.',
+                                required: FORM_MSG.REQUIRED,
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
@@ -201,11 +201,11 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                             inputMode="numeric"
                             width="166px"
                             {...register('stock', {
-                                required: '필수 정보입니다.',
+                                required: FORM_MSG.REQUIRED,
                                 min: { value: 1, message: '재고는 1개 이상 입력해야 합니다.' },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />

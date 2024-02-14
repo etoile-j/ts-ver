@@ -36,7 +36,7 @@ const Input = styled.input`
     border: 1px solid var(--base-gray);
     font-size: 17px;
 `;
-const PhoneInput = styled(Input)`
+const PhoneInput = styled(Input).attrs({ type: 'text', inputMode: 'tel' })`
     padding-left: 0;
     text-align: center;
 `;
