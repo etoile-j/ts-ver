@@ -1,5 +1,6 @@
 import { UseFormRegister, FieldValues } from 'react-hook-form';
 import { FORM_MSG, REGEX } from 'constants/index';
+import { FieldErrors } from 'GlobalType';
 import {
     Legend,
     Line,
@@ -11,7 +12,6 @@ import {
     PostCodeBtn,
     CautionText,
 } from './DeliveryInfoStyle';
-import { FieldErrors } from 'GlobalType';
 
 interface IForm {
     register: UseFormRegister<FieldValues>;
