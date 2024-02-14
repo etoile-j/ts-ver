@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useForm, FieldValues, FieldError, DeepMap } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
-import { IProductSeller } from 'GlobalType';
+import { FieldErrors, IProductSeller } from 'GlobalType';
 import { FORM_MSG, REGEX } from 'constants/index';
 import {
     Wrap,
@@ -25,11 +25,6 @@ import {
     ColorBtn,
     WhiteBtn,
 } from './ProductInputStyle';
-
-type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
-    TFieldValues,
-    FieldError
->;
 
 const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller }) => {
     const [preImg, setPreImg] = useState<string>();
@@ -100,7 +95,10 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                 </ImgWrap>
                 <InputContainer>
                     <Field>
-                        <Label htmlFor="product_name">상품명</Label>
+                        <LabelWrap>
+                            <Label htmlFor="product_name">상품명</Label>
+                            {showCautionText(errors.product_name!)}
+                        </LabelWrap>
                         <NameInputWrap>
                             <NameInput
                                 id="product_name"

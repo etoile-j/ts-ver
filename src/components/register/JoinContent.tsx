@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useForm, FieldValues, FieldError, DeepMap } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { axiosApi } from '../../apis/axiosInstance';
 import { AxiosError } from 'axios';
-import { ILoginType } from 'GlobalType';
+import { FieldErrors, ILoginType } from 'GlobalType';
 import { FORM_MSG, REGEX } from 'constants/index';
 import Check_off from '../../assets/icon-check-off.svg';
 import Check_on from '../../assets/icon-check-on.svg';
@@ -36,11 +36,6 @@ interface IJoinInputs {
     companyNum: string;
     agreement: boolean;
 }
-
-type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
-    TFieldValues,
-    FieldError
->;
 
 const ID_REGEX = /^[A-za-z0-9]{1,19}$/g;
 const PW_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g;
