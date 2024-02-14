@@ -1,5 +1,6 @@
-import { UseFormRegister, FieldValues, FieldError, DeepMap } from 'react-hook-form';
-import { REGEX } from 'constants/index';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { FORM_MSG, REGEX } from 'constants/index';
+import { FieldErrors } from 'GlobalType';
 import {
     Legend,
     Line,
@@ -16,11 +17,6 @@ interface IForm {
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors<FieldValues>;
 }
-
-type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
-    TFieldValues,
-    FieldError
->;
 
 const DeliveryInfo = ({ register, errors }: IForm) => {
     const showCautionText = (error: FieldErrors<FieldValues>) => {
@@ -49,26 +45,12 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <PhoneInput
-                            title="휴대폰 첫 세 자리"
-                            type="text"
-                            inputMode="tel"
-                            width="80px"
-                            maxLength={3}
-                        />
+                        <PhoneInput title="휴대폰 첫 세 자리" width="80px" maxLength={3} />
                         <Hyphen>-</Hyphen>
-                        <PhoneInput
-                            title="휴대폰 중간 네 자리"
-                            type="text"
-                            inputMode="tel"
-                            width="100px"
-                            maxLength={4}
-                        />
+                        <PhoneInput title="휴대폰 중간 네 자리" width="100px" maxLength={4} />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             title="휴대폰 마지막 네 자리"
-                            type="text"
-                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                         />
@@ -90,7 +72,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         type="text"
                         width="334px"
                         {...register('receiver', {
-                            required: '필수 정보입니다.',
+                            required: FORM_MSG.REQUIRED,
                             validate: (value) => isWhitespaceOnly(value, '수령인을'),
                         })}
                     />
@@ -101,48 +83,42 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                     <span>
                         <PhoneInput
                             title="휴대폰번호 첫 세 자리"
-                            type="text"
-                            inputMode="tel"
                             width="80px"
                             maxLength={3}
                             {...register('phone.first', {
-                                required: '필수 정보입니다.',
-                                minLength: { value: 2, message: '모두 입력해 주세요.' },
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 2, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             title="휴대폰번호 중간 네 자리"
-                            type="text"
-                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone.second', {
-                                required: '필수 정보입니다.',
-                                minLength: { value: 4, message: '모두 입력해 주세요.' },
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 4, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             title="휴대폰번호 마지막 네 자리"
-                            type="text"
-                            inputMode="tel"
                             width="100px"
                             maxLength={4}
                             {...register('phone.third', {
-                                required: '필수 정보입니다.',
-                                minLength: { value: 4, message: '모두 입력해 주세요.' },
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 4, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />

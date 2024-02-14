@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosApi } from '../../apis/axiosInstance';
 import { AxiosError } from 'axios';
-import { ILoginType } from 'GlobalType';
-import { REGEX } from 'constants/index';
+import { FieldErrors, ILoginType } from 'GlobalType';
+import { FORM_MSG, REGEX } from 'constants/index';
 import Check_off from '../../assets/icon-check-off.svg';
 import Check_on from '../../assets/icon-check-on.svg';
 import {
@@ -30,11 +30,8 @@ interface IJoinInputs {
     password: string;
     passwordCheck: string;
     name: string;
-    phone1: number;
-    phone2: number;
-    phone3: number;
-    emailId: string;
-    emailDomain: string;
+    phone: { first: number; second: number; third: number };
+    email: { id: string; domain: string };
     storeName: string;
     companyNum: string;
     agreement: boolean;
@@ -73,7 +70,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                 username: data.id,
                 password: data.password,
                 password2: data.passwordCheck,
-                phone_number: data.phone1 + data.phone2 + data.phone3,
+                phone_number: Object.values(data.phone).join(''),
                 name: data.name,
                 company_registration_number: data.companyNum,
                 store_name: data.storeName,
@@ -88,19 +85,15 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             if (err instanceof AxiosError) {
                 if (err.response?.data.phone_number) {
                     setError(
-                        'phone1',
-                        {
-                            message: err.response?.data.phone_number,
-                        },
+                        'phone.first',
+                        { message: err.response?.data.phone_number },
                         { shouldFocus: true },
                     );
                 }
                 if (err.response?.data.store_name) {
                     setError(
                         'storeName',
-                        {
-                            message: err.response?.data.store_name,
-                        },
+                        { message: err.response?.data.store_name },
                         { shouldFocus: true },
                     );
                 }
@@ -125,9 +118,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             if (err instanceof AxiosError) {
                 setError(
                     'id',
-                    {
-                        message: err.response?.data?.FAIL_Message,
-                    },
+                    { message: err.response?.data?.FAIL_Message },
                     { shouldFocus: true },
                 );
             }
@@ -149,6 +140,10 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
         }
     };
 
+    const showCautionText = (error: FieldErrors) => {
+        return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
+    };
+
     return (
         <Form onSubmit={handleSubmit(handleJoin)}>
             <fieldset>
@@ -157,60 +152,55 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                     <Input
                         id="id"
                         type="text"
+                        placeholder="20자 이내의 영문 및 숫자"
                         width="346px"
                         {...register('id', {
-                            required: '필수 정보입니다.',
+                            required: FORM_MSG.REQUIRED,
                             pattern: {
                                 value: ID_REGEX,
                                 message:
                                     '20자 이내의 영문(소문자, 대문자), 숫자만 사용 가능합니다.',
                             },
-                            onChange(event) {
+                            onChange() {
                                 setPassIdText('');
                                 setIsPassId(false);
                             },
                         })}
                     />
-                    <VaildCheckBtn
-                        type="button"
-                        aria-label="아이디 중복 확인하기"
-                        onClick={idValidCheck}
-                    >
+                    <VaildCheckBtn aria-label="아이디 중복 확인하기" onClick={idValidCheck}>
                         중복확인
                     </VaildCheckBtn>
                 </Div>
                 <PassText>{passIdText}</PassText>
-                {errors.id && (
-                    <CautionText aria-live="assertive">{errors.id.message}</CautionText>
-                )}
+                {showCautionText(errors.id!)}
                 <Div>
                     <Label htmlFor="password">비밀번호</Label>
                     <PasswordInput>
                         <Input
                             id="password"
                             type="password"
+                            placeholder="8자 이상의 문자 및 숫자"
                             width="100%"
                             {...register('password', {
-                                required: '필수 정보입니다.',
+                                required: FORM_MSG.REQUIRED,
                                 pattern: {
                                     value: PW_REGEX,
                                     message:
-                                        '8자 이상, 최소 하나의 문자 및 하나의 문자를 사용해야 합니다.',
+                                        '8자 이상, 최소 하나의 문자 및 하나의 숫자를 포함해야 합니다.',
                                 },
                             })}
                         />
                         <PwCheck
                             style={{
-                                backgroundImage: !PW_REGEX.test(getValues('password'))
-                                    ? `url(${Check_off})`
-                                    : `url(${Check_on})`,
+                                backgroundImage:
+                                    getValues('password') && !errors.password
+                                        ? `url(${Check_on})`
+                                        : `url(${Check_off})`,
                             }}
                         />
                     </PasswordInput>
                 </Div>
-                {errors.password && (
-                    <CautionText aria-live="assertive">{errors.password.message}</CautionText>
-                )}
+                {showCautionText(errors.password!)}
                 <Div>
                     <Label htmlFor="passwordCheck">비밀번호 재확인</Label>
                     <PasswordInput>
@@ -219,7 +209,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             type="password"
                             width="100%"
                             {...register('passwordCheck', {
-                                required: '필수 정보입니다.',
+                                required: FORM_MSG.REQUIRED,
                                 validate: {
                                     matchingPw: (value) => {
                                         const password = getValues('password');
@@ -242,11 +232,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         />
                     </PasswordInput>
                 </Div>
-                {errors.passwordCheck && (
-                    <CautionText aria-live="assertive">
-                        {errors.passwordCheck.message}
-                    </CautionText>
-                )}
+                {showCautionText(errors.passwordCheck!)}
             </fieldset>
             <Fieldset>
                 <div>
@@ -256,7 +242,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         type="text"
                         width="100%"
                         {...register('name', {
-                            required: '필수 정보입니다.',
+                            required: FORM_MSG.REQUIRED,
                             pattern: {
                                 value: REGEX.ONLY_LETTER,
                                 message: '한글, 영문만 입력 가능합니다.',
@@ -264,23 +250,17 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         })}
                     />
                 </div>
-                {errors.name && (
-                    <CautionText aria-live="assertive">{errors.name.message}</CautionText>
-                )}
+                {showCautionText(errors.name!)}
                 <Div>
                     <Label>휴대폰번호</Label>
                     <PhoneNumber>
                         <PhoneInput
-                            type="text"
                             width="152px"
                             maxLength={3}
                             title="휴대폰번호 첫 세 자리"
-                            {...register('phone1', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 3,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.first', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 3, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: /^01[0-9]+$/,
                                     message: '01으로 시작하는 숫자만 입력 가능합니다.',
@@ -288,66 +268,47 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                             })}
                         />
                         <PhoneInput
-                            type="text"
                             width="152px"
                             maxLength={4}
                             title="휴대폰번호 중간 네 자리"
-                            {...register('phone2', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 3,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.second', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 3, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                         <PhoneInput
-                            type="text"
-                            inputMode="tel"
                             width="152px"
                             maxLength={4}
                             title="휴대폰번호 마지막 네 자리"
-                            {...register('phone3', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 4,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.third', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 4, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
                                     value: REGEX.ONLY_NUMBER,
-                                    message: '숫자만 입력 가능합니다.',
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                     </PhoneNumber>
                 </Div>
-                {(errors.phone1 && (
-                    <CautionText aria-live="assertive">{errors.phone1.message}</CautionText>
-                )) ||
-                    (errors.phone2 && (
-                        <CautionText aria-live="assertive">
-                            {errors.phone2.message}
-                        </CautionText>
-                    )) ||
-                    (errors.phone3 && (
-                        <CautionText aria-live="assertive">
-                            {errors.phone3.message}
-                        </CautionText>
-                    ))}
+                {showCautionText(errors.phone?.first!) ||
+                    showCautionText(errors.phone?.second!) ||
+                    showCautionText(errors.phone?.third!)}
                 <Div>
                     <Label>이메일</Label>
                     <Input
                         type="text"
                         width="220px"
                         title="이메일 주소 중 아이디"
-                        {...register('emailId', {
-                            required: '필수 정보입니다.',
+                        {...register('email.id', {
+                            required: FORM_MSG.REQUIRED,
                             pattern: {
-                                value: /^[a-zA-Z0-9-.]+$/,
-                                message: '잘못된 이메일 형식입니다.',
+                                value: ID_REGEX,
+                                message: '잘못된 이메일 형식입니다.(아이디)',
                             },
                         })}
                     />
@@ -356,23 +317,17 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         type="text"
                         width="220px"
                         title="이메일 주소 중 도메인"
-                        {...register('emailDomain', {
-                            required: '필수 정보입니다.',
+                        {...register('email.domain', {
+                            required: FORM_MSG.REQUIRED,
                             pattern: {
                                 value: /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                                message: '잘못된 이메일 형식입니다.',
+                                message: '잘못된 이메일 형식입니다.(도메인)',
                             },
                         })}
                     />
                 </Div>
-                {(errors.emailId && (
-                    <CautionText aria-live="assertive">{errors.emailId?.message}</CautionText>
-                )) ||
-                    (errors.emailDomain && (
-                        <CautionText aria-live="assertive">
-                            {errors.emailDomain?.message}
-                        </CautionText>
-                    ))}
+                {showCautionText(errors.email?.id!) || showCautionText(errors.email?.domain!)}
+
                 {!typeBuyers && (
                     <Fieldset>
                         <div>
@@ -382,30 +337,25 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 type="text"
                                 width="346px"
                                 {...register('companyNum', {
-                                    required: '필수 정보입니다.',
+                                    required: FORM_MSG.REQUIRED,
                                     pattern: {
                                         value: /^[0-9]{10}$/,
                                         message: '숫자 10자까지만 입력 가능합니다.',
                                     },
-                                    onChange(event) {
+                                    onChange() {
                                         setIsPassCompany(false);
                                         setPassCompanyText('');
                                     },
                                 })}
                             />
                             <VaildCheckBtn
-                                type="button"
                                 aria-label="사업자 등록번호 인증하기"
                                 onClick={companyValidCheck}
                             >
                                 인증
                             </VaildCheckBtn>
                         </div>
-                        {errors.companyNum && (
-                            <CautionText aria-live="assertive">
-                                {errors.companyNum.message}
-                            </CautionText>
-                        )}
+                        {showCautionText(errors.companyNum!)}
                         <PassText>{passCompanyText}</PassText>
                         <Div>
                             <Label htmlFor="storeName">스토어 이름</Label>
@@ -413,16 +363,13 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                                 id="storeName"
                                 type="text"
                                 width="100%"
-                                {...register('storeName', { required: '필수정보 입니다.' })}
+                                {...register('storeName', { required: FORM_MSG.REQUIRED })}
                             />
                         </Div>
-                        {errors.storeName && (
-                            <CautionText aria-live="assertive">
-                                {errors.storeName.message}
-                            </CautionText>
-                        )}
+                        {showCautionText(errors.storeName!)}
                     </Fieldset>
                 )}
+
                 <Div2>
                     <label>
                         <Agree
@@ -433,9 +380,8 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         동의합니다.
                     </label>
                     <JoinBtn
-                        type="submit"
                         disabled={!isValid}
-                        color={isValid ? '#6997f7' : '#c4c4c4'}
+                        color={isValid ? 'var(--point-color)' : 'var(--base-gray)'}
                     >
                         가입하기
                     </JoinBtn>

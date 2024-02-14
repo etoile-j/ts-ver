@@ -55,4 +55,9 @@ module 'GlobalType' {
         shipping_fee?: number;
         stock?: number;
     }
+
+    type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
+        TFieldValues,
+        FieldError
+    >;
 }
