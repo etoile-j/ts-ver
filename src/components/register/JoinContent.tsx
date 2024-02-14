@@ -85,7 +85,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
             if (err instanceof AxiosError) {
                 if (err.response?.data.phone_number) {
                     setError(
-                        'phone',
+                        'phone.first',
                         { message: err.response?.data.phone_number },
                         { shouldFocus: true },
                     );
@@ -307,7 +307,7 @@ const JoinContent = ({ typeBuyers }: ILoginType) => {
                         {...register('email.id', {
                             required: FORM_MSG.REQUIRED,
                             pattern: {
-                                value: /^[a-zA-Z0-9-.]+$/,
+                                value: ID_REGEX,
                                 message: '잘못된 이메일 형식입니다.(아이디)',
                             },
                         })}
