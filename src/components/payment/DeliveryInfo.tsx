@@ -1,4 +1,6 @@
-import { UseFormRegister, FieldValues, FieldError, DeepMap } from 'react-hook-form';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { FORM_MSG, REGEX } from 'constants/index';
+import { FieldErrors } from 'GlobalType';
 import {
     Legend,
     Line,
@@ -16,12 +18,15 @@ interface IForm {
     errors: FieldErrors<FieldValues>;
 }
 
-type FieldErrors<TFieldValues extends FieldValues = FieldValues> = DeepMap<
-    TFieldValues,
-    FieldError
->;
-
 const DeliveryInfo = ({ register, errors }: IForm) => {
+    const showCautionText = (error: FieldErrors<FieldValues>) => {
+        return error && <CautionText aria-live="assertive">{error.message}</CautionText>;
+    };
+
+    const isWhitespaceOnly = (value: string, field: string) => {
+        return value.trim() !== '' || `${field} 입력해 주세요.`;
+    };
+
     return (
         <>
             <fieldset>
@@ -40,26 +45,12 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
-                        <PhoneInput
-                            title="휴대폰번호 첫 세 자리"
-                            type="text"
-                            inputMode="tel"
-                            width="80px"
-                            maxLength={3}
-                        />
+                        <PhoneInput title="휴대폰 첫 세 자리" width="80px" maxLength={3} />
+                        <Hyphen>-</Hyphen>
+                        <PhoneInput title="휴대폰 중간 네 자리" width="100px" maxLength={4} />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
-                            title="휴대폰번호 중간 네 자리"
-                            type="text"
-                            inputMode="tel"
-                            width="100px"
-                            maxLength={4}
-                        />
-                        <Hyphen>-</Hyphen>
-                        <PhoneInput
-                            title="휴대폰번호 마지막 네 자리"
-                            type="text"
-                            inputMode="tel"
+                            title="휴대폰 마지막 네 자리"
                             width="100px"
                             maxLength={4}
                         />
@@ -80,138 +71,90 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         id="receiver"
                         type="text"
                         width="334px"
-                        {...register('name', {
-                            required: '필수 정보입니다.',
-                            pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
-                                message: '한글, 영문만 입력 가능합니다.',
-                            },
+                        {...register('receiver', {
+                            required: FORM_MSG.REQUIRED,
+                            validate: (value) => isWhitespaceOnly(value, '수령인을'),
                         })}
                     />
-                    {errors.name && (
-                        <CautionText aria-live="assertive">
-                            {errors.name.message}
-                        </CautionText>
-                    )}
+                    {showCautionText(errors.receiver)}
                 </Line>
                 <Line>
                     <Label>휴대폰</Label>
                     <span>
                         <PhoneInput
                             title="휴대폰번호 첫 세 자리"
-                            type="text"
-                            inputMode="tel"
                             width="80px"
                             maxLength={3}
-                            {...register('phone1', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 2,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.first', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 2, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: '숫자만 입력 가능합니다.',
+                                    value: REGEX.ONLY_NUMBER,
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             title="휴대폰번호 중간 네 자리"
-                            type="text"
-                            inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone2', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 4,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.second', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 4, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: '숫자만 입력 가능합니다.',
+                                    value: REGEX.ONLY_NUMBER,
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
                         <Hyphen>-</Hyphen>
                         <PhoneInput
                             title="휴대폰번호 마지막 네 자리"
-                            type="text"
-                            inputMode="tel"
                             width="100px"
                             maxLength={4}
-                            {...register('phone3', {
-                                required: '필수 정보입니다.',
-                                minLength: {
-                                    value: 4,
-                                    message: '모두 입력해 주세요.',
-                                },
+                            {...register('phone.third', {
+                                required: FORM_MSG.REQUIRED,
+                                minLength: { value: 4, message: FORM_MSG.INSUFFICIENT_LENGTH },
                                 pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: '숫자만 입력 가능합니다.',
+                                    value: REGEX.ONLY_NUMBER,
+                                    message: FORM_MSG.ONLY_NUMBER,
                                 },
                             })}
                         />
-
-                        {(errors.phone1 && (
-                            <CautionText aria-live="assertive">
-                                {errors.phone1.message}
-                            </CautionText>
-                        )) ||
-                            (errors.phone2 && (
-                                <CautionText aria-live="assertive">
-                                    {errors.phone2.message}
-                                </CautionText>
-                            )) ||
-                            (errors.phone3 && (
-                                <CautionText aria-live="assertive">
-                                    {errors.phone3.message}
-                                </CautionText>
-                            ))}
+                        {showCautionText(errors.phone?.first) ||
+                            showCautionText(errors.phone?.second) ||
+                            showCautionText(errors.phone?.third)}
                     </span>
                 </Line>
                 <Line>
                     <Label>배송주소</Label>
                     <Input title="우편번호" type="text" width="170px" />
                     <PostCodeBtn>우편번호 조회</PostCodeBtn>
-                    {(errors.address1 && (
-                        <CautionText aria-live="assertive">
-                            {errors.address1.message}
-                        </CautionText>
-                    )) ||
-                        (errors.address2 && (
-                            <CautionText aria-live="assertive">
-                                {errors.address2.message}
-                            </CautionText>
-                        )) ||
-                        (errors.deliveryMessage && (
-                            <CautionText aria-live="assertive">
-                                {errors.deliveryMessage.message}
-                            </CautionText>
-                        ))}
+                    {showCautionText(errors.address1) ||
+                        showCautionText(errors.address2) ||
+                        showCautionText(errors.deliveryMessage)}
                     <br />
-                    <Label></Label>
+                    <Label />
                     <AddressInput
                         title="기본 주소"
                         type="text"
                         width="600px"
                         {...register('address1', {
                             required: '주소를 입력해 주세요.',
-                            pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
-                                message: '한글, 영문만 입력 가능합니다.',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '주소를'),
                         })}
                     />
                     <br />
                     <Label />
                     <Input
                         title="상세 주소"
+                        placeholder="나머지 주소"
                         type="text"
                         width="600px"
                         {...register('address2', {
                             required: '나머지 주소를 입력해 주세요.',
+                            validate: (value) => isWhitespaceOnly(value, '나머지 주소를'),
                         })}
                     />
                 </Line>
@@ -223,10 +166,7 @@ const DeliveryInfo = ({ register, errors }: IForm) => {
                         width="600px"
                         {...register('deliveryMessage', {
                             required: '배송 메세지를 입력해 주세요.',
-                            pattern: {
-                                value: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/,
-                                message: '한글, 영문만 입력 가능합니다.',
-                            },
+                            validate: (value) => isWhitespaceOnly(value, '배송 메세지를'),
                         })}
                     />
                 </Line>

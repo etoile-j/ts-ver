@@ -29,7 +29,7 @@ const EditProduct = () => {
                         <p>- 재고는 1개 이상 입력해야 합니다.</p>
                     </CautionBox>
                 </CautionWrap>
-                <ProductInput detail={productDetail} />
+                <ProductInput existingDetails={productDetail} />
             </Main>
         </>
     );

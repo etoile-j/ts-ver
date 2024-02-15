@@ -64,7 +64,7 @@ const ProductName = styled.p`
 `;
 
 const SellerName = styled.p`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
@@ -88,7 +88,7 @@ const Won = styled.span`
 
 const DeliveryText = styled.p`
     margin-bottom: 20px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -100,8 +100,8 @@ const DeliveryText = styled.p`
 const CountContainer = styled.div`
     height: 110px;
     padding-top: 27px;
-    border-top: 2px solid #c4c4c4;
-    border-bottom: 2px solid #c4c4c4;
+    border-top: 2px solid var(--base-gray);
+    border-bottom: 2px solid var(--base-gray);
 `;
 
 const TotalWrap = styled.div`
@@ -123,19 +123,19 @@ const TotalTitle = styled.span`
 `;
 
 const TotalAmount = styled.span`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
 `;
 const Number = styled.strong`
-    color: #6997f7;
+    color: var(--point-color);
     font-weight: 700;
 `;
 
 const TotalPrice = styled.strong`
     margin-left: 28px;
-    color: #6997f7;
+    color: var(--point-color);
     font-weight: 700;
     font-size: 36px;
     line-height: 45px;
@@ -159,10 +159,11 @@ const BtnContainer = styled.div`
 const DirectBuyBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: ${({ disabled }) => (disabled ? '#c4c4c4' : '#6997f7')};
+    background-color: ${({ disabled }) =>
+        disabled ? 'var(--base-gray)' : 'var(--point-color)'};
     width: 100%;
     padding: 19px 0;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;

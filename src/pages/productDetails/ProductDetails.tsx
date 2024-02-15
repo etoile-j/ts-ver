@@ -8,8 +8,6 @@ const ProductDetails = () => {
         <>
             <Header />
             <Main>
-                {/* <h2>상품 상세 정보</h2> */}
-                {/* ir */}
                 <ProductCard />
                 <Ul>
                     <Li>상세정보</Li>

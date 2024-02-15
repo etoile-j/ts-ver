@@ -1,4 +1,4 @@
-import DeleteIcon from '../../assets/icon-delete.svg';
+import DeleteIcon from '../../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
 interface styledCompo {
@@ -27,7 +27,7 @@ const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
 
 const SellerName = styled.p`
     margin-top: 5px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -50,7 +50,7 @@ const Price = styled.span`
 const DeliveryText = styled.p`
     position: absolute;
     bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -59,8 +59,8 @@ const DeliveryText = styled.p`
 const Count = styled.button`
     width: 50px;
     height: 50px;
-    border-top: 1px solid #c4c4c4;
-    border-bottom: 1px solid #c4c4c4;
+    border-top: 1px solid var(--base-gray);
+    border-bottom: 1px solid var(--base-gray);
     font-weight: 400;
     font-size: 18px;
     line-height: 23px;
@@ -78,7 +78,7 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
     width: 50px;
     height: 50px;
     margin: 30px 0;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px 0 0 5px;
     color: transparent;
     font-weight: 500;
@@ -90,7 +90,7 @@ const CountBtn = styled.button.attrs({ type: 'button' })`
     }
     ::before {
         content: '';
-        background-color: #c4c4c4;
+        background-color: var(--base-gray);
         position: absolute;
         top: 24px;
         left: 15px;
@@ -108,7 +108,7 @@ const CountBtnplus = styled(CountBtn)`
     border-radius: 0 5px 5px 0;
     ::after {
         content: '';
-        background-color: #c4c4c4;
+        background-color: var(--base-gray);
         position: absolute;
         top: 16px;
         left: 23px;
@@ -131,11 +131,11 @@ const InPrice = styled.p`
 `;
 
 const OrderBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 130px;
     padding: 10px 0;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;

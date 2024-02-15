@@ -24,14 +24,14 @@ const Banner2 = styled(Banner)`
 `;
 const Banner3 = styled(Banner2)`
     padding-top: 120px;
-    border-right: 60px solid #000000;
-    background-color: #6997f7;
+    border-right: 60px solid var(--black);
+    background-color: var(--point-color);
     background-image: none;
     cursor: default;
 `;
 
 const MainText = styled.p`
-    color: #ffffff;
+    color: var(--white);
     font-family: 'SpoqaHanSansNeo-Medium', sans-serif;
     font-size: 50px;
     font-weight: 500;
@@ -39,7 +39,7 @@ const MainText = styled.p`
 
 const SubText = styled.p`
     padding-top: 25px;
-    color: #ffffff;
+    color: var(--white);
     font-size: 20px;
     font-weight: 600;
 `;

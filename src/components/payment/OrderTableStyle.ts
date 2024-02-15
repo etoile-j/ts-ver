@@ -6,7 +6,7 @@ interface styledCompo {
 
 const TitleLi = styled.li`
     display: flex;
-    background: #f2f2f2;
+    background: var(--light-gray);
     padding: 19px 0 18px;
     border-radius: 10px;
     font-weight: 400;
@@ -24,7 +24,7 @@ const OrderLi = styled.li`
     align-items: center;
     height: 138px;
     margin-top: 7px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
 `;
 
 const Wrap = styled.div`
@@ -36,13 +36,13 @@ const Wrap = styled.div`
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     width: 104px;
     height: 104px;
-    margin-right: 36px;
+    margin: 0 36px 0 7px;
     border-radius: 10px;
     object-fit: cover;
 `;
 
 const GrayFont = styled.p`
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -61,13 +61,4 @@ const Price = styled.strong`
     line-height: 23px;
 `;
 
-export {
-    TitleLi,
-    Title,
-    OrderLi,
-    Wrap,
-    ProductImg,
-    GrayFont,
-    ProductName,
-    Price,
-};
+export { TitleLi, Title, OrderLi, Wrap, ProductImg, GrayFont, ProductName, Price };

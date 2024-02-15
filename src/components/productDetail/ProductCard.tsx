@@ -4,6 +4,7 @@ import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
 import { getLocalStorage } from 'utils/storage';
 import { IProduct, ICartData } from 'GlobalType';
+import { ORDER_KIND } from 'constants/index';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
 import ModalContainer from '../modal/ModalContainer';
@@ -34,15 +35,8 @@ const ProductCard = () => {
     const navigate = useNavigate();
     const [count, setCount] = useState(DEFAULT_QUANTITY);
     const [product, setProduct] = useState<IProduct>();
-    const {
-        image,
-        price,
-        product_name,
-        shipping_method,
-        shipping_fee,
-        stock,
-        store_name,
-    } = product || {};
+    const { image, price, product_name, shipping_method, shipping_fee, stock, store_name } =
+        product || {};
 
     const [loginModal, setLoginModal] = useState(false);
     const [addedModal, setAddedModal] = useState(false);
@@ -66,10 +60,8 @@ const ProductCard = () => {
 
     useEffect(() => {
         (async () => {
-            if (typeof product_id === 'string') {
-                const productDetail = await getProductDetail(product_id);
-                setProduct(productDetail);
-            }
+            const productDetail = await getProductDetail(product_id!);
+            setProduct(productDetail);
         })();
     }, []);
 
@@ -112,7 +104,7 @@ const ProductCard = () => {
         navigate('/payment', {
             state: {
                 product_id: product_id,
-                order_kind: 'direct_order',
+                order_kind: ORDER_KIND.DIRECT_ORDER,
                 total: count * price! + shipping_fee!,
                 order_product: [
                     {

@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
     from {
-        opacity: 0;
+        opacity: 0.3;
         transform: translateY(40px);
     }
     to {
@@ -30,7 +30,7 @@ const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     right: 0;
     width: 100%;
     margin-bottom: 16px;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 10px;
     object-fit: cover;
 `;
@@ -49,7 +49,7 @@ const ProductName = styled.p`
 
 const SellerName = styled.p`
     margin-top: 7px;
-    color: #767676;
+    color: var(--dark-gray);
     font-family: 'SpoqaHanSansNeo-Regular';
     font-weight: 400;
     font-size: 16px;

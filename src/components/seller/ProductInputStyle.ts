@@ -5,7 +5,7 @@ interface styledCompo {
     width?: string;
     font?: string;
     color?: string;
-    border?: string;
+    borderColor?: string;
 }
 
 const Wrap = styled.div`
@@ -32,7 +32,7 @@ const Field = styled.div`
 const Label = styled.label`
     display: block;
     margin-bottom: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -77,7 +77,7 @@ const Input = styled.input`
     width: ${(props: styledCompo) => props.width};
     padding: 16px 25px 16px 15px;
     margin: 0;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px 0 0 5px;
     font-weight: 400;
     font-size: 16px;
@@ -87,7 +87,7 @@ const Input = styled.input`
 const NameInputWrap = styled.div`
     position: relative;
     width: 100%;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
 `;
 const NameInput = styled(Input)`
@@ -101,17 +101,17 @@ const NameLength = styled.span`
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: #c4c4c4;
+    color: var(--base-gray);
 `;
 
 const Unit = styled.span`
-    background-color: #c4c4c4;
+    background-color: var(--base-gray);
     display: inline-block;
     width: 54px;
     height: 54px;
     padding: 16px 6px 17px 6px;
     border-radius: 0 5px 5px 0;
-    color: #ffffff;
+    color: var(--white);
     text-align: center;
     font-weight: 400;
     font-size: 16px;
@@ -131,7 +131,8 @@ const RadioLabel = styled.label`
     width: 220px;
     padding: 16px 45px 16px 25px;
     margin-right: 10px;
-    border: ${(props: styledCompo) => props.border};
+    border: 1px solid;
+    border-color: ${({ borderColor }) => borderColor};
     border-radius: 5px;
     color: ${(props: styledCompo) => props.font};
     font-weight: 500;
@@ -166,10 +167,10 @@ const BtnContainer = styled.div`
 `;
 
 const ColorBtn = styled.button`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 200px;
     padding: 19px 0;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
@@ -179,11 +180,11 @@ const ColorBtn = styled.button`
     }
 `;
 const WhiteBtn = styled(ColorBtn)`
-    background-color: #ffffff;
+    background-color: var(--white);
     padding: 18px 0;
     margin-right: 14px;
-    border: 1px solid #c4c4c4;
-    color: #767676;
+    border: 1px solid var(--base-gray);
+    color: var(--dark-gray);
 `;
 
 export {

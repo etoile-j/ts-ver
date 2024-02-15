@@ -1,29 +1,19 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { DeepPartial, FieldValues, useForm } from 'react-hook-form';
 import { postOrder } from 'apis/order';
 import { IDirectOrderInfo } from 'GlobalType';
+import { ORDER_KIND } from 'constants/index';
 import DeliveryInfo from 'components/payment/DeliveryInfo';
-import FinalPaymentInfo from 'components/payment/FinalPaymentInfo';
+import FinalPayment from 'components/payment/FinalPayment';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/header/Header';
 import OrderTable from 'components/payment/OrderTable';
-import {
-    Main,
-    Total,
-    Section,
-    Container,
-    Wrap,
-    Heading,
-    RadioInput,
-    Label,
-    KakkoLabel,
-} from './style';
+import PaymentMethod from 'components/payment/PaymentMethod';
+import { Main, Total, Section, Container, Heading } from './style';
 
 interface IPaymentInputs {
-    name: string;
-    phone1: number;
-    phone2: number;
-    phone3: number;
+    receiver: string;
+    phone: { first: number; second: number; third: number };
     address1: string;
     address2: string;
     deliveryMessage: string;
@@ -31,43 +21,46 @@ interface IPaymentInputs {
     agreement: HTMLInputElement;
 }
 
-const Payment = ({ defaultValues }: any) => {
+const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
     const navigate = useNavigate();
-    const info: IDirectOrderInfo = useLocation().state;
-    const orderProductsInfo = useLocation().state.order_product;
+    const orderDetail: IDirectOrderInfo = useLocation().state;
+    const { product_id, order_kind, total_price, total_shipping, total } = orderDetail || {};
+    const orderProductsDetail = useLocation()?.state?.order_product;
     const {
         register,
         handleSubmit,
         formState: { isValid, errors },
     } = useForm({ mode: 'onChange', defaultValues });
 
-    const onSubmit = (data: IPaymentInputs) => {
-        handleOrder(data);
-    };
+    const onSubmit = async (data: IPaymentInputs) => {
+        try {
+            const requestData = {
+                product_id,
+                quantity: orderProductsDetail?.[0]?.quantity,
+                order_kind,
+                total_price:
+                    order_kind === ORDER_KIND.CART_ORDER
+                        ? total_price + total_shipping
+                        : total,
+                receiver: data.receiver,
+                receiver_phone_number: Object.values(data.phone).join(''),
+                address: `${data.address1} ${data.address2}`,
+                address_message: data.deliveryMessage,
+                payment_method: data.paymentMethod,
+            };
 
-    const handleOrder = async (data: IPaymentInputs) => {
-        const requestData = {
-            product_id: info.product_id,
-            quantity: orderProductsInfo[0].quantity,
-            order_kind: info.order_kind,
-            total_price:
-                info.order_kind === 'cart_order'
-                    ? info.total_price + info.total_shipping
-                    : info.total,
-            receiver: data.name,
-            receiver_phone_number: data.phone1 + data.phone2 + data.phone3,
-            address: data.address1 + ' ' + data.address2,
-            address_message: data.deliveryMessage,
-            payment_method: data.paymentMethod,
-        };
-        const responseData = await postOrder(requestData);
-        if (responseData) {
-            navigate('/complete_payment', {
-                state: {
-                    created_at: responseData.created_at,
-                    order_number: responseData.order_number,
-                },
-            });
+            const response = await postOrder(requestData);
+
+            if (response) {
+                navigate('/complete_payment', {
+                    state: {
+                        created_at: response.created_at,
+                        order_number: response.order_number,
+                    },
+                });
+            }
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -77,16 +70,14 @@ const Payment = ({ defaultValues }: any) => {
             <Main>
                 <h2>주문/결제하기</h2>
                 <section>
-                    {/* <Heading>주문 목록</Heading> */}
-                    <OrderTable productsInfo={orderProductsInfo} />
+                    <Heading>주문 목록</Heading>
+                    <OrderTable orderProductsDetail={orderProductsDetail} />
                     <Total>
                         총 주문금액
                         <strong>
-                            {info.order_kind === 'cart_order'
-                                ? (info.total_price + info.total_shipping).toLocaleString(
-                                      'ko-KR',
-                                  )
-                                : info.total.toLocaleString('ko-KR')}
+                            {order_kind === ORDER_KIND.CART_ORDER
+                                ? (total_price + total_shipping).toLocaleString('ko-KR')
+                                : total && total.toLocaleString('ko-KR')}
                             <span>원</span>
                         </strong>
                     </Total>
@@ -99,61 +90,15 @@ const Payment = ({ defaultValues }: any) => {
                     <Container>
                         <section>
                             <Heading>결제수단</Heading>
-                            <Wrap>
-                                <Label>
-                                    <RadioInput
-                                        value="CARD"
-                                        {...register('paymentMethod', {
-                                            required: true,
-                                        })}
-                                    />
-                                    신용/체크카드
-                                </Label>
-                                <Label>
-                                    <RadioInput
-                                        value="DEPOSIT"
-                                        {...register('paymentMethod', {
-                                            required: true,
-                                        })}
-                                    />
-                                    무통장 입금
-                                </Label>
-                                <Label>
-                                    <RadioInput
-                                        value="PHONE_PAYMENT"
-                                        {...register('paymentMethod', {
-                                            required: true,
-                                        })}
-                                    />
-                                    휴대폰 결제
-                                </Label>
-                                <Label>
-                                    <RadioInput
-                                        value="NAVERPAY"
-                                        {...register('paymentMethod', {
-                                            required: true,
-                                        })}
-                                    />
-                                    네이버페이
-                                </Label>
-                                <KakkoLabel>
-                                    <RadioInput
-                                        value="KAKAOPAY"
-                                        {...register('paymentMethod', {
-                                            required: true,
-                                        })}
-                                    />
-                                    카카오페이
-                                </KakkoLabel>
-                            </Wrap>
+                            <PaymentMethod register={register} />
                         </section>
                         <Section>
                             <Heading>최종결제 정보</Heading>
-                            <FinalPaymentInfo
-                                info={orderProductsInfo}
-                                type={info.order_kind}
-                                price={info.total_price}
-                                shipping={info.total_shipping}
+                            <FinalPayment
+                                singleOrderDetail={orderProductsDetail}
+                                order_kind={order_kind}
+                                total_price={total_price}
+                                total_shipping={total_shipping}
                                 register={register}
                                 isValid={isValid}
                             />

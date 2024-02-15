@@ -7,13 +7,13 @@ interface styledCompo {
 const Product = styled.div`
     display: flex;
     align-items: center;
-    background-color: #ffffff;
+    background-color: var(--white);
     height: 103px;
     padding: 0 10px;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    border-bottom: 1px solid #c4c4c4;
+    border-bottom: 1px solid var(--base-gray);
     &:last-child {
         border-radius: 0 0 5px 5px;
     }
@@ -45,7 +45,7 @@ const TextWrap = styled.div`
 
 const Stock = styled.p`
     margin-top: 10px;
-    color: #767676;
+    color: var(--dark-gray);
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
@@ -60,10 +60,10 @@ const Price = styled.strong`
 const EditBtn = styled.button.attrs({
     type: 'button',
 })`
-    background-color: #6997f7;
+    background-color: var(--point-color);
     width: 80px;
     height: 40px;
-    color: #ffffff;
+    color: var(--white);
     border-radius: 5px;
     font-weight: 400;
     font-size: 16px;
@@ -76,24 +76,14 @@ const EditBtn = styled.button.attrs({
     }
 `;
 const DeleteBtn = styled(EditBtn)`
-    background-color: #ffffff;
-    border: 1px solid #c4c4c4;
-    color: #767676;
+    background-color: var(--white);
+    border: 1px solid var(--base-gray);
+    color: var(--dark-gray);
     :hover {
-        background-color: #ffffff;
-        border: 1px solid #767676;
-        color: #000000;
+        background-color: var(--white);
+        border: 1px solid var(--dark-gray);
+        color: var(--black);
     }
 `;
 
-export {
-    Product,
-    Content,
-    ProductWrap,
-    Img,
-    TextWrap,
-    Stock,
-    Price,
-    EditBtn,
-    DeleteBtn,
-};
+export { Product, Content, ProductWrap, Img, TextWrap, Stock, Price, EditBtn, DeleteBtn };

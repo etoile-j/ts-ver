@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { IProduct } from 'GlobalType';
 import {
     TitleLi,
@@ -10,7 +11,7 @@ import {
     Price,
 } from './OrderTableStyle';
 
-const OrderTable = ({ productsInfo }: { productsInfo: IProduct[] }) => {
+const OrderTable = ({ orderProductsDetail }: { orderProductsDetail: IProduct[] }) => {
     return (
         <ul>
             <TitleLi>
@@ -19,17 +20,21 @@ const OrderTable = ({ productsInfo }: { productsInfo: IProduct[] }) => {
                 <Title width="228px">배송비</Title>
                 <Title width="231px">주문금액</Title>
             </TitleLi>
-            {productsInfo.map((info: IProduct) => {
-                const { image, store_name, product_name, quantity, price, shipping_fee } =
-                    info;
+            {orderProductsDetail?.map((product: IProduct) => {
+                const { product_id, product_name, quantity, price, shipping_fee } = product;
+
                 return (
-                    <OrderLi key={info.product_id}>
+                    <OrderLi key={product_id}>
                         <Title width="589px">
                             <Wrap>
-                                <ProductImg src={image}></ProductImg>
+                                <Link to={`/detail/${product_id}`}>
+                                    <ProductImg src={product.image}></ProductImg>
+                                </Link>
                                 <div>
-                                    <GrayFont>{store_name}</GrayFont>
-                                    <ProductName>{product_name}</ProductName>
+                                    <GrayFont>{product.store_name}</GrayFont>
+                                    <Link to={`/detail/${product_id}`}>
+                                        <ProductName>{product_name}</ProductName>
+                                    </Link>
                                     <GrayFont>수량: {quantity}개</GrayFont>
                                 </div>
                             </Wrap>

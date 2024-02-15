@@ -3,6 +3,7 @@ import { axiosApi } from 'apis/axiosInstance';
 import { setLocalStorage } from 'utils/storage';
 import { ILoginType } from 'GlobalType';
 import { Form, Input, SubmitButton, Div, CautionText } from './LoginContentStyle';
+import { LOGIN_TYPE } from 'constants/index';
 
 const LoginContent = ({ typeBuyers }: ILoginType) => {
     const idRef = useRef<HTMLInputElement>(null);
@@ -21,7 +22,7 @@ const LoginContent = ({ typeBuyers }: ILoginType) => {
             const response = await axiosApi.post('/accounts/login/', {
                 username: idRef.current?.value,
                 password: passwordRef.current?.value,
-                login_type: typeBuyers ? 'BUYER' : 'SELLER',
+                login_type: typeBuyers ? LOGIN_TYPE.BUYER : LOGIN_TYPE.SELLER,
             });
             setLocalStorage('token', response.data.token);
             setLocalStorage('login_type', response.data.user_type);

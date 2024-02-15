@@ -6,7 +6,7 @@ interface styledCompo {
 
 const Container = styled.div`
     width: 480px;
-    border: 2px solid #6997f7;
+    border: 2px solid var(--point-color);
     border-radius: 10px;
     @media screen and (max-width: 820px) {
         width: 425px;
@@ -39,7 +39,7 @@ const Price = styled.strong`
     line-height: 23px;
     & > span {
         margin-left: 4px;
-        color: #767676;
+        color: var(--dark-gray);
         font-weight: 400;
         font-size: 14px;
         line-height: 18px;
@@ -55,7 +55,7 @@ const PaymentPrice = styled(Price)`
         content: '';
         display: inline-block;
         position: absolute;
-        background: #c4c4c4;
+        background: var(--base-gray);
         width: 100%;
         height: 1px;
         top: -29px;
@@ -64,7 +64,7 @@ const PaymentPrice = styled(Price)`
 `;
 
 const GrayWrap = styled.div`
-    background-color: #f2f2f2;
+    background-color: var(--light-gray);
     padding: 30px 30px 34px;
     border-radius: 10px;
     text-align: center;
@@ -76,20 +76,10 @@ const GrayBtn = styled.button`
     padding: 19px 0;
     margin-top: 30px;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--white);
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
 `;
 
-export {
-    Container,
-    WhiteWrap,
-    Div,
-    PaymentDiv,
-    H4,
-    Price,
-    PaymentPrice,
-    GrayWrap,
-    GrayBtn,
-};
+export { Container, WhiteWrap, Div, PaymentDiv, H4, Price, PaymentPrice, GrayWrap, GrayBtn };

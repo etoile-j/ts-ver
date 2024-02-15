@@ -29,7 +29,7 @@ const SubTextWrap = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
-    color: #767676;
+    color: var(--dark-gray);
 `;
 
 const BtnWrap = styled.div`
@@ -37,29 +37,20 @@ const BtnWrap = styled.div`
 `;
 
 const BackBtn = styled.button`
-    background: #ffffff;
+    background: var(--white);
     width: 200px;
     padding: 18px 0;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--base-gray);
     border-radius: 5px;
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
-    color: #767676;
+    color: var(--dark-gray);
 `;
 const MainBtn = styled(BackBtn)`
-    background: #6997f7;
+    background: var(--point-color);
     margin-right: 14px;
-    color: #ffffff;
+    color: var(--white);
 `;
 
-export {
-    Container,
-    Img,
-    MainText,
-    ErrorText,
-    SubTextWrap,
-    BtnWrap,
-    BackBtn,
-    MainBtn,
-};
+export { Container, Img, MainText, ErrorText, SubTextWrap, BtnWrap, BackBtn, MainBtn };

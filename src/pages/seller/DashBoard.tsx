@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ITEMS_PER_PAGE } from 'constants/index';
 import SellerCenterHeader from 'components/seller/SellerCenterHeader';
 import ProductList from 'components/seller/ProductList';
 import UploadIcon from '../../assets/icon-upload.svg';
@@ -21,18 +23,19 @@ import {
     Content,
     PageNum,
     Page,
-    PreviousPage,
-    NextPage,
+    PageButton,
 } from './DashBoardStyle';
 
-const DashBoard = () => {
-    const [count, setCount] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
+const NAV_LIST = [
+    { id: 1, title: '주문/배송' },
+    { id: 2, title: '통계' },
+    { id: 3, title: '스토어 설정' },
+];
 
-    const pages = [];
-    for (let i = 0; i < Math.ceil(count! / 15); i++) {
-        pages.push(i + 1);
-    }
+const DashBoard = () => {
+    const [totalCount, setTotalCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPage = Math.ceil(totalCount! / ITEMS_PER_PAGE);
 
     return (
         <>
@@ -40,29 +43,25 @@ const DashBoard = () => {
             <Main>
                 <HeadingWrap>
                     <h2>대시보드</h2>
-                    <ProductUpload
-                        onClick={() =>
-                            (window.location.href = '/seller/upload')
-                        }
-                    >
-                        <IconUpload src={UploadIcon} />
-                        상품 업로드
-                    </ProductUpload>
+                    <Link to="/seller/upload">
+                        <ProductUpload>
+                            <IconUpload src={UploadIcon} />
+                            상품 업로드
+                        </ProductUpload>
+                    </Link>
                 </HeadingWrap>
                 <nav>
                     <Ol>
                         <li>
-                            <OnListBtn>판매중인 상품({count})</OnListBtn>
+                            <OnListBtn>판매중인 상품 ({totalCount})</OnListBtn>
                         </li>
-                        <li>
-                            <ListBtn>주문/배송</ListBtn>
-                        </li>
-                        <li>
-                            <ListBtn>통계</ListBtn>
-                        </li>
-                        <li>
-                            <ListBtn>스토어 설정</ListBtn>
-                        </li>
+                        {NAV_LIST.map((info) => {
+                            return (
+                                <li key={info.id}>
+                                    <ListBtn>{info.title}</ListBtn>
+                                </li>
+                            );
+                        })}
                     </Ol>
                 </nav>
                 <TableWrap>
@@ -75,20 +74,16 @@ const DashBoard = () => {
                         </Title>
                         <Container>
                             <ProductList
-                                count={count}
-                                setCount={setCount}
+                                totalCount={totalCount}
+                                setTotalCount={setTotalCount}
                                 currentPage={currentPage}
                             />
                         </Container>
                     </Table>
                     <PageNum>
-                        <PreviousPage
+                        <PageButton
                             disabled={currentPage <= 1}
-                            onClick={() =>
-                                setCurrentPage(
-                                    (previousValue) => previousValue - 1,
-                                )
-                            }
+                            onClick={() => setCurrentPage((preValue) => preValue - 1)}
                             style={{
                                 backgroundImage:
                                     currentPage <= 1
@@ -97,32 +92,30 @@ const DashBoard = () => {
                             }}
                             aria-label="이전 페이지로 이동"
                         />
-                        {pages.map((page) => {
-                            return (
-                                <Page
-                                    key="page"
-                                    onClick={() => setCurrentPage(page)}
-                                    style={{
-                                        color:
-                                            currentPage === page
-                                                ? '#000000'
-                                                : '#c4c4c4',
-                                    }}
-                                >
-                                    {page}
-                                </Page>
-                            );
-                        })}
-                        <NextPage
-                            disabled={currentPage >= Math.ceil(count! / 15)}
-                            onClick={() =>
-                                setCurrentPage(
-                                    (previousValue) => previousValue + 1,
-                                )
-                            }
+                        {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+                            (page) => {
+                                return (
+                                    <Page
+                                        key={page}
+                                        onClick={() => setCurrentPage(page)}
+                                        style={{
+                                            color:
+                                                currentPage === page
+                                                    ? 'var(--black)'
+                                                    : 'var(--base-gray)',
+                                        }}
+                                    >
+                                        {page}
+                                    </Page>
+                                );
+                            },
+                        )}
+                        <PageButton
+                            disabled={currentPage >= totalPage}
+                            onClick={() => setCurrentPage((preValue) => preValue + 1)}
                             style={{
                                 backgroundImage:
-                                    currentPage >= Math.ceil(count! / 15)
+                                    currentPage >= totalPage
                                         ? `url(${NextOffIcon})`
                                         : `url(${NextIcon})`,
                             }}
