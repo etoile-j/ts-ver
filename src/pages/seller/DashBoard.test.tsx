@@ -2,13 +2,14 @@ import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import server from 'mocks/server';
-import { dashBoardRender } from 'utils/test';
+import { componentRender } from 'utils/test';
 import { BASE_URL } from 'apis/axiosInstance';
 import { PRODUCT_MOCK_17 } from 'mocks/data';
+import DashBoard from './DashBoard';
 
 describe('DashBoard page: 상품이 2개인 경우', () => {
     test('상품 2개가 표시된다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         await waitFor(() => {
             const productImgElement = screen.getAllByAltText('상품 이미지');
@@ -17,7 +18,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 
     test('1 페이지 버튼이 있다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         await waitFor(() => {
             const page1Button = screen.getByRole('button', { name: '1' });
@@ -26,7 +27,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 
     test('2 페이지 버튼은 존재하지 않는다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         await waitFor(() => {
             const page2Button = screen.queryByRole('button', { name: '2' });
@@ -35,7 +36,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 
     test('이전, 다음 페이지로 이동하는 버튼이 disable 상태이다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         const previousButton = await screen.findByLabelText('이전 페이지로 이동');
         const nextButton = await screen.findByLabelText('다음 페이지로 이동');
@@ -53,7 +54,7 @@ describe('DashBoard page: 상품이 17개인 경우', () => {
     });
 
     test('1, 2 페이지 버튼이 있다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         const page1Button = await screen.findByRole('button', { name: '1' });
         const page2Button = await screen.findByRole('button', { name: '2' });
@@ -63,7 +64,7 @@ describe('DashBoard page: 상품이 17개인 경우', () => {
     });
 
     test('3 페이지 버튼은 존재하지 않는다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         await waitFor(() => {
             const page3Button = screen.queryByRole('button', { name: '3' });
@@ -72,7 +73,7 @@ describe('DashBoard page: 상품이 17개인 경우', () => {
     });
 
     test('다음 페이지로 이동하는 버튼이 활성화되어 있다.', async () => {
-        dashBoardRender();
+        componentRender(<DashBoard />);
 
         await waitFor(() => {
             const nextButton = screen.getByLabelText('다음 페이지로 이동');
