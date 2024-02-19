@@ -48,14 +48,14 @@ export const product_id_2 = {
 };
 
 // DashBoard
-export const PRODUCT_MOCK_2 = {
+export const product_mock_2 = {
     count: 2,
     next: null,
     previous: null,
     results: [product_id_1, product_id_2],
 };
 
-export const PRODUCT_MOCK_17 = {
+export const product_mock_17 = {
     count: 17,
     next: null,
     previous: null,

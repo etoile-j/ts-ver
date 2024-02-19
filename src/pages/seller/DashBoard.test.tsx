@@ -4,7 +4,7 @@ import { rest } from 'msw';
 import server from 'mocks/server';
 import { componentRender } from 'utils/test';
 import { BASE_URL } from 'apis/axiosInstance';
-import { PRODUCT_MOCK_17 } from 'mocks/data';
+import { product_mock_17 } from 'mocks/data';
 import DashBoard from './DashBoard';
 
 describe('DashBoard page: 상품이 2개인 경우', () => {
@@ -49,7 +49,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
 describe('DashBoard page: 상품이 17개인 경우', () => {
     beforeEach(() => {
         server.use(
-            rest.get(BASE_URL + '/seller/', (_, res, ctx) => res(ctx.json(PRODUCT_MOCK_17))),
+            rest.get(BASE_URL + '/seller/', (_, res, ctx) => res(ctx.json(product_mock_17))),
         );
     });
 
