@@ -1,33 +1,58 @@
-export const PRODUCT_MOCK_2 = {
+// Cart
+export const cartData = {
     count: 2,
     next: null,
     previous: null,
     results: [
         {
-            image: 'https://sample/image.jpg',
-            price: 64000,
+            my_cart: 3,
+            cart_item_id: 5,
             product_id: 1,
-            product_info: '쓰레기통',
-            product_name: 'Shade Bin, 5 colors',
-            seller: 4,
-            shipping_fee: 4000,
-            shipping_method: 'PARCEL',
-            stock: 50,
-            store_name: "seller2's store",
+            quantity: 2,
+            is_active: true,
         },
         {
-            image: 'https://sample/image.jpg',
-            price: 70000,
+            my_cart: 3,
+            cart_item_id: 6,
             product_id: 2,
-            product_info: '법랑 그릇',
-            product_name: 'Soft Ice Salad Bowl, Green',
-            seller: 4,
-            shipping_fee: 3000,
-            shipping_method: 'DELIVERY',
-            stock: 66,
-            store_name: "seller2's store",
+            quantity: 1,
+            is_active: true,
         },
     ],
+};
+
+export const product_id_1 = {
+    image: 'https://sample/image.jpg',
+    price: 64000,
+    product_id: 1,
+    product_info: '쓰레기통',
+    product_name: 'Shade Bin, 5 colors',
+    seller: 4,
+    shipping_fee: 4000,
+    shipping_method: 'PARCEL',
+    stock: 50,
+    store_name: 'OUR',
+};
+
+export const product_id_2 = {
+    image: 'https://sample/image.jpg',
+    price: 55000,
+    product_id: 2,
+    product_info: '법랑 그릇',
+    product_name: 'Soft Ice Salad Bowl, Blue',
+    seller: 4,
+    shipping_fee: 3000,
+    shipping_method: 'DELIVERY',
+    stock: 66,
+    store_name: 'OUR',
+};
+
+// DashBoard
+export const PRODUCT_MOCK_2 = {
+    count: 2,
+    next: null,
+    previous: null,
+    results: [product_id_1, product_id_2],
 };
 
 export const PRODUCT_MOCK_17 = {
