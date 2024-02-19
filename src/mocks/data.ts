@@ -21,7 +21,7 @@ export const cartData = {
     ],
 };
 
-export const product_id_1 = {
+export const productId_1 = {
     image: 'https://sample/image.jpg',
     price: 64000,
     product_id: 1,
@@ -34,7 +34,7 @@ export const product_id_1 = {
     store_name: 'OUR',
 };
 
-export const product_id_2 = {
+export const productId_2 = {
     image: 'https://sample/image.jpg',
     price: 55000,
     product_id: 2,
@@ -48,14 +48,14 @@ export const product_id_2 = {
 };
 
 // DashBoard
-export const product_mock_2 = {
+export const productMock_2 = {
     count: 2,
     next: null,
     previous: null,
-    results: [product_id_1, product_id_2],
+    results: [productId_1, productId_2],
 };
 
-export const product_mock_17 = {
+export const productMock_17 = {
     count: 17,
     next: null,
     previous: null,
