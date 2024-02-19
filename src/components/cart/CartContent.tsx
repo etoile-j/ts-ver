@@ -10,7 +10,8 @@ const CartContent = () => {
     const [cartProductDetails, setCartProductDetails] = useState<IProduct[]>([]);
     const [checkedItems, setCheckedItems] = useState<ICheckedItems[]>([]);
 
-    const { data: cartData, isLoading } = useQuery(['cartData'], getCartItem);
+    const { data: cartData } = useQuery(['cartData'], getCartItem);
+    const { count, results } = cartData || {};
 
     return (
         <>
@@ -20,14 +21,14 @@ const CartContent = () => {
                 setCheckedItems={setCheckedItems}
             />
             <CartItems
-                isLoading={isLoading}
-                cartData={cartData}
+                cartCount={count}
+                cartData={results}
                 cartProductDetails={cartProductDetails}
                 setCartProductDetails={setCartProductDetails}
                 checkedItems={checkedItems}
                 setCheckedItems={setCheckedItems}
             />
-            {cartData && cartData.length > 0 && (
+            {!!count && (
                 <CartResult
                     checkedItems={checkedItems}
                     cartProductDetails={cartProductDetails}
