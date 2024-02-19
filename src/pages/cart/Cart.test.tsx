@@ -78,4 +78,14 @@ describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 없�
             expect(toggleAll).toBeInTheDocument();
         });
     });
+
+    test('총 상품 금액 및 주문하기 버튼이 표시되지 않는다.', async () => {
+        componentRender(<CartContent />);
+
+        const totalPaymentAmountText = screen.queryByText('결제 예정 금액');
+        const orderButton = screen.queryByText('주문하기');
+
+        expect(totalPaymentAmountText).not.toBeInTheDocument();
+        expect(orderButton).not.toBeInTheDocument();
+    });
 });
