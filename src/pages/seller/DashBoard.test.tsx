@@ -29,10 +29,8 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     test('2 페이지 버튼은 존재하지 않는다.', async () => {
         componentRender(<DashBoard />);
 
-        await waitFor(() => {
-            const page2Button = screen.queryByRole('button', { name: '2' });
-            expect(page2Button).not.toBeInTheDocument();
-        });
+        const page2Button = screen.queryByRole('button', { name: '2' });
+        expect(page2Button).not.toBeInTheDocument();
     });
 
     test('이전, 다음 페이지로 이동하는 버튼이 disable 상태이다.', async () => {
@@ -66,10 +64,8 @@ describe('DashBoard page: 상품이 17개인 경우', () => {
     test('3 페이지 버튼은 존재하지 않는다.', async () => {
         componentRender(<DashBoard />);
 
-        await waitFor(() => {
-            const page3Button = screen.queryByRole('button', { name: '3' });
-            expect(page3Button).not.toBeInTheDocument();
-        });
+        const page3Button = screen.queryByRole('button', { name: '3' });
+        expect(page3Button).not.toBeInTheDocument();
     });
 
     test('다음 페이지로 이동하는 버튼이 활성화되어 있다.', async () => {
