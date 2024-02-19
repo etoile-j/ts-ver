@@ -4,6 +4,7 @@ import { BASE_URL } from 'apis/axiosInstance';
 import { productMock_2, cartData, productId_1, productId_2 } from './data';
 
 export const handlers = [
+    // DashBoard
     rest.get<IProductSeller>(BASE_URL + '/seller/', (req, res, ctx) => {
         const page = req.url.searchParams.get('page');
 
