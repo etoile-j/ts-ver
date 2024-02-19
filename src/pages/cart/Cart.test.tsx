@@ -7,13 +7,11 @@ import { BASE_URL } from 'apis/axiosInstance';
 import CartContent from 'components/cart/CartContent';
 
 describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 2개 있는 경우', () => {
-    test('NoneCartItem 컴포넌트가 렌더링되지 않는다.', async () => {
+    test('NoneCartItem 컴포넌트가 렌더링되지 않는다.', () => {
         componentRender(<CartContent />);
 
-        await waitFor(() => {
-            const textEl = screen.queryByText('장바구니에 담긴 상품이 없습니다.');
-            expect(textEl).toBeNull();
-        });
+        const emptyCartText = screen.queryByText('장바구니에 담긴 상품이 없습니다.');
+        expect(emptyCartText).toBeNull();
     });
 
     test('담긴 상품 2개가 렌더링된다.', async () => {
@@ -79,7 +77,7 @@ describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 없�
         });
     });
 
-    test('총 상품 금액 및 주문하기 버튼이 표시되지 않는다.', async () => {
+    test('총 상품 금액 및 주문하기 버튼이 표시되지 않는다.', () => {
         componentRender(<CartContent />);
 
         const totalPaymentAmountText = screen.queryByText('결제 예정 금액');
