@@ -8,7 +8,7 @@ import Skeleton from './item/Skeleton';
 import { Container } from './style';
 
 interface ICartItemsProps {
-    isLoading: boolean;
+    cartCount: number;
     cartData: ICartData[];
     checkedItems: ICheckedItems[];
     setCheckedItems: React.Dispatch<React.SetStateAction<ICheckedItems[]>>;
@@ -18,7 +18,7 @@ interface ICartItemsProps {
 
 const CartItems = (CartItemsProps: ICartItemsProps) => {
     const {
-        isLoading,
+        cartCount,
         cartData,
         cartProductDetails,
         setCartProductDetails,
@@ -29,20 +29,14 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
     useEffect(() => {
         const updateProductDetails = async () => {
             const result = (await getProductsDetail()) as IProduct[];
-
             setCartProductDetails(result);
             setCheckedItems(filterAllItems(result));
         };
-
-        !isLoading && updateProductDetails();
-    }, [cartData, isLoading]);
+        cartCount && updateProductDetails();
+    }, [cartData, cartCount]);
 
     const getProductsDetail = async () => {
         try {
-            if (cartData.length === 0) {
-                return [];
-            }
-
             const productsDetail = cartData?.map((item) => getProductDetail(item.product_id));
             const resolvedProductsDetail = await Promise.all(productsDetail);
 
@@ -56,7 +50,9 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
         }
     };
 
-    return !isLoading && cartProductDetails.length > 0 ? (
+    return cartCount === 0 ? (
+        <NoneCartItem />
+    ) : cartProductDetails?.length ? (
         <>
             {cartProductDetails?.map((item) => (
                 <Container key={item.cart_item_id}>
@@ -68,8 +64,6 @@ const CartItems = (CartItemsProps: ICartItemsProps) => {
                 </Container>
             ))}
         </>
-    ) : !isLoading && cartData.length === 0 ? (
-        <NoneCartItem />
     ) : (
         <>
             {new Array(4).fill(0).map((_, i) => (

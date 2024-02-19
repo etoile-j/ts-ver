@@ -4,7 +4,7 @@ import { ICartData } from 'GlobalType';
 export const getCartItem = async () => {
     try {
         const response = await axiosApi.get('/cart/');
-        return response.data.results;
+        return response.data;
     } catch (err) {
         console.error(err);
     }

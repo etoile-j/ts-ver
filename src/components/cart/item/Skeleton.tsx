@@ -32,7 +32,7 @@ const Skeleton = () => {
             <Content width="329px">
                 <InPrice />
                 <OrderBtn>주문하기</OrderBtn>
-                <DeleteBtn aria-label="삭제" />
+                <DeleteBtn aria-label="Skeleton 삭제" />
             </Content>
         </>
     );
