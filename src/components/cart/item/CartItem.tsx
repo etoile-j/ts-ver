@@ -95,8 +95,8 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                     checked={checkedItems.some((item) => item.product_id === product_id)}
                 />
             </Content>
-            <Link to={`/detail/${product_id}`}>
-                <Content width="611px">
+            <Content width="611px">
+                <Link to={`/detail/${product_id}`}>
                     <Wrap>
                         <ProductImg src={image}></ProductImg>
                         <div>
@@ -114,8 +114,8 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                             </DeliveryText>
                         </div>
                     </Wrap>
-                </Content>
-            </Link>
+                </Link>
+            </Content>
             <Content width="248px">
                 <CountBtn onClick={handleCountModal}>-</CountBtn>
                 <Count>{quantity}</Count>
