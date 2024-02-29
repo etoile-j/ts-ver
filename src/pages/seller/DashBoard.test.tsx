@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import server from 'mocks/server';
