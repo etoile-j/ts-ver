@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import server from 'mocks/server';
@@ -7,23 +6,19 @@ import { BASE_URL } from 'apis/axiosInstance';
 import { productMock_17 } from 'mocks/data';
 import DashBoard from './DashBoard';
 
-describe('DashBoard page: 상품이 2개인 경우', () => {
+describe('DashBoard 페이지 테스트: 상품이 2개인 경우', () => {
     test('상품 2개가 표시된다.', async () => {
         componentRender(<DashBoard />);
 
-        await waitFor(() => {
-            const productImgElement = screen.getAllByAltText('상품 이미지');
-            expect(productImgElement).toHaveLength(2);
-        });
+        const productImgElement = await screen.findAllByAltText('상품 이미지');
+        expect(productImgElement).toHaveLength(2);
     });
 
     test('1 페이지 버튼이 있다.', async () => {
         componentRender(<DashBoard />);
 
-        await waitFor(() => {
-            const page1Button = screen.getByRole('button', { name: '1' });
-            expect(page1Button).toBeInTheDocument();
-        });
+        const page1Button = await screen.findByRole('button', { name: '1' });
+        expect(page1Button).toBeInTheDocument();
     });
 
     test('2 페이지 버튼은 존재하지 않는다.', async () => {
@@ -44,7 +39,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 });
 
-describe('DashBoard page: 상품이 17개인 경우', () => {
+describe('DashBoard 페이지 테스트: 상품이 17개인 경우', () => {
     beforeEach(() => {
         server.use(
             rest.get(BASE_URL + '/seller/', (_, res, ctx) => res(ctx.json(productMock_17))),

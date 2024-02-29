@@ -1,8 +1,7 @@
-import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { paymentRender } from 'utils/test';
 
-describe('payment 페이지 테스트', () => {
+describe('Payment 페이지 테스트', () => {
     test('수령인에 공백을 입력하면 에러 메시지가 표시된다.', async () => {
         paymentRender();
 
@@ -77,8 +76,6 @@ describe('payment 페이지 테스트', () => {
         fireEvent.click(paymentMethoudInput);
         fireEvent.click(agreeInput);
 
-        await waitFor(() => {
-            expect(paymentButton).toBeEnabled();
-        });
+        await waitFor(() => expect(paymentButton).toBeEnabled());
     });
 });
