@@ -1,9 +1,12 @@
-import { render } from '@testing-library/react';
+import { RenderResult, render } from '@testing-library/react';
+import { ReactElement } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { QueryClientProvider } from 'react-query';
-import queryClient from 'queries/queryClient';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Payment from 'pages/payment/Payment';
-import DashBoard from 'pages/seller/DashBoard';
+
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+});
 
 export const paymentRender = () => {
     return render(
@@ -13,12 +16,10 @@ export const paymentRender = () => {
     );
 };
 
-export const dashBoardRender = () => {
-    render(
+export const componentRender = (element: ReactElement): RenderResult => {
+    return render(
         <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-                <DashBoard />
-            </MemoryRouter>
+            <MemoryRouter>{element}</MemoryRouter>
         </QueryClientProvider>,
     );
 };

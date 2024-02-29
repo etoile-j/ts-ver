@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteCartItem, putCartItemQuantity } from 'apis/cart';
 import { IProduct, ICheckedItems } from 'GlobalType';
@@ -96,23 +96,25 @@ const CartItem = ({ detail, checkedItems, setCheckedItems }: ICartItemProps) => 
                 />
             </Content>
             <Content width="611px">
-                <Wrap>
-                    <ProductImg src={image}></ProductImg>
-                    <div>
-                        <SellerName>{store_name}</SellerName>
-                        <ProductName>{product_name}</ProductName>
-                        <Price>
-                            {price.toLocaleString('ko-KR')}
-                            <span>원</span>
-                        </Price>
-                        <DeliveryText>
-                            택배배송 /{' '}
-                            {shipping_fee
-                                ? `${shipping_fee.toLocaleString('ko-KR')}원`
-                                : '무료배송'}
-                        </DeliveryText>
-                    </div>
-                </Wrap>
+                <Link to={`/detail/${product_id}`}>
+                    <Wrap>
+                        <ProductImg src={image}></ProductImg>
+                        <div>
+                            <SellerName>{store_name}</SellerName>
+                            <ProductName>{product_name}</ProductName>
+                            <Price>
+                                {price.toLocaleString('ko-KR')}
+                                <span>원</span>
+                            </Price>
+                            <DeliveryText>
+                                택배배송 /{' '}
+                                {shipping_fee
+                                    ? `${shipping_fee.toLocaleString('ko-KR')}원`
+                                    : '무료배송'}
+                            </DeliveryText>
+                        </div>
+                    </Wrap>
+                </Link>
             </Content>
             <Content width="248px">
                 <CountBtn onClick={handleCountModal}>-</CountBtn>
