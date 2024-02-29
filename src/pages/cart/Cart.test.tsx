@@ -5,7 +5,7 @@ import { componentRender } from 'utils/test';
 import { BASE_URL } from 'apis/axiosInstance';
 import CartContent from 'components/cart/CartContent';
 
-describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 2개 있는 경우', () => {
+describe('Cart 페이지 테스트: 처음 장바구니 진입 시, 장바구니에 담긴 상품이 2개 있는 경우', () => {
     test('NoneCartItem 컴포넌트가 렌더링되지 않는다.', () => {
         componentRender(<CartContent />);
 
@@ -49,7 +49,7 @@ describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 2개 
     });
 });
 
-describe('처음 장바구니 진입 시, 장바구니에 담긴 상품이 없는 경우', () => {
+describe('Cart 페이지 테스트: 처음 장바구니 진입 시, 장바구니에 담긴 상품이 없는 경우', () => {
     beforeEach(() => {
         server.use(
             rest.get(BASE_URL + '/cart/', (_, res, ctx) =>

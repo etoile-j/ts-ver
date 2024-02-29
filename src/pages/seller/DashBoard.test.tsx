@@ -6,7 +6,7 @@ import { BASE_URL } from 'apis/axiosInstance';
 import { productMock_17 } from 'mocks/data';
 import DashBoard from './DashBoard';
 
-describe('DashBoard page: 상품이 2개인 경우', () => {
+describe('DashBoard 페이지 테스트: 상품이 2개인 경우', () => {
     test('상품 2개가 표시된다.', async () => {
         componentRender(<DashBoard />);
 
@@ -43,7 +43,7 @@ describe('DashBoard page: 상품이 2개인 경우', () => {
     });
 });
 
-describe('DashBoard page: 상품이 17개인 경우', () => {
+describe('DashBoard 페이지 테스트: 상품이 17개인 경우', () => {
     beforeEach(() => {
         server.use(
             rest.get(BASE_URL + '/seller/', (_, res, ctx) => res(ctx.json(productMock_17))),
