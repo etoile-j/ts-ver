@@ -76,8 +76,6 @@ describe('Payment 페이지 테스트', () => {
         fireEvent.click(paymentMethoudInput);
         fireEvent.click(agreeInput);
 
-        await waitFor(() => {
-            expect(paymentButton).toBeEnabled();
-        });
+        await waitFor(() => expect(paymentButton).toBeEnabled());
     });
 });

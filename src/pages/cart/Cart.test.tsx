@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { rest } from 'msw';
 import server from 'mocks/server';
 import { componentRender } from 'utils/test';
@@ -16,19 +16,15 @@ describe('Cart 페이지 테스트: 처음 장바구니 진입 시, 장바구니
     test('담긴 상품 2개가 렌더링된다.', async () => {
         componentRender(<CartContent />);
 
-        await waitFor(() => {
-            const deleteButton = screen.getAllByLabelText('삭제');
-            expect(deleteButton).toHaveLength(2);
-        });
+        const deleteButton = await screen.findAllByLabelText('삭제');
+        expect(deleteButton).toHaveLength(2);
     });
 
     test('최상단 체크박스 및 상품 2개의 체크박스가 체크되어 있다.', async () => {
         componentRender(<CartContent />);
 
-        await waitFor(() => {
-            const checkboxes = screen.getAllByRole('checkbox', { checked: true });
-            expect(checkboxes).toHaveLength(3);
-        });
+        const checkboxes = await screen.findAllByRole('checkbox', { checked: true });
+        expect(checkboxes).toHaveLength(3);
     });
 
     test('최하단의 "주문하기" 버튼이 활성화되어 있다.', async () => {
@@ -61,19 +57,15 @@ describe('Cart 페이지 테스트: 처음 장바구니 진입 시, 장바구니
     test('NoneCartItem 컴포넌트가 렌더링된다.', async () => {
         componentRender(<CartContent />);
 
-        await waitFor(() => {
-            const emptyCartText = screen.getByText('장바구니에 담긴 상품이 없습니다.');
-            expect(emptyCartText).toBeInTheDocument();
-        });
+        const emptyCartText = await screen.findByText('장바구니에 담긴 상품이 없습니다.');
+        expect(emptyCartText).toBeInTheDocument();
     });
 
     test('최상단 체크박스가 체크 해제되어 있다.', async () => {
         componentRender(<CartContent />);
 
-        await waitFor(() => {
-            const toggleAll = screen.getByRole('checkbox', { checked: false });
-            expect(toggleAll).toBeInTheDocument();
-        });
+        const toggleAll = await screen.findByRole('checkbox', { checked: false });
+        expect(toggleAll).toBeInTheDocument();
     });
 
     test('총 상품 금액 및 주문하기 버튼이 표시되지 않는다.', () => {
