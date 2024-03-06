@@ -8,3 +8,12 @@ export const postOrder = async (requestData: {}) => {
         console.error(err);
     }
 };
+
+export const getOrder = async () => {
+    try {
+        const response = await axiosApi.get('/order/');
+        return response.data;
+    } catch (err) {
+        console.error(err);
+    }
+};
