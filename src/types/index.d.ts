@@ -37,6 +37,12 @@ module 'GlobalType' {
         product_name?: string;
     }
 
+    interface IPostCart {
+        product_id?: string;
+        quantity: number;
+        check: boolean;
+    }
+
     interface ISearch {
         [keyword: string]: string;
     }

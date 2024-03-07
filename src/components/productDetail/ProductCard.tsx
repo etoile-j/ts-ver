@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from 'apis/products';
 import { getCartItem, postCartItem } from 'apis/cart';
 import { getLocalStorage } from 'utils/storage';
-import { IProduct, ICartData } from 'GlobalType';
-import { ORDER_KIND } from 'constants/index';
+import { IProduct, ICartData, IPostCart } from 'GlobalType';
+import { LOGIN_TYPE, ORDER_KIND } from 'constants/index';
 import CountButton from '../common/CountButton';
 import Modal from '../modal/Modal';
 import ModalContainer from '../modal/ModalContainer';
@@ -29,21 +29,23 @@ import {
     CartBtn,
 } from './style';
 
+const DEFAULT_QUANTITY = 1;
+
 const ProductCard = () => {
-    const DEFAULT_QUANTITY = 1;
-    const { product_id } = useParams();
-    const navigate = useNavigate();
     const [count, setCount] = useState(DEFAULT_QUANTITY);
     const [product, setProduct] = useState<IProduct>();
     const { image, price, product_name, shipping_method, shipping_fee, stock, store_name } =
         product || {};
 
+    const loginType = getLocalStorage('login_type');
+    const token = getLocalStorage('token');
+    const navigate = useNavigate();
+    const { product_id } = useParams();
+
     const [loginModal, setLoginModal] = useState(false);
     const [addedModal, setAddedModal] = useState(false);
     const [addMoreModal, setAddMoreModal] = useState(false);
     const [stockModal, setStockModal] = useState(false);
-    const loginType = getLocalStorage('login_type');
-    const token = getLocalStorage('token');
 
     const handleLoginModal = () => {
         setLoginModal(!loginModal);
@@ -82,11 +84,7 @@ const ProductCard = () => {
     };
 
     const handlePostCart = async (checkCart: boolean) => {
-        const requestData = {
-            product_id: product_id,
-            quantity: count,
-            check: checkCart,
-        };
+        const requestData: IPostCart = { product_id, quantity: count, check: checkCart };
 
         const responseStatusCode = await postCartItem(requestData);
         if (responseStatusCode === 201) {
@@ -103,18 +101,11 @@ const ProductCard = () => {
 
         navigate('/payment', {
             state: {
-                product_id: product_id,
+                product_id,
                 order_kind: ORDER_KIND.DIRECT_ORDER,
                 total: count * price! + shipping_fee!,
                 order_product: [
-                    {
-                        quantity: count,
-                        image: image,
-                        store_name: store_name,
-                        product_name: product_name,
-                        shipping_fee: shipping_fee,
-                        price: price,
-                    },
+                    { quantity: count, image, store_name, product_name, shipping_fee, price },
                 ],
             },
         });
@@ -135,7 +126,7 @@ const ProductCard = () => {
                 <div>
                     <DeliveryText>
                         {shipping_method === 'PARCEL' ? '택배 배송' : '직접 배송'} /{' '}
-                        {shipping_fee === 0
+                        {!shipping_fee
                             ? '무료 배송'
                             : shipping_fee && `${shipping_fee.toLocaleString('ko-KR')}원`}
                     </DeliveryText>
@@ -148,14 +139,14 @@ const ProductCard = () => {
                             총 수량 <Number>{count}</Number>개
                         </TotalAmount>
                         <TotalPrice>
-                            {price && (price! * count).toLocaleString('ko-KR')}
+                            {price && (price * count).toLocaleString('ko-KR')}
                             <TotalWon>원</TotalWon>
                         </TotalPrice>
                     </TotalWrap>
                     <BtnContainer>
                         <DirectBuyBtn
                             onClick={handleDirectBuy}
-                            disabled={loginType === 'SELLER' || stock === 0}
+                            disabled={loginType === LOGIN_TYPE.SELLER || stock === 0}
                         >
                             {stock === 0 ? '품절' : '바로 구매'}
                         </DirectBuyBtn>
@@ -167,7 +158,7 @@ const ProductCard = () => {
                                     handleCheckIsInCart();
                                 }
                             }}
-                            disabled={loginType === 'SELLER' || stock === 0}
+                            disabled={loginType === LOGIN_TYPE.SELLER || stock === 0}
                         >
                             장바구니
                         </CartBtn>
