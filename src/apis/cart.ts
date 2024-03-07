@@ -1,5 +1,5 @@
 import { axiosApi } from './axiosInstance';
-import { ICartData } from 'GlobalType';
+import { ICartData, IPostCart } from 'GlobalType';
 
 export const getCartItem = async () => {
     try {
@@ -10,7 +10,7 @@ export const getCartItem = async () => {
     }
 };
 
-export const postCartItem = async (requestData: {}) => {
+export const postCartItem = async (requestData: IPostCart) => {
     try {
         const response = await axiosApi.post('/cart/', requestData);
         return response.status;
