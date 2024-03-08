@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-interface styledCompo {
+interface StyledProps {
     width?: string;
 }
 
@@ -15,6 +15,6 @@ export const productCircleImg = css`
 export const tabeleContent = css`
     position: relative;
     display: inline-block;
-    width: ${(props: styledCompo) => props.width};
+    width: ${(props: StyledProps) => props.width};
     text-align: center;
 `;
