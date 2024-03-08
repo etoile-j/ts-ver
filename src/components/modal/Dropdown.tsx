@@ -6,7 +6,9 @@ const Dropdown = () => {
         <Container>
             <ul>
                 <li>
-                    <Button>마이페이지</Button>
+                    <Button onClick={() => (window.location.href = '/mypage')}>
+                        마이페이지
+                    </Button>
                 </li>
                 <li>
                     <Button
