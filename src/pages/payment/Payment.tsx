@@ -9,7 +9,7 @@ import Footer from 'components/common/Footer';
 import Header from 'components/common/header/Header';
 import OrderTable from 'components/payment/OrderTable';
 import PaymentMethod from 'components/payment/PaymentMethod';
-import { Main, Total, Section, Container, Heading } from './style';
+import { Main, Total, Section, Container } from './style';
 
 interface IPaymentInputs {
     receiver: string;
@@ -70,7 +70,7 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
             <Main>
                 <h2>주문/결제하기</h2>
                 <section>
-                    <Heading>주문 목록</Heading>
+                    <h3>주문 목록</h3>
                     <OrderTable orderProductsDetail={orderProductsDetail} />
                     <Total>
                         총 주문금액
@@ -84,16 +84,16 @@ const Payment = ({ defaultValues }: DeepPartial<FieldValues>) => {
                 </section>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <section>
-                        <Heading>배송 정보</Heading>
+                        <h3>배송 정보</h3>
                         <DeliveryInfo register={register} errors={errors} />
                     </section>
                     <Container>
                         <section>
-                            <Heading>결제수단</Heading>
+                            <h3>결제수단</h3>
                             <PaymentMethod register={register} />
                         </section>
                         <Section>
-                            <Heading>최종결제 정보</Heading>
+                            <h3>최종결제 정보</h3>
                             <FinalPayment
                                 singleOrderDetail={orderProductsDetail}
                                 order_kind={order_kind}
