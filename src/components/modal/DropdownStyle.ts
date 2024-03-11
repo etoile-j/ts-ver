@@ -15,7 +15,6 @@ const Container = styled.div`
     right: 40px;
     background-color: var(--white);
     width: 113px;
-    height: 104px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
@@ -28,7 +27,6 @@ const Button = styled.button.attrs({
 })`
     width: 95px;
     padding: 9px;
-    margin-bottom: 5px;
     color: var(--dark-gray);
     font-weight: 500;
     font-size: 14px;

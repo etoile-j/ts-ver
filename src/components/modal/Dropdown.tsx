@@ -1,15 +1,20 @@
-import { clearLocalStorage } from 'utils/storage';
+import { clearLocalStorage, getLocalStorage } from 'utils/storage';
+import { LOGIN_TYPE } from 'constants/index';
 import { Container, Button } from './DropdownStyle';
 
 const Dropdown = () => {
+    const loginType = getLocalStorage('login_type');
+
     return (
         <Container>
             <ul>
-                <li>
-                    <Button onClick={() => (window.location.href = '/mypage')}>
-                        마이페이지
-                    </Button>
-                </li>
+                {loginType === LOGIN_TYPE.BUYER && (
+                    <li>
+                        <Button onClick={() => (window.location.href = '/mypage')}>
+                            마이페이지
+                        </Button>
+                    </li>
+                )}
                 <li>
                     <Button
                         onClick={() => {
