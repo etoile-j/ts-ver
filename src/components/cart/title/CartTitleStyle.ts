@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-
-interface styledCompo {
-    width?: string;
-}
+import { tabeleContent } from 'styles/mixins';
 
 const TitleLi = styled.li`
     display: flex;
@@ -14,10 +11,8 @@ const TitleLi = styled.li`
     font-size: 18px;
     line-height: 23px;
 `;
+
 const Content = styled.span`
-    position: relative;
-    display: inline-block;
-    width: ${(props: styledCompo) => props.width};
-    text-align: center;
+    ${tabeleContent}
 `;
 export { TitleLi, Content };

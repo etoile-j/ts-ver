@@ -31,11 +31,4 @@ const Container = styled.div`
     margin-top: 70px;
 `;
 
-const Heading = styled.h3`
-    padding-bottom: 18px;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-`;
-
-export { Main, Total, Section, Container, Heading };
+export { Main, Total, Section, Container };

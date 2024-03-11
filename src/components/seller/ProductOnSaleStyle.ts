@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { productCircleImg } from 'styles/mixins';
 
 interface styledCompo {
     width?: string;
@@ -32,11 +33,7 @@ const ProductWrap = styled.div`
 `;
 
 const Img = styled.img.attrs({ alt: '상품 이미지' })`
-    width: 70px;
-    height: 70px;
-    margin: 0 20px 0 10px;
-    border-radius: 50%;
-    object-fit: contain;
+    ${productCircleImg}
 `;
 
 const TextWrap = styled.div`
