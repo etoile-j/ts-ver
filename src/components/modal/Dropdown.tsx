@@ -1,4 +1,5 @@
 import { clearLocalStorage, getLocalStorage } from 'utils/storage';
+import { goToRoute } from 'utils';
 import { LOGIN_TYPE } from 'constants/index';
 import { Container, Button } from './DropdownStyle';
 
@@ -10,9 +11,7 @@ const Dropdown = () => {
             <ul>
                 {loginType === LOGIN_TYPE.BUYER && (
                     <li>
-                        <Button onClick={() => (window.location.href = '/mypage')}>
-                            마이페이지
-                        </Button>
+                        <Button onClick={() => goToRoute('/mypage')}>마이페이지</Button>
                     </li>
                 )}
                 <li>

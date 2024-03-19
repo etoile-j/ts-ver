@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { goToRoute } from 'utils';
 import Notification from 'components/common/Notification';
 import { Main } from './style';
 
@@ -14,7 +15,7 @@ const NotFound = () => {
                     subText2="웹 주소가 올바른지 확인해 주세요."
                     leftText="메인 페이지"
                     rightText="이전 페이지"
-                    leftBtn={() => (window.location.href = '/')}
+                    leftBtn={() => goToRoute()}
                     rightBtn={() => navigate(-1)}
                 />
             </Main>

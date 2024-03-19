@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { goToRoute } from 'utils';
 import Header from 'components/common/header/Header';
 import Notification from 'components/common/Notification';
 import { Main } from './style';
@@ -18,7 +19,7 @@ const CompletePayment = () => {
                     }`}
                     subText2={`주문일자 : ${info.created_at.slice(0, 19).replace('T', ' ')}`}
                     rightText="메인으로"
-                    rightBtn={() => (window.location.href = '/')}
+                    rightBtn={() => goToRoute()}
                     leftNone="none"
                 />
             </Main>
