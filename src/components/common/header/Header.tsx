@@ -2,22 +2,18 @@ import { Link } from 'react-router-dom';
 import { ISearch } from 'GlobalType';
 import SearchBar from './SearchBar';
 import RightButtons from './RightButtons';
-import {
-    HeaderEl,
-    Nav,
-    Wrap,
-    Logos,
-    LogoImg,
-    LogoText
-} from './HeaderStyle';
+import { HeaderElement, Nav, Wrap, Logos, LogoImg, LogoText } from './HeaderStyle';
 
 const Header = ({ searchKeyword }: ISearch) => {
-
     return (
-        <HeaderEl>
+        <HeaderElement>
             <Nav>
                 <Wrap>
-                    <Link to="/" aria-label="OUR-SHOP 메인 페이지">
+                    <Link
+                        to="/"
+                        aria-label="OUR-SHOP 메인 페이지"
+                        title="OUR-SHOP 메인 페이지"
+                    >
                         <Logos>
                             <LogoImg />
                             <LogoText />
@@ -27,7 +23,7 @@ const Header = ({ searchKeyword }: ISearch) => {
                 </Wrap>
                 <RightButtons />
             </Nav>
-        </HeaderEl>
+        </HeaderElement>
     );
 };
 export default Header;

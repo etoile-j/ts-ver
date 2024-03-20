@@ -1,21 +1,12 @@
 import { useState } from 'react';
 import { getLocalStorage } from 'utils/storage';
+import { goToRoute } from 'utils';
 import { LOGIN_TYPE } from 'constants/index';
-import Dropdown from 'components/modal/Dropdown';
+import RightButton from './RightButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
-import ShoppingCartIcon from '../../../assets/icon-shopping-cart.svg';
-import UserIcon from '../../../assets/icon-user.svg';
 import BagIcon from '../../../assets/icon-shopping-bag.svg';
-import {
-    Ul,
-    ShoppingCartBtn,
-    LiButtonImg,
-    ShoppingCartImg,
-    SellerBtn,
-    IconUpload,
-    MyPage,
-} from './HeaderStyle';
+import { Ul, SellerCenterBtn, IconUpload } from './HeaderStyle';
 
 const RightButtons = () => {
     const token = getLocalStorage('token');
@@ -27,38 +18,38 @@ const RightButtons = () => {
         setOpenModal(!openModal);
     };
 
+    const handleDropDown = () => {
+        setOpenDropdown(!openDropdown);
+    };
+
     return (
         <Ul>
             <li>
-                {!token ? (
-                    <ShoppingCartBtn onClick={handleModal}>
-                        <ShoppingCartImg src={ShoppingCartIcon} />
-                        <span>장바구니</span>
-                    </ShoppingCartBtn>
-                ) : loginType === LOGIN_TYPE.BUYER ? (
-                    <ShoppingCartBtn onClick={() => (window.location.href = '/cart')}>
-                        <ShoppingCartImg src={ShoppingCartIcon} />
-                        <span>장바구니</span>
-                    </ShoppingCartBtn>
-                ) : (
-                    <SellerBtn onClick={() => (window.location.href = '/seller')}>
+                {!token && <RightButton title="장바구니" onClick={handleModal} />}
+                {loginType === LOGIN_TYPE.BUYER && (
+                    <RightButton title="장바구니" onClick={() => goToRoute('/cart')} />
+                )}
+                {loginType === LOGIN_TYPE.SELLER && (
+                    <SellerCenterBtn onClick={() => goToRoute('/seller')}>
                         <IconUpload src={BagIcon} />
                         판매자 센터
-                    </SellerBtn>
+                    </SellerCenterBtn>
                 )}
             </li>
             <li>
                 {!token ? (
-                    <MyPage onClick={() => (window.location.href = '/login')}>
-                        <LiButtonImg src={UserIcon} />
-                        <span>로그인</span>
-                    </MyPage>
+                    <RightButton
+                        title="로그인"
+                        onClick={() => goToRoute('/login')}
+                        style={{ width: 72 }}
+                    />
                 ) : (
-                    <MyPage onClick={() => setOpenDropdown(!openDropdown)}>
-                        <LiButtonImg src={UserIcon} />
-                        <span>마이페이지</span>
-                        {openDropdown && <Dropdown />}
-                    </MyPage>
+                    <RightButton
+                        title="마이페이지"
+                        onClick={handleDropDown}
+                        style={{ width: 72 }}
+                        openDropdown={openDropdown}
+                    />
                 )}
             </li>
             {openModal && (
