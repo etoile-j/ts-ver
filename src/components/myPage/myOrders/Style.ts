@@ -38,4 +38,21 @@ const ProductWrap = styled.div`
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     ${productCircleImg}
 `;
-export { Wrap, TitleLi, Container, Content, ProductWrap, ProductImg };
+
+const ViewDetailButton = styled.button.attrs({ type: 'button' })`
+    margin: 0 auto;
+`;
+const ViewDetailImg = styled.img.attrs({ alt: '' })`
+    width: 42px;
+`;
+
+export {
+    Wrap,
+    TitleLi,
+    Container,
+    Content,
+    ProductWrap,
+    ProductImg,
+    ViewDetailButton,
+    ViewDetailImg,
+};

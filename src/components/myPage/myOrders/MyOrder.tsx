@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getProductDetail } from 'apis/products';
 import { IProduct } from 'GlobalType';
-import { Content, Container, ProductWrap, ProductImg } from './Style';
+import MyOrderDetails from './MyOrderDetails';
+import ViewDetailIcon from 'assets/icon-view-details.svg';
+import {
+    Content,
+    Container,
+    ProductWrap,
+    ProductImg,
+    ViewDetailButton,
+    ViewDetailImg,
+} from './Style';
 
 interface IOrderList {
     address: string;
@@ -28,17 +37,23 @@ const MyOrder = ({ order }: { order: IOrderList }) => {
         updateItemDetail();
     }, []);
 
+    const showMyOrderDetails = () => {};
+
     return (
         <Container key={order_number}>
-            <Content width="280px">{created_at.slice(0, 10)}</Content>
-            <Content width="580px">
+            <Content width="270px">{created_at.slice(0, 10)}</Content>
+            <Content width="550px">
                 <ProductWrap>
                     <ProductImg src={itemDetail?.image} />
                     <em>{itemDetail?.product_name}</em>
                 </ProductWrap>
             </Content>
-            <Content width="250px">{total_price.toLocaleString('ko-KR')}</Content>
-            <Content width="110px" />
+            <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
+            <Content width="150px" onClick={showMyOrderDetails}>
+                <ViewDetailButton>
+                    <ViewDetailImg src={ViewDetailIcon} />
+                </ViewDetailButton>
+            </Content>
         </Container>
     );
 };

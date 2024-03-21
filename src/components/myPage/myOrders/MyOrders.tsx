@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getOrders } from 'apis/order';
-import { Wrap, TitleLi, Content, Container, ProductWrap, ProductImg } from './Style';
+import { Wrap, TitleLi, Content } from './Style';
 import MyOrder from './MyOrder';
 
 interface IOrderList {
@@ -31,10 +31,10 @@ const MyOrders = () => {
         <Wrap>
             <h3>주문 내역</h3>
             <TitleLi>
-                <Content width="280px">주문일자</Content>
-                <Content width="580px">주문정보</Content>
-                <Content width="250px">상품구매금액</Content>
-                <Content width="110px" />
+                <Content width="270px">주문일자</Content>
+                <Content width="550px">주문정보</Content>
+                <Content width="280px">상품구매금액</Content>
+                <Content width="150px" />
             </TitleLi>
             {orderList.map((order) => (
                 <MyOrder order={order} />
