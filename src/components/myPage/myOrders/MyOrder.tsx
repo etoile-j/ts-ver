@@ -29,6 +29,7 @@ interface IOrderList {
 const MyOrder = ({ order }: { order: IOrderList }) => {
     const { created_at, order_items, total_price } = order;
     const [leadItemDetails, setLeadItemDetails] = useState<IProduct>();
+    const [showDetails, setShowDetails] = useState(false);
     const orderCount = order_items.length;
 
     useEffect(() => {
@@ -39,32 +40,37 @@ const MyOrder = ({ order }: { order: IOrderList }) => {
         updateItemDetail();
     }, []);
 
-    const showMyOrderDetails = () => {};
+    const showMyOrderDetails = () => {
+        setShowDetails(!showDetails);
+    };
 
     return (
-        <Container>
-            <Content width="270px">{created_at.slice(0, 10)}</Content>
-            <Content width="550px">
-                <ProductWrap>
-                    <ProductImg src={leadItemDetails?.image} />
-                    <em>
-                        {leadItemDetails?.product_name}
-                        {orderCount > 1 && (
-                            <>
-                                {' '}
-                                외 <StrongNumber> {orderCount - 1}</StrongNumber>개
-                            </>
-                        )}
-                    </em>
-                </ProductWrap>
-            </Content>
-            <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
-            <Content width="150px" onClick={showMyOrderDetails}>
-                <ViewDetailButton>
-                    <ViewDetailImg src={ViewDetailIcon} />
-                </ViewDetailButton>
-            </Content>
-        </Container>
+        <>
+            <Container>
+                <Content width="270px">{created_at.slice(0, 10)}</Content>
+                <Content width="550px">
+                    <ProductWrap>
+                        <ProductImg src={leadItemDetails?.image} />
+                        <em>
+                            {leadItemDetails?.product_name}
+                            {orderCount > 1 && (
+                                <>
+                                    {' '}
+                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>개
+                                </>
+                            )}
+                        </em>
+                    </ProductWrap>
+                </Content>
+                <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
+                <Content width="150px" onClick={showMyOrderDetails}>
+                    <ViewDetailButton>
+                        <ViewDetailImg src={ViewDetailIcon} />
+                    </ViewDetailButton>
+                </Content>
+            </Container>
+            {showDetails && <MyOrderDetails order={order} />}
+        </>
     );
 };
 export default MyOrder;

@@ -37,7 +37,7 @@ const MyOrders = () => {
                 <Content width="150px" />
             </TitleLi>
             {orderList.map((order) => (
-                <MyOrder order={order} />
+                <MyOrder order={order} key={order.order_number} />
             ))}
         </Wrap>
     );
