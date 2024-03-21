@@ -8,6 +8,7 @@ import {
     Container,
     ProductWrap,
     ProductImg,
+    StrongNumber,
     ViewDetailButton,
     ViewDetailImg,
 } from './Style';
@@ -26,13 +27,14 @@ interface IOrderList {
 }
 
 const MyOrder = ({ order }: { order: IOrderList }) => {
-    const { order_number, created_at, order_items, total_price } = order;
-    const [itemDetail, setItemDetail] = useState<IProduct>();
+    const { created_at, order_items, total_price } = order;
+    const [leadItemDetails, setLeadItemDetails] = useState<IProduct>();
+    const orderCount = order_items.length;
 
     useEffect(() => {
         const updateItemDetail = async () => {
             const itemDetailData = await getProductDetail(order_items[0]);
-            setItemDetail(itemDetailData);
+            setLeadItemDetails(itemDetailData);
         };
         updateItemDetail();
     }, []);
@@ -40,12 +42,20 @@ const MyOrder = ({ order }: { order: IOrderList }) => {
     const showMyOrderDetails = () => {};
 
     return (
-        <Container key={order_number}>
+        <Container>
             <Content width="270px">{created_at.slice(0, 10)}</Content>
             <Content width="550px">
                 <ProductWrap>
-                    <ProductImg src={itemDetail?.image} />
-                    <em>{itemDetail?.product_name}</em>
+                    <ProductImg src={leadItemDetails?.image} />
+                    <em>
+                        {leadItemDetails?.product_name}
+                        {orderCount > 1 && (
+                            <>
+                                {' '}
+                                외 <StrongNumber> {orderCount - 1}</StrongNumber>개
+                            </>
+                        )}
+                    </em>
                 </ProductWrap>
             </Content>
             <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>

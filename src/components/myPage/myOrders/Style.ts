@@ -39,6 +39,10 @@ const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     ${productCircleImg}
 `;
 
+const StrongNumber = styled.strong`
+    font-weight: 600;
+`;
+
 const ViewDetailButton = styled.button.attrs({ type: 'button' })`
     margin: 0 auto;
 `;
@@ -53,6 +57,7 @@ export {
     Content,
     ProductWrap,
     ProductImg,
+    StrongNumber,
     ViewDetailButton,
     ViewDetailImg,
 };
