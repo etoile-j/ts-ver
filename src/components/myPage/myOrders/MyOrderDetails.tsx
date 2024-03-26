@@ -1,48 +1,38 @@
-import { Section, Container, Title, Ul, Li, LeftSide } from './MyOrderDetailsStyle';
+import { IOrderInfo } from 'GlobalType';
+import { PAYMENT_METHOD } from 'constants/index';
+import { Section, Container, Title, Ul, List, ListTitle } from './MyOrderDetailsStyle';
 
-interface IOrderList {
-    address: string;
-    address_message: string;
-    created_at: string;
-    order_items: number[];
-    order_number: number;
-    order_quantity: number[];
-    payment_method: string;
-    receiver: string;
-    receiver_phone_number: string;
-    total_price: number;
-}
-
-const MyOrderDetails = ({ order }: { order: IOrderList }) => {
-    const 결제일시 = order.created_at.slice(0, 19).replace('T', ' ');
-    const 연락처 = order.receiver_phone_number.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+const MyOrderDetails = ({ order }: { order: IOrderInfo }) => {
+    const { receiver, address, address_message, payment_method, created_at } = order;
+    const paymentDateTime = created_at.slice(0, 19).replace('T', ' ');
+    const phone = order.receiver_phone_number.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 
     return (
         <Section>
             <Container>
                 <Title>배송지 정보</Title>
                 <Ul>
-                    <Li>
-                        <LeftSide>수령인</LeftSide> {order.receiver}
-                    </Li>
-                    <Li>
-                        <LeftSide>연락처</LeftSide> {연락처}
-                    </Li>
-                    <Li>
-                        <LeftSide>배송 주소</LeftSide> {order.address}
-                    </Li>
-                    <Li>
-                        <LeftSide>배송 메시지</LeftSide> {order.address_message}
-                    </Li>
+                    <List>
+                        <ListTitle>수령인</ListTitle> {receiver}
+                    </List>
+                    <List>
+                        <ListTitle>연락처</ListTitle> {phone}
+                    </List>
+                    <List>
+                        <ListTitle>배송 주소</ListTitle> {address}
+                    </List>
+                    <List>
+                        <ListTitle>배송 메시지</ListTitle> {address_message}
+                    </List>
                 </Ul>
                 <Title>결제 정보</Title>
                 <Ul>
-                    <Li>
-                        <LeftSide>결제일시</LeftSide> {결제일시}
-                    </Li>
-                    <Li>
-                        <LeftSide>결제수단</LeftSide> {order.payment_method}
-                    </Li>
+                    <List>
+                        <ListTitle>결제일시</ListTitle> {paymentDateTime}
+                    </List>
+                    <List>
+                        <ListTitle>결제수단</ListTitle> {PAYMENT_METHOD[payment_method]}
+                    </List>
                 </Ul>
             </Container>
         </Section>

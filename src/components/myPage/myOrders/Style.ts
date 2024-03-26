@@ -37,6 +37,7 @@ const ProductWrap = styled.div`
 
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     ${productCircleImg}
+    object-fit: cover;
 `;
 
 const StrongNumber = styled.strong`

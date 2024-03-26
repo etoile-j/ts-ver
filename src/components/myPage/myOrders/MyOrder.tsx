@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getProductDetail } from 'apis/products';
-import { IProduct } from 'GlobalType';
+import { IOrderInfo, IProduct } from 'GlobalType';
 import MyOrderDetails from './MyOrderDetails';
 import ViewDetailIcon from 'assets/icon-view-details.svg';
 import {
@@ -13,20 +13,7 @@ import {
     ViewDetailImg,
 } from './Style';
 
-interface IOrderList {
-    address: string;
-    address_message: string;
-    created_at: string;
-    order_items: number[];
-    order_number: number;
-    order_quantity: number[];
-    payment_method: string;
-    receiver: string;
-    receiver_phone_number: string;
-    total_price: number;
-}
-
-const MyOrder = ({ order }: { order: IOrderList }) => {
+const MyOrder = ({ order }: { order: IOrderInfo }) => {
     const { created_at, order_items, total_price } = order;
     const [leadItemDetails, setLeadItemDetails] = useState<IProduct>();
     const [showDetails, setShowDetails] = useState(false);

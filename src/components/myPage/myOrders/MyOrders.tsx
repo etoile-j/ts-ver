@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getOrders } from 'apis/order';
-import { Wrap, TitleLi, Content } from './Style';
+import { IOrderInfo } from 'GlobalType';
 import MyOrder from './MyOrder';
-
-interface IOrderList {
-    address: string;
-    address_message: string;
-    created_at: string;
-    order_items: number[];
-    order_number: number;
-    order_quantity: number[];
-    payment_method: string;
-    receiver: string;
-    receiver_phone_number: string;
-    total_price: number;
-}
+import { Wrap, TitleLi, Content } from './Style';
 
 const MyOrders = () => {
-    const [orderList, setOrderList] = useState<IOrderList[]>([]);
+    const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
 
     useEffect(() => {
         const updateOrderList = async () => {
