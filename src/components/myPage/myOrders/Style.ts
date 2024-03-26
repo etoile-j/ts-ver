@@ -37,6 +37,8 @@ const ProductWrap = styled.div`
 
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     ${productCircleImg}
+    width: 68px;
+    height: 68px;
     object-fit: cover;
 `;
 

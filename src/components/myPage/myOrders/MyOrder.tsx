@@ -15,9 +15,9 @@ import {
 
 const MyOrder = ({ order }: { order: IOrderInfo }) => {
     const { created_at, order_items, total_price } = order;
+    const orderCount = order_items.length;
     const [leadItemDetails, setLeadItemDetails] = useState<IProduct>();
     const [showDetails, setShowDetails] = useState(false);
-    const orderCount = order_items.length;
 
     useEffect(() => {
         const updateItemDetail = async () => {
@@ -52,7 +52,10 @@ const MyOrder = ({ order }: { order: IOrderInfo }) => {
                 <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
                 <Content width="150px" onClick={showMyOrderDetails}>
                     <ViewDetailButton>
-                        <ViewDetailImg src={ViewDetailIcon} />
+                        <ViewDetailImg
+                            src={ViewDetailIcon}
+                            style={{ transform: showDetails ? 'rotate(180deg)' : 'none' }}
+                        />
                     </ViewDetailButton>
                 </Content>
             </Container>
