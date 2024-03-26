@@ -1,45 +1,66 @@
 import { useEffect, useState } from 'react';
 import { getProductDetail } from 'apis/products';
-import { IProduct } from 'GlobalType';
-import { Content, Container, ProductWrap, ProductImg } from './Style';
+import { IOrderInfo, IProduct } from 'GlobalType';
+import MyOrderDetails from './MyOrderDetails';
+import ViewDetailIcon from 'assets/icon-view-details.svg';
+import {
+    Content,
+    Container,
+    ProductWrap,
+    ProductImg,
+    StrongNumber,
+    ViewDetailButton,
+    ViewDetailImg,
+} from './Style';
 
-interface IOrderList {
-    address: string;
-    address_message: string;
-    created_at: string;
-    order_items: number[];
-    order_number: number;
-    order_quantity: number[];
-    payment_method: string;
-    receiver: string;
-    receiver_phone_number: string;
-    total_price: number;
-}
-
-const MyOrder = ({ order }: { order: IOrderList }) => {
-    const { order_number, created_at, order_items, total_price } = order;
-    const [itemDetail, setItemDetail] = useState<IProduct>();
+const MyOrder = ({ order }: { order: IOrderInfo }) => {
+    const { created_at, order_items, total_price } = order;
+    const orderCount = order_items.length;
+    const [leadItemDetails, setLeadItemDetails] = useState<IProduct>();
+    const [showDetails, setShowDetails] = useState(false);
 
     useEffect(() => {
         const updateItemDetail = async () => {
             const itemDetailData = await getProductDetail(order_items[0]);
-            setItemDetail(itemDetailData);
+            setLeadItemDetails(itemDetailData);
         };
         updateItemDetail();
     }, []);
 
+    const showMyOrderDetails = () => {
+        setShowDetails(!showDetails);
+    };
+
     return (
-        <Container key={order_number}>
-            <Content width="280px">{created_at.slice(0, 10)}</Content>
-            <Content width="580px">
-                <ProductWrap>
-                    <ProductImg src={itemDetail?.image} />
-                    <em>{itemDetail?.product_name}</em>
-                </ProductWrap>
-            </Content>
-            <Content width="250px">{total_price.toLocaleString('ko-KR')}</Content>
-            <Content width="110px" />
-        </Container>
+        <>
+            <Container>
+                <Content width="270px">{created_at.slice(0, 10)}</Content>
+                <Content width="550px">
+                    <ProductWrap>
+                        <ProductImg src={leadItemDetails?.image} />
+                        <em>
+                            {leadItemDetails?.product_name}
+                            {orderCount > 1 && (
+                                <>
+                                    {' '}
+                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>개
+                                </>
+                            )}
+                        </em>
+                    </ProductWrap>
+                </Content>
+                <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
+                <Content width="150px" onClick={showMyOrderDetails}>
+                    <ViewDetailButton>
+                        <ViewDetailImg
+                            src={ViewDetailIcon}
+                            style={{ transform: showDetails ? 'rotate(180deg)' : 'none' }}
+                        />
+                    </ViewDetailButton>
+                </Content>
+            </Container>
+            {showDetails && <MyOrderDetails order={order} />}
+        </>
     );
 };
 export default MyOrder;

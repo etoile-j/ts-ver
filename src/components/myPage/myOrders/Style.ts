@@ -37,5 +37,30 @@ const ProductWrap = styled.div`
 
 const ProductImg = styled.img.attrs({ alt: '상품 이미지' })`
     ${productCircleImg}
+    width: 68px;
+    height: 68px;
+    object-fit: cover;
 `;
-export { Wrap, TitleLi, Container, Content, ProductWrap, ProductImg };
+
+const StrongNumber = styled.strong`
+    font-weight: 600;
+`;
+
+const ViewDetailButton = styled.button.attrs({ type: 'button' })`
+    margin: 0 auto;
+`;
+const ViewDetailImg = styled.img.attrs({ alt: '' })`
+    width: 42px;
+`;
+
+export {
+    Wrap,
+    TitleLi,
+    Container,
+    Content,
+    ProductWrap,
+    ProductImg,
+    StrongNumber,
+    ViewDetailButton,
+    ViewDetailImg,
+};

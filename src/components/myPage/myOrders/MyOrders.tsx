@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getOrders } from 'apis/order';
-import { Wrap, TitleLi, Content, Container, ProductWrap, ProductImg } from './Style';
+import { IOrderInfo } from 'GlobalType';
 import MyOrder from './MyOrder';
-
-interface IOrderList {
-    address: string;
-    address_message: string;
-    created_at: string;
-    order_items: number[];
-    order_number: number;
-    order_quantity: number[];
-    payment_method: string;
-    receiver: string;
-    receiver_phone_number: string;
-    total_price: number;
-}
+import { Wrap, TitleLi, Content } from './Style';
 
 const MyOrders = () => {
-    const [orderList, setOrderList] = useState<IOrderList[]>([]);
+    const [orderList, setOrderList] = useState<IOrderInfo[]>([]);
 
     useEffect(() => {
         const updateOrderList = async () => {
@@ -31,13 +19,13 @@ const MyOrders = () => {
         <Wrap>
             <h3>주문 내역</h3>
             <TitleLi>
-                <Content width="280px">주문일자</Content>
-                <Content width="580px">주문정보</Content>
-                <Content width="250px">상품구매금액</Content>
-                <Content width="110px" />
+                <Content width="270px">주문일자</Content>
+                <Content width="550px">주문정보</Content>
+                <Content width="280px">상품구매금액</Content>
+                <Content width="150px" />
             </TitleLi>
             {orderList.map((order) => (
-                <MyOrder order={order} />
+                <MyOrder order={order} key={order.order_number} />
             ))}
         </Wrap>
     );
