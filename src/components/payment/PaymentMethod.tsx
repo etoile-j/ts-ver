@@ -1,4 +1,5 @@
 import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { PAYMENT_METHOD } from 'constants/index';
 import { Wrap, RadioInput, Label, KakkoLabel } from './PaymentMethodStyle';
 
 const PaymentMethod = ({ register }: { register: UseFormRegister<FieldValues> }) => {
@@ -6,35 +7,35 @@ const PaymentMethod = ({ register }: { register: UseFormRegister<FieldValues> })
         <Wrap>
             <Label>
                 <RadioInput value="CARD" {...register('paymentMethod', { required: true })} />
-                신용/체크카드
+                {PAYMENT_METHOD.CARD}
             </Label>
             <Label>
                 <RadioInput
                     value="DEPOSIT"
                     {...register('paymentMethod', { required: true })}
                 />
-                무통장 입금
+                {PAYMENT_METHOD.DEPOSIT}
             </Label>
             <Label>
                 <RadioInput
                     value="PHONE_PAYMENT"
                     {...register('paymentMethod', { required: true })}
                 />
-                휴대폰 결제
+                {PAYMENT_METHOD.PHONE_PAYMENT}
             </Label>
             <Label>
                 <RadioInput
                     value="NAVERPAY"
                     {...register('paymentMethod', { required: true })}
                 />
-                네이버페이
+                {PAYMENT_METHOD.NAVERPAY}
             </Label>
             <KakkoLabel>
                 <RadioInput
                     value="KAKAOPAY"
                     {...register('paymentMethod', { required: true })}
                 />
-                카카오페이
+                {PAYMENT_METHOD.KAKAOPAY}
             </KakkoLabel>
         </Wrap>
     );
