@@ -21,7 +21,7 @@ const MyOrders = () => {
             <TitleLi>
                 <Content width="270px">주문일자</Content>
                 <Content width="550px">주문정보</Content>
-                <Content width="280px">상품구매금액</Content>
+                <Content width="280px">결제금액</Content>
                 <Content width="150px" />
             </TitleLi>
             {orderList.map((order) => (

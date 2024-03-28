@@ -43,7 +43,7 @@ const MyOrder = ({ order }: { order: IOrderInfo }) => {
                             {orderCount > 1 && (
                                 <>
                                     {' '}
-                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>개
+                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>건
                                 </>
                             )}
                         </em>
