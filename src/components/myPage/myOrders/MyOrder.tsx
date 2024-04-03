@@ -43,15 +43,15 @@ const MyOrder = ({ order }: { order: IOrderInfo }) => {
                             {orderCount > 1 && (
                                 <>
                                     {' '}
-                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>개
+                                    외 <StrongNumber> {orderCount - 1}</StrongNumber>건
                                 </>
                             )}
                         </em>
                     </ProductWrap>
                 </Content>
-                <Content width="280px">{total_price.toLocaleString('ko-KR')}</Content>
+                <Content width="280px">{total_price.toLocaleString('ko-KR')}원</Content>
                 <Content width="150px" onClick={showMyOrderDetails}>
-                    <ViewDetailButton>
+                    <ViewDetailButton title="자세히 보기">
                         <ViewDetailImg
                             src={ViewDetailIcon}
                             style={{ transform: showDetails ? 'rotate(180deg)' : 'none' }}
@@ -59,7 +59,7 @@ const MyOrder = ({ order }: { order: IOrderInfo }) => {
                     </ViewDetailButton>
                 </Content>
             </Container>
-            {showDetails && <MyOrderDetails order={order} />}
+            {showDetails && <MyOrderDetails order={order} leadItemDetails={leadItemDetails} />}
         </>
     );
 };
