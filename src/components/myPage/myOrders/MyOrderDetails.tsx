@@ -1,15 +1,60 @@
-import { IOrderInfo } from 'GlobalType';
+import { useEffect, useState } from 'react';
+import { getProductDetail } from 'apis/products';
+import { IOrderInfo, IProduct } from 'GlobalType';
 import { PAYMENT_METHOD } from 'constants/index';
+import MyOrderDetailsProduct from './MyOrderDetailsProduct';
 import { Section, Container, Title, Ul, List, ListTitle } from './MyOrderDetailsStyle';
 
-const MyOrderDetails = ({ order }: { order: IOrderInfo }) => {
-    const { receiver, address, address_message, payment_method, created_at } = order;
-    const paymentDateTime = created_at.slice(0, 19).replace('T', ' ');
+interface IMyOrderDetailsProps {
+    order: IOrderInfo;
+    leadItemDetails: IProduct | undefined;
+}
+
+const MyOrderDetails = ({ order, leadItemDetails }: IMyOrderDetailsProps) => {
+    const { receiver, address, address_message, payment_method, order_items, order_quantity } =
+        order;
+    const paymentDateTime = order.created_at.slice(0, 19).replace('T', ' ');
     const phone = order.receiver_phone_number.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+
+    const [allItemDetails, setAllItemDetails] = useState([leadItemDetails]);
+
+    useEffect(() => {
+        const getOtherItemsDetails = async () => {
+            try {
+                const otherItemIds = order_items.slice(1);
+
+                const otherItemsDetails = await Promise.all(
+                    otherItemIds.map((itemId) => getProductDetail(itemId)),
+                );
+                return otherItemsDetails;
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        if (order_items.length > 1) {
+            const concatItemsDetails = async () => {
+                const otherItemsDetails = await getOtherItemsDetails();
+                setAllItemDetails([...allItemDetails, ...otherItemsDetails!]);
+            };
+            concatItemsDetails();
+        }
+    }, []);
 
     return (
         <Section>
             <Container>
+                <Title>주문 상품 정보</Title>
+                <Ul>
+                    {allItemDetails.map((product, idx) => (
+                        <div key={product?.product_id}>
+                            <MyOrderDetailsProduct
+                                productDetails={product}
+                                quantity={order_quantity[idx]}
+                            />
+                        </div>
+                    ))}
+                </Ul>
                 <Title>배송지 정보</Title>
                 <Ul>
                     <List>
