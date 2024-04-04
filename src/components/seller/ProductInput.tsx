@@ -3,6 +3,7 @@ import { useForm, FieldValues } from 'react-hook-form';
 import { patchProductInfo, postProduct } from 'apis/seller';
 import { FieldErrors, IProductSeller } from 'GlobalType';
 import { FORM_MSG, REGEX } from 'constants/index';
+import { goToRoute } from 'utils';
 import {
     Wrap,
     InputContainer,
@@ -212,7 +213,7 @@ const ProductInput = ({ existingDetails }: { existingDetails?: IProductSeller })
                 </InputContainer>
             </Wrap>
             <BtnContainer>
-                <WhiteBtn type="button" onClick={() => (window.location.href = '/seller')}>
+                <WhiteBtn type="button" onClick={() => goToRoute('/seller')}>
                     취소
                 </WhiteBtn>
                 <ColorBtn type="submit">저장하기</ColorBtn>

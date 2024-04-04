@@ -1,5 +1,9 @@
 import { IProduct } from 'GlobalType';
 
+export const goToRoute = (route: string = '/') => {
+    window.location.href = route;
+};
+
 export const filterAllItems = (productDetails: IProduct[]) => {
     return productDetails.map((item) => {
         return {

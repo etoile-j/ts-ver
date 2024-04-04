@@ -14,6 +14,7 @@ import Search from 'pages/search/Search';
 import Payment from 'pages/payment/Payment';
 import ProductDetails from 'pages/productDetails/ProductDetails';
 import Cart from 'pages/cart/Cart';
+import MyPage from 'pages/myPage/MyPage';
 import UploadProduct from 'pages/seller/UploadProduct';
 import DashBoard from 'pages/seller/DashBoard';
 import EditProduct from 'pages/seller/EditProduct';
@@ -43,6 +44,11 @@ function App() {
                         element={<TypeRoute component={<Payment />} type={LOGIN_TYPE.BUYER} />}
                     />
                     <Route path="/complete_payment" element={<CompletePayment />} />
+                    <Route
+                        path="/mypage"
+                        element={<TypeRoute component={<MyPage />} type={LOGIN_TYPE.BUYER} />}
+                    />
+
                     <Route
                         path="/seller"
                         element={

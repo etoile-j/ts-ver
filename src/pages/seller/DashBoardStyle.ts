@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-
-interface styledCompo {
-    width?: string;
-}
+import { tabeleContent } from 'styles/mixins';
 
 const Main = styled.main`
     max-width: 1720px;
@@ -105,9 +102,8 @@ const Title = styled.div`
 `;
 
 const Content = styled.span`
-    display: inline-block;
-    width: ${(props: styledCompo) => props.width};
-    text-align: center;
+    ${tabeleContent}
+    position: static;
 `;
 
 const PageNum = styled.div`

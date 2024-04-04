@@ -37,6 +37,25 @@ module 'GlobalType' {
         product_name?: string;
     }
 
+    interface IPostCart {
+        product_id?: string;
+        quantity: number;
+        check: boolean;
+    }
+
+    interface IOrderInfo {
+        address: string;
+        address_message: string;
+        created_at: string;
+        order_items: number[];
+        order_number: number;
+        order_quantity: number[];
+        payment_method: string;
+        receiver: string;
+        receiver_phone_number: string;
+        total_price: number;
+    }
+
     interface ISearch {
         [keyword: string]: string;
     }

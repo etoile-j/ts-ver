@@ -73,6 +73,13 @@ export const GlobalStyle = createGlobalStyle`
         line-height: 44px;
         text-align: center;
     }
+    h3 {
+        padding-bottom: 18px;
+        margin-left: 5px;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+    }
 
     ol, ul, li {
         list-style: none;

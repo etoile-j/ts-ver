@@ -2,7 +2,7 @@ import Logo from '../../../assets/icon-logoImg.png';
 import LogoTextt from '../../../assets/icon-logoText.png';
 import styled from 'styled-components';
 
-const HeaderEl = styled.header`
+const HeaderElement = styled.header`
     z-index: 2;
     display: block;
     position: fixed;
@@ -53,27 +53,27 @@ const LogoText = styled(LogoImg)`
 
 const Ul = styled.ul`
     display: flex;
+    justify-content: space-between;
     align-items: center;
 `;
 
-const ShoppingCartBtn = styled.button`
+const HearderBtn = styled.button.attrs({ type: 'button' })`
     display: inline-block;
     width: 66px;
     height: 46px;
-    margin-right: 10px;
     color: var(--dark-gray);
     font-weight: 400;
     font-size: 12px;
     line-height: 14px;
 `;
-const LiButtonImg = styled.img.attrs({ alt: '' })`
+const IconUser = styled.img.attrs({ alt: '' })`
     height: 30px;
 `;
-const ShoppingCartImg = styled(LiButtonImg)`
+const IconShoppingCart = styled(IconUser)`
     width: 48px;
 `;
 
-const SellerBtn = styled.button`
+const SellerCenterBtn = styled.button.attrs({ type: 'button' })`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -98,23 +98,17 @@ const IconUpload = styled.img.attrs({ alt: '' })`
     margin-right: 7px;
 `;
 
-const MyPage = styled(ShoppingCartBtn)`
-    width: 72px;
-    margin-right: 0;
-`;
-
 export {
-    HeaderEl,
+    HeaderElement,
     Nav,
     Wrap,
     Logos,
     LogoImg,
     LogoText,
     Ul,
-    ShoppingCartBtn,
-    ShoppingCartImg,
-    LiButtonImg,
-    SellerBtn,
+    HearderBtn,
+    IconShoppingCart,
+    IconUser,
+    SellerCenterBtn,
     IconUpload,
-    MyPage,
 };

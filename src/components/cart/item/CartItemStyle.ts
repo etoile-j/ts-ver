@@ -1,15 +1,9 @@
+import { tabeleContent } from 'styles/mixins';
 import DeleteIcon from '../../../assets/icon-delete.svg';
 import styled from 'styled-components';
 
-interface styledCompo {
-    width?: string;
-}
-
 const Content = styled.span`
-    position: relative;
-    display: inline-block;
-    width: ${(props: styledCompo) => props.width};
-    text-align: center;
+    ${tabeleContent}
 `;
 
 const Wrap = styled.div`

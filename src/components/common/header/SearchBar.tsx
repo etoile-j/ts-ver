@@ -1,25 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ISearch } from 'GlobalType';
 import { SearchContainer, Search, ClearBtn, SearchBtn } from './SearchBarStyle';
 
 const SearchBar = ({ searchKeyword }: ISearch) => {
-    const [keyword, setKeyword] = useState(searchKeyword || '');
+    const keywordRef = useRef<HTMLInputElement>(null);
+    const [clearVisible, setClearVisible] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        setKeyword(searchKeyword!);
+        if (searchKeyword !== undefined) {
+            keywordRef.current!.value = searchKeyword;
+        }
     }, [searchKeyword]);
 
     const handleSearch = () => {
-        if (keyword.trim() === '') {
+        if (keywordRef.current!.value.trim() === '') {
             return;
         } else {
             navigate('/search', {
-                state: {
-                    keyword: keyword.trim(),
-                },
+                state: { keyword: keywordRef.current!.value.trim() },
             });
+        }
+    };
+
+    const handleInput = () => {
+        if (keywordRef.current?.value) {
+            setClearVisible(true);
+        } else {
+            setClearVisible(false);
         }
     };
 
@@ -27,17 +36,21 @@ const SearchBar = ({ searchKeyword }: ISearch) => {
         <SearchContainer>
             <Search
                 type="text"
-                value={keyword || ''}
+                ref={keywordRef}
                 placeholder="상품을 검색해보세요!"
                 maxLength={20}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setKeyword(e.target.value)
-                }
+                onChange={handleInput}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSearch();
                 }}
             />
-            {keyword && <ClearBtn onClick={() => setKeyword('')} />}
+            {clearVisible && (
+                <ClearBtn
+                    onClick={() => {
+                        keywordRef.current!.value = '';
+                    }}
+                />
+            )}
             <SearchBtn onClick={() => handleSearch()} aria-label="검색하기" />
         </SearchContainer>
     );

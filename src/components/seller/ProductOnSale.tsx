@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteProduct } from 'apis/seller';
 import { IProductSeller } from 'GlobalType';
+import { goToRoute } from 'utils';
 import ModalContainer from 'components/modal/ModalContainer';
 import Modal from 'components/modal/Modal';
 import {
@@ -36,9 +37,7 @@ const ProductOnSale = (product: IProductSeller) => {
         <>
             <Product>
                 <Content width="939px">
-                    <ProductWrap
-                        onClick={() => (window.location.href = `detail/${product_id}`)}
-                    >
+                    <ProductWrap onClick={() => goToRoute(`detail/${product_id}`)}>
                         <Img src={image} />
                         <TextWrap>
                             <p>{product_name}</p>
@@ -52,9 +51,7 @@ const ProductOnSale = (product: IProductSeller) => {
                 <Content width="205px">
                     <EditBtn
                         onClick={() => {
-                            navigate('/seller/edit', {
-                                state: { product_id },
-                            });
+                            navigate('/seller/edit', { state: { product_id } });
                         }}
                     >
                         수정
