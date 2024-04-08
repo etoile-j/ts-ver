@@ -73,6 +73,10 @@ const IconShoppingCart = styled(IconUser)`
     width: 48px;
 `;
 
+const BtnWrap = styled.li`
+    position: relative;
+`;
+
 const SellerCenterBtn = styled.button.attrs({ type: 'button' })`
     display: inline-flex;
     align-items: center;
@@ -109,6 +113,7 @@ export {
     HearderBtn,
     IconShoppingCart,
     IconUser,
+    BtnWrap,
     SellerCenterBtn,
     IconUpload,
 };
