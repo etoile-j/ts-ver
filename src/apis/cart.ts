@@ -43,3 +43,11 @@ export const deleteCartItem = async (cartItemId: number) => {
         console.error(err);
     }
 };
+
+export const deleteAllCartItems = async () => {
+    try {
+        await axiosApi.delete('/cart/');
+    } catch (err) {
+        console.error(err);
+    }
+};

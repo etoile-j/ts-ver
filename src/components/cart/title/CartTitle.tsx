@@ -1,3 +1,6 @@
+import { useMutation } from 'react-query';
+import queryClient from 'queries/queryClient';
+import { deleteAllCartItems } from 'apis/cart';
 import { IProduct, ICheckedItems } from 'GlobalType';
 import { filterAllItems } from 'utils';
 import { TitleLi, Content, ContentWrap, AllDeleteBtn } from './CartTitleStyle';
@@ -20,6 +23,15 @@ const CartTitle = (cartTitleProps: ICartTitleProps) => {
         }
     };
 
+    const { mutate: mutateDeleteAll } = useMutation(() => deleteAllCartItems(), {
+        onSuccess: () => queryClient.invalidateQueries(['cartData']),
+        onError: (err) => console.error(err),
+    });
+
+    const handleDeleteAll = () => {
+        mutateDeleteAll();
+    };
+
     return (
         <TitleLi>
             <Content width="90px">
@@ -37,7 +49,7 @@ const CartTitle = (cartTitleProps: ICartTitleProps) => {
             <Content width="611px">
                 <ContentWrap>
                     <span style={{ display: 'flex', alignItems: 'center', width: '73px' }}>
-                        <AllDeleteBtn>모두 비우기</AllDeleteBtn>
+                        <AllDeleteBtn onClick={handleDeleteAll}>모두 비우기</AllDeleteBtn>
                     </span>
                     <span style={{ textAlign: 'center' }}>상품정보</span>
                     <span></span>
