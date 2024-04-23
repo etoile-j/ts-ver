@@ -12,12 +12,14 @@ interface IRightButton {
 
 const RightButton = ({ title, onClick, style, openDropdown }: IRightButton) => {
     return (
-        <HearderBtn onClick={onClick} style={style}>
-            {title === '장바구니' && <IconShoppingCart src={CartIcon} />}
-            {title !== '장바구니' && <IconUser src={UserIcon} />}
-            <span>{title}</span>
+        <>
+            <HearderBtn onClick={onClick} style={style}>
+                {title === '장바구니' && <IconShoppingCart src={CartIcon} />}
+                {title !== '장바구니' && <IconUser src={UserIcon} />}
+                <span>{title}</span>
+            </HearderBtn>
             {openDropdown && <Dropdown />}
-        </HearderBtn>
+        </>
     );
 };
 export default RightButton;

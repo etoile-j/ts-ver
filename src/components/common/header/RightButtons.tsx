@@ -6,7 +6,7 @@ import RightButton from './RightButton';
 import Modal from 'components/modal/Modal';
 import ModalContainer from 'components/modal/ModalContainer';
 import BagIcon from '../../../assets/icon-shopping-bag.svg';
-import { Ul, SellerCenterBtn, IconUpload } from './HeaderStyle';
+import { Ul, BtnWrap, SellerCenterBtn, IconUpload } from './HeaderStyle';
 
 const RightButtons = () => {
     const token = getLocalStorage('token');
@@ -36,7 +36,7 @@ const RightButtons = () => {
                     </SellerCenterBtn>
                 )}
             </li>
-            <li>
+            <BtnWrap>
                 {!token ? (
                     <RightButton
                         title="로그인"
@@ -51,7 +51,7 @@ const RightButtons = () => {
                         openDropdown={openDropdown}
                     />
                 )}
-            </li>
+            </BtnWrap>
             {openModal && (
                 <ModalContainer>
                     <Modal
