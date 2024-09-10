@@ -2,7 +2,7 @@
 
 <img width="784" alt="OUR-SHOP 소개 이미지" src="https://github.com/etoile-j/OUR-SHOP/assets/102905624/42c4b203-0c1d-4a2a-8c64-eeb984aec12b">
 
-### 📍 https://etoile-ourshop.netlify.app
+### 📍 https://etoile-ourshop.netlify.app (현재 백엔드 API 중지됨)
 
 ### 테스트용 계정
 
@@ -40,7 +40,7 @@
 
 ### Back-End
 
-제공된 API 사용
+~~제공된 API 사용~~ 현재 중지됨
 
 <br><br>
 
